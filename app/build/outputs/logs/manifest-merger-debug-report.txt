@@ -1,0 +1,273 @@
+-- Merging decision tree log ---
+manifest
+ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-34:12
+INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-34:12
+INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-34:12
+INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-34:12
+MERGED from [com.google.android.material:material:1.9.0] C:\Users\Sasha\.gradle\caches\transforms-3\5877a83b7d1a89f606fa0438ddd5fcff\transformed\material-1.9.0\AndroidManifest.xml:17:1-26:12
+MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\Sasha\.gradle\caches\transforms-3\f03cb39b9e7879bd06117c029eb48e57\transformed\constraintlayout-2.1.4\AndroidManifest.xml:2:1-11:12
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\Sasha\.gradle\caches\transforms-3\e6f9b728479fa4c99d461b540ec7fc7a\transformed\appcompat-resources-1.6.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.appcompat:appcompat:1.6.1] C:\Users\Sasha\.gradle\caches\transforms-3\b4d9602d0dce54bc731723f70df199a9\transformed\appcompat-1.6.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.viewpager2:viewpager2:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\4715f50f14152c91a198d9c337b28ed5\transformed\viewpager2-1.0.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.fragment:fragment:1.3.6] C:\Users\Sasha\.gradle\caches\transforms-3\0218945f41bff34cee708985ac8bcab9\transformed\fragment-1.3.6\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.activity:activity:1.6.0] C:\Users\Sasha\.gradle\caches\transforms-3\2436a6b85b9ab319e6694d29a28aeae6\transformed\activity-1.6.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.dynamicanimation:dynamicanimation:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\ca4d65eca904e6299480f8d4e0f53d38\transformed\dynamicanimation-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\9885ee2a6dd410e3702b45453a5a4e0c\transformed\legacy-support-core-utils-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\b1249092cfcb186b0090e0e9a2762910\transformed\loader-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.5.1] C:\Users\Sasha\.gradle\caches\transforms-3\84c88b48d6f8e85b02ed2933ff56ad9f\transformed\lifecycle-viewmodel-2.5.1\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.5.1] C:\Users\Sasha\.gradle\caches\transforms-3\f205bd104d1d94344b6019d76f2b6974\transformed\lifecycle-viewmodel-savedstate-2.5.1\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.emoji2:emoji2-views-helper:1.2.0] C:\Users\Sasha\.gradle\caches\transforms-3\ed7d3b09667f5bf58139fc6e222c057b\transformed\emoji2-views-helper-1.2.0\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Sasha\.gradle\caches\transforms-3\b7df2a140e725f009348c1d57014e308\transformed\emoji2-1.2.0\AndroidManifest.xml:17:1-35:12
+MERGED from [androidx.drawerlayout:drawerlayout:1.1.1] C:\Users\Sasha\.gradle\caches\transforms-3\332b324076072fd62dc1fae981efe699\transformed\drawerlayout-1.1.1\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] C:\Users\Sasha\.gradle\caches\transforms-3\577608ec6de885f2576c5a8a097b86c4\transformed\coordinatorlayout-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.transition:transition:1.2.0] C:\Users\Sasha\.gradle\caches\transforms-3\7b2ad60e4843dc36bb66355a93a5d35a\transformed\transition-1.2.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\Sasha\.gradle\caches\transforms-3\92d4b66d9a472efcf2099121df37af00\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\Sasha\.gradle\caches\transforms-3\2176f326c21282bba0a4c58b5ef3090e\transformed\vectordrawable-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\29f0a43c419da29dff35a90af99b3fd9\transformed\viewpager-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.recyclerview:recyclerview:1.1.0] C:\Users\Sasha\.gradle\caches\transforms-3\fb7d9c9ef3d18bea6dc78ba98f40dc7b\transformed\recyclerview-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.customview:customview:1.1.0] C:\Users\Sasha\.gradle\caches\transforms-3\17782af64ac564dc4664c29ae77e1eb6\transformed\customview-1.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:17:1-30:12
+MERGED from [androidx.core:core-ktx:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\341048544991d6f88560419c98e94d62\transformed\core-ktx-1.12.0-rc01\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.savedstate:savedstate:1.2.0] C:\Users\Sasha\.gradle\caches\transforms-3\4cdf7a29a7e561015d04942c8035a70a\transformed\savedstate-1.2.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.annotation:annotation-experimental:1.3.0] C:\Users\Sasha\.gradle\caches\transforms-3\d81bd3bbd7bff9fad2e5e122b968d0e7\transformed\annotation-experimental-1.3.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\70274b5c525109da434aaff252a36a1d\transformed\cursoradapter-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Sasha\.gradle\caches\transforms-3\9eff97e7649752649434c157447c214f\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:17:1-37:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.5.1] C:\Users\Sasha\.gradle\caches\transforms-3\a050ed9566f91f1b4d842ecda735d2df\transformed\lifecycle-runtime-2.5.1\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\973a1da7c9344e8072edc42ce540362a\transformed\cardview-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\fc531c59cd9d56ae0263482aa002e7ed\transformed\interpolator-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Sasha\.gradle\caches\transforms-3\292103b45b1f5ebfc7a3c7a0e839604a\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Sasha\.gradle\caches\transforms-3\9e0242952a612c3523913e1102f477a6\transformed\startup-runtime-1.1.1\AndroidManifest.xml:17:1-33:12
+MERGED from [androidx.tracing:tracing:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\732e0738c4c3584414d345330e0971ab\transformed\tracing-1.0.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\caeda25b9ee5ec775dfae7a08d98fa57\transformed\lifecycle-livedata-2.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.5.1] C:\Users\Sasha\.gradle\caches\transforms-3\99b45ed5efbfa3fef4877ff22f1c2d09\transformed\lifecycle-livedata-core-2.5.1\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.arch.core:core-runtime:2.1.0] C:\Users\Sasha\.gradle\caches\transforms-3\32986b6956af6c8711c10a86481341a8\transformed\core-runtime-2.1.0\AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\e32af3ca4bb56afaf026b25e130d8e57\transformed\documentfile-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\6ee262e3545dbf9cf13f05aea7cc5d8a\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.print:print:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\614d85384f1e3b486ec20044c66d42f6\transformed\print-1.0.0\AndroidManifest.xml:17:1-22:12
+INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-34:12
+INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-34:12
+INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-34:12
+	package
+		INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-34:12
+		INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml
+	android:versionName
+		INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-34:12
+		INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml
+	xmlns:tools
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:3:5-51
+	android:versionCode
+		INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-34:12
+		INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml
+	xmlns:android
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:11-69
+application
+ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:5:5-32:19
+MERGED from [com.google.android.material:material:1.9.0] C:\Users\Sasha\.gradle\caches\transforms-3\5877a83b7d1a89f606fa0438ddd5fcff\transformed\material-1.9.0\AndroidManifest.xml:24:5-20
+MERGED from [com.google.android.material:material:1.9.0] C:\Users\Sasha\.gradle\caches\transforms-3\5877a83b7d1a89f606fa0438ddd5fcff\transformed\material-1.9.0\AndroidManifest.xml:24:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\Sasha\.gradle\caches\transforms-3\f03cb39b9e7879bd06117c029eb48e57\transformed\constraintlayout-2.1.4\AndroidManifest.xml:9:5-20
+MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\Sasha\.gradle\caches\transforms-3\f03cb39b9e7879bd06117c029eb48e57\transformed\constraintlayout-2.1.4\AndroidManifest.xml:9:5-20
+MERGED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Sasha\.gradle\caches\transforms-3\b7df2a140e725f009348c1d57014e308\transformed\emoji2-1.2.0\AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Sasha\.gradle\caches\transforms-3\b7df2a140e725f009348c1d57014e308\transformed\emoji2-1.2.0\AndroidManifest.xml:23:5-33:19
+MERGED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:28:5-89
+MERGED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:28:5-89
+MERGED from [androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Sasha\.gradle\caches\transforms-3\9eff97e7649752649434c157447c214f\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:25:5-35:19
+MERGED from [androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Sasha\.gradle\caches\transforms-3\9eff97e7649752649434c157447c214f\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:25:5-35:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Sasha\.gradle\caches\transforms-3\292103b45b1f5ebfc7a3c7a0e839604a\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Sasha\.gradle\caches\transforms-3\292103b45b1f5ebfc7a3c7a0e839604a\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Sasha\.gradle\caches\transforms-3\9e0242952a612c3523913e1102f477a6\transformed\startup-runtime-1.1.1\AndroidManifest.xml:25:5-31:19
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Sasha\.gradle\caches\transforms-3\9e0242952a612c3523913e1102f477a6\transformed\startup-runtime-1.1.1\AndroidManifest.xml:25:5-31:19
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:28:18-86
+	android:supportsRtl
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:11:9-35
+	android:label
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:10:9-41
+	android:fullBackupContent
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:8:9-54
+	tools:targetApi
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:13:9-29
+	android:icon
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:9:9-43
+	android:allowBackup
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:6:9-35
+	android:theme
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:12:9-77
+	android:dataExtractionRules
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:7:9-65
+activity#com.example.playlistmaker.SearchActivity
+ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:14:9-16:40
+	android:exported
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:16:13-37
+	android:name
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:15:13-43
+activity#com.example.playlistmaker.LibraryActivity
+ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:17:9-19:40
+	android:exported
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:19:13-37
+	android:name
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:18:13-44
+activity#com.example.playlistmaker.SettingsActivity
+ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:20:9-22:40
+	android:exported
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:22:13-37
+	android:name
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:21:13-45
+activity#com.example.playlistmaker.MainActivity
+ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:23:9-31:20
+	android:exported
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:25:13-36
+	android:name
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:24:13-41
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:26:13-30:29
+action#android.intent.action.MAIN
+ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:27:17-69
+	android:name
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:27:25-66
+category#android.intent.category.LAUNCHER
+ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:29:17-77
+	android:name
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:29:27-74
+uses-sdk
+INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml
+MERGED from [com.google.android.material:material:1.9.0] C:\Users\Sasha\.gradle\caches\transforms-3\5877a83b7d1a89f606fa0438ddd5fcff\transformed\material-1.9.0\AndroidManifest.xml:20:5-22:41
+MERGED from [com.google.android.material:material:1.9.0] C:\Users\Sasha\.gradle\caches\transforms-3\5877a83b7d1a89f606fa0438ddd5fcff\transformed\material-1.9.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\Sasha\.gradle\caches\transforms-3\f03cb39b9e7879bd06117c029eb48e57\transformed\constraintlayout-2.1.4\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\Sasha\.gradle\caches\transforms-3\f03cb39b9e7879bd06117c029eb48e57\transformed\constraintlayout-2.1.4\AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\Sasha\.gradle\caches\transforms-3\e6f9b728479fa4c99d461b540ec7fc7a\transformed\appcompat-resources-1.6.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\Sasha\.gradle\caches\transforms-3\e6f9b728479fa4c99d461b540ec7fc7a\transformed\appcompat-resources-1.6.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat:1.6.1] C:\Users\Sasha\.gradle\caches\transforms-3\b4d9602d0dce54bc731723f70df199a9\transformed\appcompat-1.6.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.appcompat:appcompat:1.6.1] C:\Users\Sasha\.gradle\caches\transforms-3\b4d9602d0dce54bc731723f70df199a9\transformed\appcompat-1.6.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager2:viewpager2:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\4715f50f14152c91a198d9c337b28ed5\transformed\viewpager2-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.viewpager2:viewpager2:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\4715f50f14152c91a198d9c337b28ed5\transformed\viewpager2-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.3.6] C:\Users\Sasha\.gradle\caches\transforms-3\0218945f41bff34cee708985ac8bcab9\transformed\fragment-1.3.6\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.3.6] C:\Users\Sasha\.gradle\caches\transforms-3\0218945f41bff34cee708985ac8bcab9\transformed\fragment-1.3.6\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity:1.6.0] C:\Users\Sasha\.gradle\caches\transforms-3\2436a6b85b9ab319e6694d29a28aeae6\transformed\activity-1.6.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.6.0] C:\Users\Sasha\.gradle\caches\transforms-3\2436a6b85b9ab319e6694d29a28aeae6\transformed\activity-1.6.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.dynamicanimation:dynamicanimation:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\ca4d65eca904e6299480f8d4e0f53d38\transformed\dynamicanimation-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.dynamicanimation:dynamicanimation:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\ca4d65eca904e6299480f8d4e0f53d38\transformed\dynamicanimation-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\9885ee2a6dd410e3702b45453a5a4e0c\transformed\legacy-support-core-utils-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\9885ee2a6dd410e3702b45453a5a4e0c\transformed\legacy-support-core-utils-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\b1249092cfcb186b0090e0e9a2762910\transformed\loader-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\b1249092cfcb186b0090e0e9a2762910\transformed\loader-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.5.1] C:\Users\Sasha\.gradle\caches\transforms-3\84c88b48d6f8e85b02ed2933ff56ad9f\transformed\lifecycle-viewmodel-2.5.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.5.1] C:\Users\Sasha\.gradle\caches\transforms-3\84c88b48d6f8e85b02ed2933ff56ad9f\transformed\lifecycle-viewmodel-2.5.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.5.1] C:\Users\Sasha\.gradle\caches\transforms-3\f205bd104d1d94344b6019d76f2b6974\transformed\lifecycle-viewmodel-savedstate-2.5.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.5.1] C:\Users\Sasha\.gradle\caches\transforms-3\f205bd104d1d94344b6019d76f2b6974\transformed\lifecycle-viewmodel-savedstate-2.5.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.emoji2:emoji2-views-helper:1.2.0] C:\Users\Sasha\.gradle\caches\transforms-3\ed7d3b09667f5bf58139fc6e222c057b\transformed\emoji2-views-helper-1.2.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.emoji2:emoji2-views-helper:1.2.0] C:\Users\Sasha\.gradle\caches\transforms-3\ed7d3b09667f5bf58139fc6e222c057b\transformed\emoji2-views-helper-1.2.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Sasha\.gradle\caches\transforms-3\b7df2a140e725f009348c1d57014e308\transformed\emoji2-1.2.0\AndroidManifest.xml:21:5-44
+MERGED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Sasha\.gradle\caches\transforms-3\b7df2a140e725f009348c1d57014e308\transformed\emoji2-1.2.0\AndroidManifest.xml:21:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.1.1] C:\Users\Sasha\.gradle\caches\transforms-3\332b324076072fd62dc1fae981efe699\transformed\drawerlayout-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.drawerlayout:drawerlayout:1.1.1] C:\Users\Sasha\.gradle\caches\transforms-3\332b324076072fd62dc1fae981efe699\transformed\drawerlayout-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] C:\Users\Sasha\.gradle\caches\transforms-3\577608ec6de885f2576c5a8a097b86c4\transformed\coordinatorlayout-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.1.0] C:\Users\Sasha\.gradle\caches\transforms-3\577608ec6de885f2576c5a8a097b86c4\transformed\coordinatorlayout-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.transition:transition:1.2.0] C:\Users\Sasha\.gradle\caches\transforms-3\7b2ad60e4843dc36bb66355a93a5d35a\transformed\transition-1.2.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.transition:transition:1.2.0] C:\Users\Sasha\.gradle\caches\transforms-3\7b2ad60e4843dc36bb66355a93a5d35a\transformed\transition-1.2.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\Sasha\.gradle\caches\transforms-3\92d4b66d9a472efcf2099121df37af00\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable-animated:1.1.0] C:\Users\Sasha\.gradle\caches\transforms-3\92d4b66d9a472efcf2099121df37af00\transformed\vectordrawable-animated-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\Sasha\.gradle\caches\transforms-3\2176f326c21282bba0a4c58b5ef3090e\transformed\vectordrawable-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\Sasha\.gradle\caches\transforms-3\2176f326c21282bba0a4c58b5ef3090e\transformed\vectordrawable-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\29f0a43c419da29dff35a90af99b3fd9\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\29f0a43c419da29dff35a90af99b3fd9\transformed\viewpager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.recyclerview:recyclerview:1.1.0] C:\Users\Sasha\.gradle\caches\transforms-3\fb7d9c9ef3d18bea6dc78ba98f40dc7b\transformed\recyclerview-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.recyclerview:recyclerview:1.1.0] C:\Users\Sasha\.gradle\caches\transforms-3\fb7d9c9ef3d18bea6dc78ba98f40dc7b\transformed\recyclerview-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.customview:customview:1.1.0] C:\Users\Sasha\.gradle\caches\transforms-3\17782af64ac564dc4664c29ae77e1eb6\transformed\customview-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.customview:customview:1.1.0] C:\Users\Sasha\.gradle\caches\transforms-3\17782af64ac564dc4664c29ae77e1eb6\transformed\customview-1.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core-ktx:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\341048544991d6f88560419c98e94d62\transformed\core-ktx-1.12.0-rc01\AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-ktx:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\341048544991d6f88560419c98e94d62\transformed\core-ktx-1.12.0-rc01\AndroidManifest.xml:5:5-44
+MERGED from [androidx.savedstate:savedstate:1.2.0] C:\Users\Sasha\.gradle\caches\transforms-3\4cdf7a29a7e561015d04942c8035a70a\transformed\savedstate-1.2.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.savedstate:savedstate:1.2.0] C:\Users\Sasha\.gradle\caches\transforms-3\4cdf7a29a7e561015d04942c8035a70a\transformed\savedstate-1.2.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.annotation:annotation-experimental:1.3.0] C:\Users\Sasha\.gradle\caches\transforms-3\d81bd3bbd7bff9fad2e5e122b968d0e7\transformed\annotation-experimental-1.3.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.annotation:annotation-experimental:1.3.0] C:\Users\Sasha\.gradle\caches\transforms-3\d81bd3bbd7bff9fad2e5e122b968d0e7\transformed\annotation-experimental-1.3.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\70274b5c525109da434aaff252a36a1d\transformed\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\70274b5c525109da434aaff252a36a1d\transformed\cursoradapter-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Sasha\.gradle\caches\transforms-3\9eff97e7649752649434c157447c214f\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Sasha\.gradle\caches\transforms-3\9eff97e7649752649434c157447c214f\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.5.1] C:\Users\Sasha\.gradle\caches\transforms-3\a050ed9566f91f1b4d842ecda735d2df\transformed\lifecycle-runtime-2.5.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.5.1] C:\Users\Sasha\.gradle\caches\transforms-3\a050ed9566f91f1b4d842ecda735d2df\transformed\lifecycle-runtime-2.5.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\973a1da7c9344e8072edc42ce540362a\transformed\cardview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.cardview:cardview:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\973a1da7c9344e8072edc42ce540362a\transformed\cardview-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\fc531c59cd9d56ae0263482aa002e7ed\transformed\interpolator-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\fc531c59cd9d56ae0263482aa002e7ed\transformed\interpolator-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Sasha\.gradle\caches\transforms-3\292103b45b1f5ebfc7a3c7a0e839604a\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Sasha\.gradle\caches\transforms-3\292103b45b1f5ebfc7a3c7a0e839604a\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Sasha\.gradle\caches\transforms-3\9e0242952a612c3523913e1102f477a6\transformed\startup-runtime-1.1.1\AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Sasha\.gradle\caches\transforms-3\9e0242952a612c3523913e1102f477a6\transformed\startup-runtime-1.1.1\AndroidManifest.xml:21:5-23:41
+MERGED from [androidx.tracing:tracing:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\732e0738c4c3584414d345330e0971ab\transformed\tracing-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.tracing:tracing:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\732e0738c4c3584414d345330e0971ab\transformed\tracing-1.0.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\caeda25b9ee5ec775dfae7a08d98fa57\transformed\lifecycle-livedata-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\caeda25b9ee5ec775dfae7a08d98fa57\transformed\lifecycle-livedata-2.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.5.1] C:\Users\Sasha\.gradle\caches\transforms-3\99b45ed5efbfa3fef4877ff22f1c2d09\transformed\lifecycle-livedata-core-2.5.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.5.1] C:\Users\Sasha\.gradle\caches\transforms-3\99b45ed5efbfa3fef4877ff22f1c2d09\transformed\lifecycle-livedata-core-2.5.1\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.arch.core:core-runtime:2.1.0] C:\Users\Sasha\.gradle\caches\transforms-3\32986b6956af6c8711c10a86481341a8\transformed\core-runtime-2.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.arch.core:core-runtime:2.1.0] C:\Users\Sasha\.gradle\caches\transforms-3\32986b6956af6c8711c10a86481341a8\transformed\core-runtime-2.1.0\AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\e32af3ca4bb56afaf026b25e130d8e57\transformed\documentfile-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\e32af3ca4bb56afaf026b25e130d8e57\transformed\documentfile-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\6ee262e3545dbf9cf13f05aea7cc5d8a\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\6ee262e3545dbf9cf13f05aea7cc5d8a\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\614d85384f1e3b486ec20044c66d42f6\transformed\print-1.0.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\614d85384f1e3b486ec20044c66d42f6\transformed\print-1.0.0\AndroidManifest.xml:20:5-44
+INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml
+INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml
+provider#androidx.startup.InitializationProvider
+ADDED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Sasha\.gradle\caches\transforms-3\b7df2a140e725f009348c1d57014e308\transformed\emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Sasha\.gradle\caches\transforms-3\9eff97e7649752649434c157447c214f\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:26:9-34:20
+MERGED from [androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Sasha\.gradle\caches\transforms-3\9eff97e7649752649434c157447c214f\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:26:9-34:20
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Sasha\.gradle\caches\transforms-3\9e0242952a612c3523913e1102f477a6\transformed\startup-runtime-1.1.1\AndroidManifest.xml:26:9-30:34
+MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Sasha\.gradle\caches\transforms-3\9e0242952a612c3523913e1102f477a6\transformed\startup-runtime-1.1.1\AndroidManifest.xml:26:9-30:34
+	tools:node
+		ADDED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Sasha\.gradle\caches\transforms-3\b7df2a140e725f009348c1d57014e308\transformed\emoji2-1.2.0\AndroidManifest.xml:28:13-31
+	android:authorities
+		ADDED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Sasha\.gradle\caches\transforms-3\b7df2a140e725f009348c1d57014e308\transformed\emoji2-1.2.0\AndroidManifest.xml:26:13-68
+	android:exported
+		ADDED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Sasha\.gradle\caches\transforms-3\b7df2a140e725f009348c1d57014e308\transformed\emoji2-1.2.0\AndroidManifest.xml:27:13-37
+	android:name
+		ADDED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Sasha\.gradle\caches\transforms-3\b7df2a140e725f009348c1d57014e308\transformed\emoji2-1.2.0\AndroidManifest.xml:25:13-67
+meta-data#androidx.emoji2.text.EmojiCompatInitializer
+ADDED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Sasha\.gradle\caches\transforms-3\b7df2a140e725f009348c1d57014e308\transformed\emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
+	android:value
+		ADDED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Sasha\.gradle\caches\transforms-3\b7df2a140e725f009348c1d57014e308\transformed\emoji2-1.2.0\AndroidManifest.xml:31:17-49
+	android:name
+		ADDED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Sasha\.gradle\caches\transforms-3\b7df2a140e725f009348c1d57014e308\transformed\emoji2-1.2.0\AndroidManifest.xml:30:17-75
+permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:23:9-81
+permission#com.example.playlistmaker.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:22:5-24:47
+	android:protectionLevel
+		ADDED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:24:9-44
+	android:name
+		ADDED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:23:9-81
+uses-permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:26:22-94
+uses-permission#com.example.playlistmaker.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
+ADDED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:26:5-97
+	android:name
+		ADDED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:26:22-94
+meta-data#androidx.lifecycle.ProcessLifecycleInitializer
+ADDED from [androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Sasha\.gradle\caches\transforms-3\9eff97e7649752649434c157447c214f\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:31:13-33:52
+	android:value
+		ADDED from [androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Sasha\.gradle\caches\transforms-3\9eff97e7649752649434c157447c214f\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:33:17-49
+	android:name
+		ADDED from [androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Sasha\.gradle\caches\transforms-3\9eff97e7649752649434c157447c214f\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:32:17-78

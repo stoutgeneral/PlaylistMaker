@@ -10,10 +10,11 @@
         android:layout_height="wrap_content">
 
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
+            android:id="@+id/arrow_back"
+            android:layout_width="@dimen/high_padding"
+            android:layout_height="@dimen/high_padding"
+            android:layout_marginStart="@dimen/low_padding"
+            android:layout_marginTop="@dimen/low_padding"
             android:src="@drawable/arrow_back" />
 
         <TextView
@@ -23,15 +24,15 @@
             android:layout_marginTop="12dp"
             android:text="@string/settings"
             android:textColor="@color/YP_black"
-            android:textSize="22sp" />
+            android:textSize="@dimen/basic_text_size" />
     </FrameLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="18dp">
+        android:layout_marginTop="@dimen/high_padding"
+        android:layout_marginEnd="@dimen/medium_padding"
+        android:layout_marginBottom="@dimen/medium_padding">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -44,16 +45,16 @@
             android:layout_height="wrap_content"
             android:text="@string/dark_theme"
             android:textColor="@color/YP_black"
-            android:textSize="16sp"
-            android:layout_marginStart="16dp"/>
+            android:textSize="@dimen/text_size_additional_screens"
+            android:layout_marginStart="@dimen/low_padding"/>
     </FrameLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="18dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="18dp">
+        android:paddingTop="@dimen/medium_padding"
+        android:layout_marginEnd="@dimen/medium_padding"
+        android:layout_marginBottom="@dimen/medium_padding">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -66,16 +67,16 @@
             android:layout_height="wrap_content"
             android:text="@string/share_app"
             android:textColor="@color/YP_black"
-            android:textSize="16sp"
-            android:layout_marginStart="16dp"/>
+            android:textSize="@dimen/text_size_additional_screens"
+            android:layout_marginStart="@dimen/low_padding"/>
     </FrameLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="18dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="18dp">
+        android:paddingTop="@dimen/medium_padding"
+        android:layout_marginEnd="@dimen/medium_padding"
+        android:layout_marginBottom="@dimen/medium_padding">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -88,16 +89,16 @@
             android:layout_height="wrap_content"
             android:text="@string/write_support"
             android:textColor="@color/YP_black"
-            android:textSize="16sp"
-            android:layout_marginStart="16dp"/>
+            android:textSize="@dimen/text_size_additional_screens"
+            android:layout_marginStart="@dimen/low_padding"/>
     </FrameLayout>
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="18dp"
-        android:layout_marginEnd="18dp"
-        android:layout_marginBottom="18dp">
+        android:paddingTop="@dimen/medium_padding"
+        android:layout_marginEnd="@dimen/medium_padding"
+        android:layout_marginBottom="@dimen/medium_padding">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -110,8 +111,8 @@
             android:layout_height="wrap_content"
             android:text="@string/user_agreement"
             android:textColor="@color/YP_black"
-            android:textSize="16sp"
-            android:layout_marginStart="16dp"/>
+            android:textSize="@dimen/text_size_additional_screens"
+            android:layout_marginStart="@dimen/low_padding"/>
     </FrameLayout>
 
 </LinearLayout>

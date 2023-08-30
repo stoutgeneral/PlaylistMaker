@@ -12,6 +12,7 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <dimen name="basic_text_size">22sp</dimen>
+    <dimen name="distance_between_buttons">8dp</dimen>
     <dimen name="high_padding">24dp</dimen>
     <dimen name="icon_offset_from_text">8dp</dimen>
     <dimen name="low_padding">16dp</dimen>

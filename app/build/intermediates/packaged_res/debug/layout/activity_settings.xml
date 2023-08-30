@@ -7,7 +7,7 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="56dp">
 
         <ImageView
             android:id="@+id/arrow_back"
@@ -30,7 +30,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/high_padding"
+        android:layout_marginTop="45dp"
         android:layout_marginEnd="@dimen/medium_padding"
         android:layout_marginBottom="@dimen/medium_padding">
 

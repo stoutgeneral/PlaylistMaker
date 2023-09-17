@@ -2201,7 +2201,7 @@ dimen design_tab_text_size_2line
 dimen design_textinput_caption_translate_y
 dimen disabled_alpha_material_dark
 dimen disabled_alpha_material_light
-dimen distance_between_buttons
+dimen distance_between_elements
 dimen fastscroll_default_thickness
 dimen fastscroll_margin
 dimen fastscroll_minimum_range
@@ -2930,11 +2930,13 @@ drawable btn_radio_off_mtrl
 drawable btn_radio_off_to_on_mtrl_animation
 drawable btn_radio_on_mtrl
 drawable btn_radio_on_to_off_mtrl_animation
+drawable cancel
 drawable design_fab_background
 drawable design_ic_visibility
 drawable design_ic_visibility_off
 drawable design_password_eye
 drawable design_snackbar_background
+drawable edit_text_bar
 drawable ic_arrow_back_black_24
 drawable ic_call_answer
 drawable ic_call_answer_low
@@ -3029,13 +3031,17 @@ drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
 drawable search
+drawable search_bar
 drawable settings
 drawable share
 drawable support
 drawable switch_off
+drawable switch_on
 drawable test_level_drawable
 drawable tooltip_frame_dark
 drawable tooltip_frame_light
+font ys_display_medium
+font ys_display_regular
 id ALT
 id BOTTOM_END
 id BOTTOM_START
@@ -3117,7 +3123,8 @@ id animateToStart
 id antiClockwise
 id anticipate
 id arc
-id arrow_back
+id arrow_back_search
+id arrow_back_settings
 id asConfigured
 id async
 id auto
@@ -3305,6 +3312,7 @@ id material_timepicker_view
 id material_value_index
 id matrix
 id message
+id message_to_support
 id middle
 id mini
 id month_grid
@@ -3382,6 +3390,7 @@ id progress_horizontal
 id radio
 id ratio
 id rectangles
+id reset_text
 id reverseSawtooth
 id right
 id rightToLeft
@@ -3427,6 +3436,7 @@ id select_dialog_listview
 id selected
 id selection_type
 id settings_button
+id share_app
 id sharedValueSet
 id sharedValueUnset
 id shortcut
@@ -3516,6 +3526,7 @@ id uniform
 id unlabeled
 id up
 id useLogo
+id user_agreement_button
 id vertical_only
 id view_offset_helper
 id view_transition
@@ -3781,6 +3792,7 @@ string character_counter_overflowed_content_description
 string character_counter_pattern
 string clear_text_end_icon_content_description
 string dark_theme
+string email
 string error_a11y_label
 string error_icon_content_description
 string exposed_dropdown_menu_content_description
@@ -3827,6 +3839,7 @@ string material_timepicker_minute
 string material_timepicker_pm
 string material_timepicker_select_time
 string material_timepicker_text_input_mode_description
+string message
 string mtrl_badge_numberless_content_description
 string mtrl_checkbox_button_icon_path_checked
 string mtrl_checkbox_button_icon_path_group_name
@@ -3901,10 +3914,13 @@ string searchview_clear_text_content_description
 string searchview_navigation_content_description
 string settings
 string share_app
+string share_link
 string side_sheet_accessibility_pane_title
 string side_sheet_behavior
 string status_bar_notification_info_overflow
+string theme_message
 string user_agreement
+string user_agreement_link
 string write_support
 style AlertDialog_AppCompat
 style AlertDialog_AppCompat_Light
@@ -3915,6 +3931,7 @@ style Animation_Design_BottomSheetDialog
 style Animation_Material3_BottomSheetDialog
 style Animation_Material3_SideSheetDialog
 style Animation_MaterialComponents_BottomSheetDialog
+style ArrowBackButton
 style Base_AlertDialog_AppCompat
 style Base_AlertDialog_AppCompat_Light
 style Base_Animation_AppCompat_Dialog
@@ -4187,9 +4204,12 @@ style Base_Widget_MaterialComponents_Snackbar
 style Base_Widget_MaterialComponents_TextInputEditText
 style Base_Widget_MaterialComponents_TextInputLayout
 style Base_Widget_MaterialComponents_TextView
+style ButtonMainActivity
 style CardView
 style CardView_Dark
 style CardView_Light
+style ImageSettings
+style LocationSettingsItems
 style MaterialAlertDialog_Material3
 style MaterialAlertDialog_Material3_Animation
 style MaterialAlertDialog_Material3_Body_Text
@@ -4210,6 +4230,7 @@ style MaterialAlertDialog_MaterialComponents_Title_Panel
 style MaterialAlertDialog_MaterialComponents_Title_Panel_CenterStacked
 style MaterialAlertDialog_MaterialComponents_Title_Text
 style MaterialAlertDialog_MaterialComponents_Title_Text_CenterStacked
+style PanelHeaderNameActivity
 style Platform_AppCompat
 style Platform_AppCompat_Light
 style Platform_MaterialComponents
@@ -4300,6 +4321,8 @@ style ShapeAppearanceOverlay_MaterialComponents_MaterialCalendar_Day
 style ShapeAppearanceOverlay_MaterialComponents_MaterialCalendar_Window_Fullscreen
 style ShapeAppearanceOverlay_MaterialComponents_MaterialCalendar_Year
 style ShapeAppearanceOverlay_MaterialComponents_TextInputLayout_FilledBox
+style SwitchOnOffActivitySettings
+style TextActivitySettings
 style TextAppearance_AppCompat
 style TextAppearance_AppCompat_Body1
 style TextAppearance_AppCompat_Body2

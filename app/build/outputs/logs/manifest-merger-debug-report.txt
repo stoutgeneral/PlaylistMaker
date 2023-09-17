@@ -1,9 +1,9 @@
 -- Merging decision tree log ---
 manifest
-ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-34:12
-INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-34:12
-INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-34:12
-INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-34:12
+ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-35:12
+INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-35:12
+INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-35:12
+INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-35:12
 MERGED from [com.google.android.material:material:1.9.0] C:\Users\Sasha\.gradle\caches\transforms-3\5877a83b7d1a89f606fa0438ddd5fcff\transformed\material-1.9.0\AndroidManifest.xml:17:1-26:12
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\Sasha\.gradle\caches\transforms-3\f03cb39b9e7879bd06117c029eb48e57\transformed\constraintlayout-2.1.4\AndroidManifest.xml:2:1-11:12
 MERGED from [androidx.appcompat:appcompat-resources:1.6.1] C:\Users\Sasha\.gradle\caches\transforms-3\e6f9b728479fa4c99d461b540ec7fc7a\transformed\appcompat-resources-1.6.1\AndroidManifest.xml:17:1-22:12
@@ -26,8 +26,8 @@ MERGED from [androidx.vectordrawable:vectordrawable:1.1.0] C:\Users\Sasha\.gradl
 MERGED from [androidx.viewpager:viewpager:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\29f0a43c419da29dff35a90af99b3fd9\transformed\viewpager-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.recyclerview:recyclerview:1.1.0] C:\Users\Sasha\.gradle\caches\transforms-3\fb7d9c9ef3d18bea6dc78ba98f40dc7b\transformed\recyclerview-1.1.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.customview:customview:1.1.0] C:\Users\Sasha\.gradle\caches\transforms-3\17782af64ac564dc4664c29ae77e1eb6\transformed\customview-1.1.0\AndroidManifest.xml:17:1-24:12
-MERGED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:17:1-30:12
-MERGED from [androidx.core:core-ktx:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\341048544991d6f88560419c98e94d62\transformed\core-ktx-1.12.0-rc01\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.core:core:1.12.0] C:\Users\Sasha\.gradle\caches\transforms-3\4a6b49c103511b066d25135440074f58\transformed\core-1.12.0\AndroidManifest.xml:17:1-30:12
+MERGED from [androidx.core:core-ktx:1.12.0] C:\Users\Sasha\.gradle\caches\transforms-3\56ba77be868f03bd3e1c9319187a72ec\transformed\core-ktx-1.12.0\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.savedstate:savedstate:1.2.0] C:\Users\Sasha\.gradle\caches\transforms-3\4cdf7a29a7e561015d04942c8035a70a\transformed\savedstate-1.2.0\AndroidManifest.xml:17:1-24:12
 MERGED from [androidx.annotation:annotation-experimental:1.3.0] C:\Users\Sasha\.gradle\caches\transforms-3\d81bd3bbd7bff9fad2e5e122b968d0e7\transformed\annotation-experimental-1.3.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\70274b5c525109da434aaff252a36a1d\transformed\cursoradapter-1.0.0\AndroidManifest.xml:17:1-22:12
@@ -44,35 +44,35 @@ MERGED from [androidx.arch.core:core-runtime:2.1.0] C:\Users\Sasha\.gradle\cache
 MERGED from [androidx.documentfile:documentfile:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\e32af3ca4bb56afaf026b25e130d8e57\transformed\documentfile-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\6ee262e3545dbf9cf13f05aea7cc5d8a\transformed\localbroadcastmanager-1.0.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.print:print:1.0.0] C:\Users\Sasha\.gradle\caches\transforms-3\614d85384f1e3b486ec20044c66d42f6\transformed\print-1.0.0\AndroidManifest.xml:17:1-22:12
-INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-34:12
-INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-34:12
-INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-34:12
+INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-35:12
+INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-35:12
+INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-35:12
 	package
 		INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-34:12
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-35:12
 		INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml
 	android:versionName
 		INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-34:12
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-35:12
 		INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml
 	xmlns:tools
 		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:3:5-51
 	android:versionCode
 		INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml
-		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-34:12
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:1-35:12
 		INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml
 	xmlns:android
 		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:2:11-69
 application
-ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:5:5-32:19
+ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:5:5-33:19
 MERGED from [com.google.android.material:material:1.9.0] C:\Users\Sasha\.gradle\caches\transforms-3\5877a83b7d1a89f606fa0438ddd5fcff\transformed\material-1.9.0\AndroidManifest.xml:24:5-20
 MERGED from [com.google.android.material:material:1.9.0] C:\Users\Sasha\.gradle\caches\transforms-3\5877a83b7d1a89f606fa0438ddd5fcff\transformed\material-1.9.0\AndroidManifest.xml:24:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\Sasha\.gradle\caches\transforms-3\f03cb39b9e7879bd06117c029eb48e57\transformed\constraintlayout-2.1.4\AndroidManifest.xml:9:5-20
 MERGED from [androidx.constraintlayout:constraintlayout:2.1.4] C:\Users\Sasha\.gradle\caches\transforms-3\f03cb39b9e7879bd06117c029eb48e57\transformed\constraintlayout-2.1.4\AndroidManifest.xml:9:5-20
 MERGED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Sasha\.gradle\caches\transforms-3\b7df2a140e725f009348c1d57014e308\transformed\emoji2-1.2.0\AndroidManifest.xml:23:5-33:19
 MERGED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Sasha\.gradle\caches\transforms-3\b7df2a140e725f009348c1d57014e308\transformed\emoji2-1.2.0\AndroidManifest.xml:23:5-33:19
-MERGED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:28:5-89
-MERGED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:28:5-89
+MERGED from [androidx.core:core:1.12.0] C:\Users\Sasha\.gradle\caches\transforms-3\4a6b49c103511b066d25135440074f58\transformed\core-1.12.0\AndroidManifest.xml:28:5-89
+MERGED from [androidx.core:core:1.12.0] C:\Users\Sasha\.gradle\caches\transforms-3\4a6b49c103511b066d25135440074f58\transformed\core-1.12.0\AndroidManifest.xml:28:5-89
 MERGED from [androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Sasha\.gradle\caches\transforms-3\9eff97e7649752649434c157447c214f\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:25:5-35:19
 MERGED from [androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Sasha\.gradle\caches\transforms-3\9eff97e7649752649434c157447c214f\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:25:5-35:19
 MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Sasha\.gradle\caches\transforms-3\292103b45b1f5ebfc7a3c7a0e839604a\transformed\versionedparcelable-1.1.1\AndroidManifest.xml:24:5-25:19
@@ -80,7 +80,7 @@ MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.1] C:\Users\Sa
 MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Sasha\.gradle\caches\transforms-3\9e0242952a612c3523913e1102f477a6\transformed\startup-runtime-1.1.1\AndroidManifest.xml:25:5-31:19
 MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Sasha\.gradle\caches\transforms-3\9e0242952a612c3523913e1102f477a6\transformed\startup-runtime-1.1.1\AndroidManifest.xml:25:5-31:19
 	android:appComponentFactory
-		ADDED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:28:18-86
+		ADDED from [androidx.core:core:1.12.0] C:\Users\Sasha\.gradle\caches\transforms-3\4a6b49c103511b066d25135440074f58\transformed\core-1.12.0\AndroidManifest.xml:28:18-86
 	android:supportsRtl
 		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:11:9-35
 	android:label
@@ -94,7 +94,7 @@ MERGED from [androidx.startup:startup-runtime:1.1.1] C:\Users\Sasha\.gradle\cach
 	android:allowBackup
 		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:6:9-35
 	android:theme
-		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:12:9-77
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:12:9-51
 	android:dataExtractionRules
 		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:7:9-65
 activity#com.example.playlistmaker.SearchActivity
@@ -110,19 +110,19 @@ ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\Andr
 	android:name
 		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:18:13-44
 activity#com.example.playlistmaker.SettingsActivity
-ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:20:9-22:40
+ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:20:9-22:39
 	android:exported
 		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:22:13-37
 	android:name
 		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:21:13-45
 activity#com.example.playlistmaker.MainActivity
-ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:23:9-31:20
+ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:23:9-32:20
 	android:exported
 		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:25:13-36
 	android:name
 		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:24:13-41
-intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
-ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:26:13-30:29
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.BROWSABLE+category:name:android.intent.category.LAUNCHER
+ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:26:13-31:29
 action#android.intent.action.MAIN
 ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:27:17-69
 	android:name
@@ -131,6 +131,10 @@ category#android.intent.category.LAUNCHER
 ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:29:17-77
 	android:name
 		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:29:27-74
+category#android.intent.category.BROWSABLE
+ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:30:17-77
+	android:name
+		ADDED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml:30:27-75
 uses-sdk
 INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from C:\Users\Sasha\AndroidStudioProjects\PlaylistMaker2\app\src\main\AndroidManifest.xml
@@ -179,10 +183,10 @@ MERGED from [androidx.recyclerview:recyclerview:1.1.0] C:\Users\Sasha\.gradle\ca
 MERGED from [androidx.recyclerview:recyclerview:1.1.0] C:\Users\Sasha\.gradle\caches\transforms-3\fb7d9c9ef3d18bea6dc78ba98f40dc7b\transformed\recyclerview-1.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.customview:customview:1.1.0] C:\Users\Sasha\.gradle\caches\transforms-3\17782af64ac564dc4664c29ae77e1eb6\transformed\customview-1.1.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.customview:customview:1.1.0] C:\Users\Sasha\.gradle\caches\transforms-3\17782af64ac564dc4664c29ae77e1eb6\transformed\customview-1.1.0\AndroidManifest.xml:20:5-22:41
-MERGED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:20:5-44
-MERGED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:20:5-44
-MERGED from [androidx.core:core-ktx:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\341048544991d6f88560419c98e94d62\transformed\core-ktx-1.12.0-rc01\AndroidManifest.xml:5:5-44
-MERGED from [androidx.core:core-ktx:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\341048544991d6f88560419c98e94d62\transformed\core-ktx-1.12.0-rc01\AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core:1.12.0] C:\Users\Sasha\.gradle\caches\transforms-3\4a6b49c103511b066d25135440074f58\transformed\core-1.12.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.12.0] C:\Users\Sasha\.gradle\caches\transforms-3\4a6b49c103511b066d25135440074f58\transformed\core-1.12.0\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core-ktx:1.12.0] C:\Users\Sasha\.gradle\caches\transforms-3\56ba77be868f03bd3e1c9319187a72ec\transformed\core-ktx-1.12.0\AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-ktx:1.12.0] C:\Users\Sasha\.gradle\caches\transforms-3\56ba77be868f03bd3e1c9319187a72ec\transformed\core-ktx-1.12.0\AndroidManifest.xml:5:5-44
 MERGED from [androidx.savedstate:savedstate:1.2.0] C:\Users\Sasha\.gradle\caches\transforms-3\4cdf7a29a7e561015d04942c8035a70a\transformed\savedstate-1.2.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.savedstate:savedstate:1.2.0] C:\Users\Sasha\.gradle\caches\transforms-3\4cdf7a29a7e561015d04942c8035a70a\transformed\savedstate-1.2.0\AndroidManifest.xml:20:5-22:41
 MERGED from [androidx.annotation:annotation-experimental:1.3.0] C:\Users\Sasha\.gradle\caches\transforms-3\d81bd3bbd7bff9fad2e5e122b968d0e7\transformed\annotation-experimental-1.3.0\AndroidManifest.xml:20:5-44
@@ -246,25 +250,25 @@ ADDED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Sasha\.gradle\caches\transfor
 	android:name
 		ADDED from [androidx.emoji2:emoji2:1.2.0] C:\Users\Sasha\.gradle\caches\transforms-3\b7df2a140e725f009348c1d57014e308\transformed\emoji2-1.2.0\AndroidManifest.xml:30:17-75
 permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
-ADDED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:22:5-24:47
+ADDED from [androidx.core:core:1.12.0] C:\Users\Sasha\.gradle\caches\transforms-3\4a6b49c103511b066d25135440074f58\transformed\core-1.12.0\AndroidManifest.xml:22:5-24:47
 	android:protectionLevel
-		ADDED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:24:9-44
+		ADDED from [androidx.core:core:1.12.0] C:\Users\Sasha\.gradle\caches\transforms-3\4a6b49c103511b066d25135440074f58\transformed\core-1.12.0\AndroidManifest.xml:24:9-44
 	android:name
-		ADDED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:23:9-81
+		ADDED from [androidx.core:core:1.12.0] C:\Users\Sasha\.gradle\caches\transforms-3\4a6b49c103511b066d25135440074f58\transformed\core-1.12.0\AndroidManifest.xml:23:9-81
 permission#com.example.playlistmaker.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
-ADDED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:22:5-24:47
+ADDED from [androidx.core:core:1.12.0] C:\Users\Sasha\.gradle\caches\transforms-3\4a6b49c103511b066d25135440074f58\transformed\core-1.12.0\AndroidManifest.xml:22:5-24:47
 	android:protectionLevel
-		ADDED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:24:9-44
+		ADDED from [androidx.core:core:1.12.0] C:\Users\Sasha\.gradle\caches\transforms-3\4a6b49c103511b066d25135440074f58\transformed\core-1.12.0\AndroidManifest.xml:24:9-44
 	android:name
-		ADDED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:23:9-81
+		ADDED from [androidx.core:core:1.12.0] C:\Users\Sasha\.gradle\caches\transforms-3\4a6b49c103511b066d25135440074f58\transformed\core-1.12.0\AndroidManifest.xml:23:9-81
 uses-permission#${applicationId}.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
-ADDED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:26:5-97
+ADDED from [androidx.core:core:1.12.0] C:\Users\Sasha\.gradle\caches\transforms-3\4a6b49c103511b066d25135440074f58\transformed\core-1.12.0\AndroidManifest.xml:26:5-97
 	android:name
-		ADDED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:26:22-94
+		ADDED from [androidx.core:core:1.12.0] C:\Users\Sasha\.gradle\caches\transforms-3\4a6b49c103511b066d25135440074f58\transformed\core-1.12.0\AndroidManifest.xml:26:22-94
 uses-permission#com.example.playlistmaker.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION
-ADDED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:26:5-97
+ADDED from [androidx.core:core:1.12.0] C:\Users\Sasha\.gradle\caches\transforms-3\4a6b49c103511b066d25135440074f58\transformed\core-1.12.0\AndroidManifest.xml:26:5-97
 	android:name
-		ADDED from [androidx.core:core:1.12.0-rc01] C:\Users\Sasha\.gradle\caches\transforms-3\016a980f102c3c92b47a6aae888fb3a2\transformed\core-1.12.0-rc01\AndroidManifest.xml:26:22-94
+		ADDED from [androidx.core:core:1.12.0] C:\Users\Sasha\.gradle\caches\transforms-3\4a6b49c103511b066d25135440074f58\transformed\core-1.12.0\AndroidManifest.xml:26:22-94
 meta-data#androidx.lifecycle.ProcessLifecycleInitializer
 ADDED from [androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\Sasha\.gradle\caches\transforms-3\9eff97e7649752649434c157447c214f\transformed\lifecycle-process-2.4.1\AndroidManifest.xml:31:13-33:52
 	android:value

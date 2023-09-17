@@ -40,7 +40,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\Sasha\\.gradle\\caches\\transforms-3\\016a980f102c3c92b47a6aae888fb3a2\\transformed\\core-1.12.0-rc01\\res\\values-ml\\values-ml.xml",
+                    "source": "C:\\Users\\Sasha\\.gradle\\caches\\transforms-3\\4a6b49c103511b066d25135440074f58\\transformed\\core-1.12.0\\res\\values-ml\\values-ml.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",

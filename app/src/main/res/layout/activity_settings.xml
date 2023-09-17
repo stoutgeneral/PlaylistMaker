@@ -3,116 +3,74 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="?attr/colorPrimaryVariant">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="56dp">
 
         <ImageView
-            android:id="@+id/arrow_back"
-            android:layout_width="@dimen/high_padding"
-            android:layout_height="@dimen/high_padding"
-            android:layout_marginStart="@dimen/low_padding"
-            android:layout_marginTop="@dimen/low_padding"
-            android:src="@drawable/arrow_back" />
+            android:id="@+id/arrow_back_settings"
+            style="@style/ArrowBackButton"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="64dp"
-            android:layout_marginTop="12dp"
             android:text="@string/settings"
-            android:textColor="@color/YP_black"
-            android:textSize="@dimen/basic_text_size" />
+            style="@style/PanelHeaderNameActivity"/>
     </FrameLayout>
 
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
-        android:layout_marginEnd="@dimen/medium_padding"
-        android:layout_marginBottom="@dimen/medium_padding">
+        style="@style/LocationSettingsItems"
+        android:layout_marginTop="45dp">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:src="@drawable/switch_off"/>
+            style="@style/SwitchOnOffActivitySettings"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/dark_theme"
-            android:textColor="@color/YP_black"
-            android:textSize="@dimen/text_size_additional_screens"
-            android:layout_marginStart="@dimen/low_padding"/>
+            style="@style/TextActivitySettings"
+            android:text="@string/dark_theme"/>
     </FrameLayout>
 
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/LocationSettingsItems"
         android:paddingTop="@dimen/medium_padding"
-        android:layout_marginEnd="@dimen/medium_padding"
-        android:layout_marginBottom="@dimen/medium_padding">
+        android:id="@+id/share_app">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
+            style="@style/ImageSettings"
             android:src="@drawable/share"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/share_app"
-            android:textColor="@color/YP_black"
-            android:textSize="@dimen/text_size_additional_screens"
-            android:layout_marginStart="@dimen/low_padding"/>
+            style="@style/TextActivitySettings"
+            android:text="@string/share_app" />
     </FrameLayout>
 
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/LocationSettingsItems"
         android:paddingTop="@dimen/medium_padding"
-        android:layout_marginEnd="@dimen/medium_padding"
-        android:layout_marginBottom="@dimen/medium_padding">
+        android:id="@+id/message_to_support">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
+            style="@style/ImageSettings"
             android:src="@drawable/support"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/write_support"
-            android:textColor="@color/YP_black"
-            android:textSize="@dimen/text_size_additional_screens"
-            android:layout_marginStart="@dimen/low_padding"/>
+            style="@style/TextActivitySettings"
+            android:text="@string/write_support"/>
     </FrameLayout>
 
     <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        style="@style/LocationSettingsItems"
         android:paddingTop="@dimen/medium_padding"
-        android:layout_marginEnd="@dimen/medium_padding"
-        android:layout_marginBottom="@dimen/medium_padding">
+        android:id="@+id/user_agreement_button">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
+            style="@style/ImageSettings"
             android:src="@drawable/arrow_forward"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/user_agreement"
-            android:textColor="@color/YP_black"
-            android:textSize="@dimen/text_size_additional_screens"
-            android:layout_marginStart="@dimen/low_padding"/>
+            style="@style/TextActivitySettings"
+            android:text="@string/user_agreement"/>
     </FrameLayout>
 
 </LinearLayout>

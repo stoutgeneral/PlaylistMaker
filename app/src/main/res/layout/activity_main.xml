@@ -23,7 +23,6 @@
         style="@style/ButtonMainActivity"
         android:id="@+id/search_button"
         android:layout_marginTop="@dimen/high_padding"
-        android:layout_weight="1"
         android:text="@string/search"
         app:icon="@drawable/search" />
 
@@ -31,7 +30,6 @@
         style="@style/ButtonMainActivity"
         android:id="@+id/library_button"
         android:layout_marginTop="@dimen/distance_between_elements"
-        android:layout_weight="1"
         android:text="@string/library"
         app:icon="@drawable/library"/>
 
@@ -40,7 +38,6 @@
         android:id="@+id/settings_button"
         android:layout_marginTop="@dimen/distance_between_elements"
         android:layout_marginBottom="28dp"
-        android:layout_weight="1"
         android:text="@string/settings"
         app:icon="@drawable/settings"/>
 

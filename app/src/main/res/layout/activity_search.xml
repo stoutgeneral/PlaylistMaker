@@ -25,12 +25,13 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:paddingEnd="@dimen/low_padding"
-        android:paddingStart="@dimen/low_padding">
+        android:paddingStart="@dimen/low_padding"
+        android:paddingTop="8dp">
 
         <EditText
             android:id="@+id/search_bar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="36dp"
             android:layout_alignParentStart="true"
             android:background="@drawable/edit_text_bar"
             android:drawableStart="@drawable/search_bar"
@@ -40,22 +41,21 @@
             android:hint="@string/search"
             android:inputType="text"
             android:paddingStart="12dp"
-            android:paddingTop="8.5dp"
-            android:paddingBottom="8.5dp"
+            android:paddingVertical="8.5dp"
             android:textColorHint="?attr/colorSecondaryVariant"
             android:textSize="@dimen/text_size_additional_screens" />
 
         <Button
             android:id="@+id/reset_text"
-            android:layout_width="wrap_content"
+            android:layout_width="46dp"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@id/search_bar"
+            android:layout_alignEnd="@+id/search_bar"
             android:layout_alignBottom="@id/search_bar"
-            android:layout_marginEnd="-6dp"
-            android:visibility="invisible"
+            android:layout_marginEnd="-10dp"
             android:background="@android:color/transparent"
             android:backgroundTint="?attr/colorOnBackground"
             android:drawableEnd="@drawable/cancel"
-            android:drawableTint="?attr/colorSecondaryVariant" />
+            android:drawableTint="?attr/colorSecondaryVariant"
+            android:visibility="invisible" />
     </RelativeLayout>
 </LinearLayout>

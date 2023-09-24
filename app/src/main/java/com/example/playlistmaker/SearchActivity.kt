@@ -16,31 +16,26 @@ class SearchActivity : AppCompatActivity() {
         const val SEARCH_BAR = "SEARCH_BAR"
     }
 
+    private var inputTextSearch = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
         // Выход из экрана настроек
-        val arrowBack = findViewById<ImageView>(R.id.arrow_back_search)
+        val arrowBack: ImageView = findViewById(R.id.arrow_back_search)
         arrowBack.setOnClickListener {
             finish()
         }
 
         // Сброс введенных значений на экране поиск
-        val resetTextButton = findViewById<Button>(R.id.reset_text)
-        val inputEditText = findViewById<EditText>(R.id.search_bar)
+        val inputEditText: EditText = findViewById(R.id.search_bar)
+        val resetTextButton: Button = findViewById(R.id.reset_text)
         resetTextButton.setOnClickListener {
             inputEditText.setText("")
-            val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            val inputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(window.decorView.windowToken, 0)
-        }
-
-        fun resetTextButtonVisibiblity(s: CharSequence?): Int {
-            return if (s.isNullOrEmpty()) {
-                View.INVISIBLE
-            } else {
-                View.VISIBLE
-            }
         }
 
         // Работа с экраном поиск.
@@ -49,11 +44,11 @@ class SearchActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                resetTextButton.visibility = resetTextButtonVisibiblity(s)
-                SEARCH_BAR.toString()
+                inputTextSearch = s.toString()
             }
 
             override fun afterTextChanged(s: Editable?) {
+                resetTextButton.visibility = resetTextButtonVisibiblity(s)
             }
         }
 
@@ -63,11 +58,21 @@ class SearchActivity : AppCompatActivity() {
     //Cохранение строки поиск
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString("SEARCH_BAR", SEARCH_BAR)
+
+        outState.putString(SEARCH_BAR, inputTextSearch)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        savedInstanceState.getString(SEARCH_BAR, "")
+        inputTextSearch = savedInstanceState.getString(SEARCH_BAR, "")
+    }
+
+    // Показ кнопки сброса
+    fun resetTextButtonVisibiblity(s: CharSequence?): Int {
+        return if (s.isNullOrEmpty()) {
+            View.INVISIBLE
+        } else {
+            View.VISIBLE
+        }
     }
 }

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="ButtonMainActivity" parent="Widget.MaterialComponents.Button">
+    <style name="ButtonMainActivity" parent="Widget.MaterialComponents.Button.UnelevatedButton">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center</item>
+        <item name="android:layout_weight">1</item>
         <item name="android:backgroundTint">@color/YP_white</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textColor">@color/YP_black</item>

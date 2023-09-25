@@ -62,12 +62,12 @@ class SearchActivity : AppCompatActivity() {
         super.onSaveInstanceState(outState)
 
         outState.putString(SEARCH_BAR_KEY, textSearch)
-        //inputEditText.setText("")
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         textSearch = savedInstanceState.getString(SEARCH_BAR_KEY,"")
+        inputEditText.setText(textSearch)
     }
 
     // Показ кнопки сброса

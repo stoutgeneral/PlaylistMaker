@@ -13,10 +13,11 @@ import android.widget.ImageView
 
 class SearchActivity : AppCompatActivity() {
     companion object {
-        const val SEARCH_BAR = "SEARCH_BAR"
+        const val SEARCH_BAR_KEY = "SEARCH_BAR"
     }
 
-    private var inputTextSearch = ""
+    private var textSearch = ""
+    private lateinit var inputEditText: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,8 +30,9 @@ class SearchActivity : AppCompatActivity() {
         }
 
         // Сброс введенных значений на экране поиск
-        val inputEditText: EditText = findViewById(R.id.search_bar)
+        inputEditText = findViewById(R.id.search_bar)
         val resetTextButton: Button = findViewById(R.id.reset_text)
+
         resetTextButton.setOnClickListener {
             inputEditText.setText("")
             val inputMethodManager =
@@ -44,11 +46,11 @@ class SearchActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                inputTextSearch = s.toString()
+                textSearch = s.toString()
             }
 
             override fun afterTextChanged(s: Editable?) {
-                resetTextButton.visibility = resetTextButtonVisibiblity(s)
+                resetTextButton.visibility = changeButtonVisibility(s)
             }
         }
 
@@ -59,16 +61,17 @@ class SearchActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
-        outState.putString(SEARCH_BAR, inputTextSearch)
+        outState.putString(SEARCH_BAR_KEY, textSearch)
+        //inputEditText.setText("")
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        inputTextSearch = savedInstanceState.getString(SEARCH_BAR, "")
+        textSearch = savedInstanceState.getString(SEARCH_BAR_KEY,"")
     }
 
     // Показ кнопки сброса
-    fun resetTextButtonVisibiblity(s: CharSequence?): Int {
+    fun changeButtonVisibility(s: CharSequence?): Int {
         return if (s.isNullOrEmpty()) {
             View.INVISIBLE
         } else {

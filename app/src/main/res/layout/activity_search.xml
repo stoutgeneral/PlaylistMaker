@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/search_bar"
             android:layout_alignBottom="@id/search_bar"
-            android:layout_marginEnd="-10dp"
+            android:layout_marginEnd="-6dp"
             android:background="@android:color/transparent"
             android:backgroundTint="?attr/colorOnBackground"
             android:drawableEnd="@drawable/cancel"

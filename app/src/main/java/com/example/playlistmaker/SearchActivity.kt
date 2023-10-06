@@ -14,6 +14,8 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
 import retrofit2.Callback
@@ -45,6 +47,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var viewTrackList: LinearLayout
 
     private var textSearch = ""
+    private var lastRequest = ""
 
 
     @SuppressLint("NotifyDataSetChanged")
@@ -79,6 +82,8 @@ class SearchActivity : AppCompatActivity() {
             val inputMethodManager =
                 getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(window.decorView.windowToken, 0)
+
+            placeholderMessage.visibility = View.GONE
         }
 
         // Работа с экраном поиск.
@@ -88,6 +93,7 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 textSearch = s.toString()
+                trackSearch(lastRequest)
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -101,10 +107,18 @@ class SearchActivity : AppCompatActivity() {
         inputEditText.setOnEditorActionListener {_, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 if (textSearch.isNotEmpty()) {
-                    trackSearch()
+                    trackSearch(lastRequest)
                 }
+                true
             }
             false
+        }
+
+        // Обработчик нажатия кнопки Обновить при проблемах со связью
+        placeholderButton = findViewById(R.id.placeholder_button)
+        placeholderButton.setOnClickListener {
+            lastRequest = inputEditText.text.toString()
+            trackSearch(lastRequest)
         }
     }
 
@@ -131,20 +145,22 @@ class SearchActivity : AppCompatActivity() {
     }
 
     @SuppressLint("NotifyDataSetChanged")
-    private fun showMessage (textMessage: String, imageMessage: Int, buttonMessage: Boolean) {
+    private fun showMessage(text: String, imageId: Int, button: Boolean) {
         placeholderMessage = findViewById(R.id.placeholder_message)
         placeholderImage = findViewById(R.id.placeholder_image)
         placeholderText = findViewById(R.id.placeholder_text)
         placeholderButton = findViewById(R.id.placeholder_button)
+        viewTrackList = findViewById(R.id.track_list_view)
 
-        if (textMessage.isNotEmpty()) {
+        if (textSearch.isNotEmpty()) {
             placeholderMessage.visibility = View.VISIBLE
-            placeholderText.text = textMessage
-            placeholderImage.setImageResource(imageMessage)
+            viewTrackList.visibility = View.GONE
+            placeholderText.text = text
+            placeholderImage.setImageResource(imageId)
+
             trackList.clear()
             trackAdapter.notifyDataSetChanged()
-
-            if (buttonMessage) {
+            if (button) {
                 placeholderButton.visibility = View.VISIBLE
             } else {
                 placeholderButton.visibility = View.GONE
@@ -152,11 +168,12 @@ class SearchActivity : AppCompatActivity() {
         } else {
             placeholderMessage.visibility = View.GONE
             viewTrackList.visibility = View.VISIBLE
-
         }
     }
 
-    private fun trackSearch () {
+    private fun trackSearch (text: String) {
+        textSearch = inputEditText.text.toString()
+
         iTunesService.search(textSearch).enqueue(object : Callback<ITunesResponse> {
             @SuppressLint("NotifyDataSetChanged")
             override fun onResponse(call: Call<ITunesResponse>, response: Response<ITunesResponse>) {
@@ -165,18 +182,20 @@ class SearchActivity : AppCompatActivity() {
                     if (response.body()?.results?.isNotEmpty() == true) {
                         trackList.addAll(response.body()?.results!!)
                         trackAdapter.notifyDataSetChanged()
+                        lastRequest = ""
                     }
                     if (trackList.isEmpty()) {
                         showMessage(getString(R.string.not_found), R.drawable.il_nothing_found, false)
                     }
                 } else {
                     showMessage(getString(R.string.not_connection), R.drawable.il_connection_error, true)
+                    lastRequest = text
                 }
             }
 
             override fun onFailure(call: Call<ITunesResponse>, t: Throwable) {
                 showMessage(getString(R.string.not_connection), R.drawable.il_connection_error, true)
-                t.printStackTrace()
+                lastRequest = text
             }
         })
     }

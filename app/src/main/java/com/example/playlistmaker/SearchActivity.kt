@@ -93,7 +93,7 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 textSearch = s.toString()
-                trackSearch(lastRequest)
+                trackSearch()
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -107,7 +107,7 @@ class SearchActivity : AppCompatActivity() {
         inputEditText.setOnEditorActionListener {_, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 if (textSearch.isNotEmpty()) {
-                    trackSearch(lastRequest)
+                    trackSearch()
                 }
                 true
             }
@@ -117,8 +117,7 @@ class SearchActivity : AppCompatActivity() {
         // Обработчик нажатия кнопки Обновить при проблемах со связью
         placeholderButton = findViewById(R.id.placeholder_button)
         placeholderButton.setOnClickListener {
-            lastRequest = inputEditText.text.toString()
-            trackSearch(lastRequest)
+            trackSearch()
         }
     }
 
@@ -171,7 +170,7 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    private fun trackSearch (text: String) {
+    private fun trackSearch () {
         textSearch = inputEditText.text.toString()
 
         iTunesService.search(textSearch).enqueue(object : Callback<ITunesResponse> {
@@ -189,13 +188,11 @@ class SearchActivity : AppCompatActivity() {
                     }
                 } else {
                     showMessage(getString(R.string.not_connection), R.drawable.il_connection_error, true)
-                    lastRequest = text
                 }
             }
 
             override fun onFailure(call: Call<ITunesResponse>, t: Throwable) {
                 showMessage(getString(R.string.not_connection), R.drawable.il_connection_error, true)
-                lastRequest = text
             }
         })
     }

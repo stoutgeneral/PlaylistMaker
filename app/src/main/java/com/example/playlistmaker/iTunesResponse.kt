@@ -1,4 +1,4 @@
 package com.example.playlistmaker
 
-class ITunesResponse (val results: List<Track>){
+class ITunesResponse (val resultCount: Int, val results: List<Track>){
 }

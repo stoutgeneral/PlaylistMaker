@@ -14,8 +14,6 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
 import retrofit2.Callback
@@ -36,7 +34,7 @@ class SearchActivity : AppCompatActivity() {
 
     private val iTunesService = retrofit.create(ITunesApi::class.java)
     private val trackList = ArrayList<Track>()
-    private val trackAdapter = TrackAdapter()
+    private val trackAdapter = TrackAdapter(trackList)
 
     private lateinit var inputEditText: EditText
     private lateinit var rvTracks: RecyclerView
@@ -55,6 +53,7 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
+        trackAdapter.trackList = trackList
         rvTracks = findViewById(R.id.rv_track)
         rvTracks.adapter = trackAdapter
 
@@ -64,8 +63,6 @@ class SearchActivity : AppCompatActivity() {
         placeholderButton = findViewById(R.id.placeholder_button)
         inputEditText = findViewById(R.id.search_bar)
         viewTrackList = findViewById(R.id.track_list_view)
-
-        trackAdapter.trackList = trackList
 
         // Выход из экрана настроек
         val arrowBack: ImageView = findViewById(R.id.arrow_back_search)
@@ -84,6 +81,7 @@ class SearchActivity : AppCompatActivity() {
             inputMethodManager?.hideSoftInputFromWindow(window.decorView.windowToken, 0)
 
             placeholderMessage.visibility = View.GONE
+            viewTrackList.visibility = View.VISIBLE
         }
 
         // Работа с экраном поиск.
@@ -93,7 +91,6 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 textSearch = s.toString()
-                trackSearch()
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -109,15 +106,14 @@ class SearchActivity : AppCompatActivity() {
                 if (textSearch.isNotEmpty()) {
                     trackSearch()
                 }
-                true
             }
             false
         }
 
         // Обработчик нажатия кнопки Обновить при проблемах со связью
-        placeholderButton = findViewById(R.id.placeholder_button)
         placeholderButton.setOnClickListener {
             trackSearch()
+            viewTrackList.visibility = View.VISIBLE
         }
     }
 
@@ -185,9 +181,8 @@ class SearchActivity : AppCompatActivity() {
                     }
                     if (trackList.isEmpty()) {
                         showMessage(getString(R.string.not_found), R.drawable.il_nothing_found, false)
+                        trackAdapter.notifyDataSetChanged()
                     }
-                } else {
-                    showMessage(getString(R.string.not_connection), R.drawable.il_connection_error, true)
                 }
             }
 

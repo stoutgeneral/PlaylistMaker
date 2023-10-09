@@ -2,6 +2,7 @@ package com.example.playlistmaker
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -15,6 +16,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.playlistmaker.SearchHistory.Companion.HISTORY_TRACK_KEY
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,25 +35,36 @@ class SearchActivity : AppCompatActivity() {
         .build()
 
     private val iTunesService = retrofit.create(ITunesApi::class.java)
-    private val trackList = ArrayList<Track>()
-    private val trackAdapter = TrackAdapter(trackList)
+    private val trackList = ArrayList<Track>() // tracks
 
+    private lateinit var trackAdapter: TrackAdapter
     private lateinit var inputEditText: EditText
     private lateinit var rvTracks: RecyclerView
+    private lateinit var rvHistory: RecyclerView
     private lateinit var placeholderMessage: LinearLayout
     private lateinit var placeholderImage: ImageView
     private lateinit var placeholderText: TextView
     private lateinit var placeholderButton: Button
     private lateinit var viewTrackList: LinearLayout
+    private lateinit var resetTextButton: Button
+    private lateinit var buttonClearHistory: Button
+    private lateinit var titleTextHistory: TextView
 
+    private lateinit var searchHistory: SearchHistory
+    private lateinit var sharePrefListener: OnSharedPreferenceChangeListener
+
+    private val trackHistoryAdapter = TrackHistoryAdapter()
     private var textSearch = ""
     private var lastRequest = ""
-
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+
+        val sharePref = getSharedPreferences(HISTORY_TRACK_KEY, MODE_PRIVATE)
+        trackAdapter = TrackAdapter(sharePref)
+        searchHistory = SearchHistory(sharePref)
 
         trackAdapter.trackList = trackList
         rvTracks = findViewById(R.id.rv_track)
@@ -70,8 +83,50 @@ class SearchActivity : AppCompatActivity() {
             finish()
         }
 
+        // Кнопка "Очистить историю"
+        buttonClearHistory = findViewById(R.id.clear_history)
+        buttonClearHistory.setOnClickListener {
+            searchHistory.clearHistoryTrack()
+            viewTrackList.visibility = View.GONE
+        }
+
+        sharePrefListener = OnSharedPreferenceChangeListener { sharedPreferences, key ->
+            if (key == HISTORY_TRACK_KEY) {
+                showHistoryTrack(searchHistory)
+            }
+        }
+
+        sharePref.registerOnSharedPreferenceChangeListener(sharePrefListener)
+        // Работа с экраном поиск.
+        val searchTextWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                textSearch = s.toString()
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                resetTextButton.visibility = changeButtonVisibility(s)
+                viewTrackList.visibility = if (inputEditText.hasFocus() && s?.isEmpty() == true) View.VISIBLE else View.GONE
+            }
+        }
+
+        inputEditText.addTextChangedListener(searchTextWatcher)
+
+        //Обработчик нажатия Done на клавиатуре
+        inputEditText.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                if (textSearch.isNotEmpty()) {
+                    trackSearch()
+                }
+            }
+            false
+        }
+
         // Сброс введенных значений на экране поиск
-        val resetTextButton: Button = findViewById(R.id.reset_text)
+        resetTextButton = findViewById(R.id.reset_text)
         resetTextButton.setOnClickListener {
             inputEditText.setText("")
             trackList.clear()
@@ -84,36 +139,25 @@ class SearchActivity : AppCompatActivity() {
             viewTrackList.visibility = View.VISIBLE
         }
 
-        // Работа с экраном поиск.
-        val searchTextWatcher = object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-            }
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                textSearch = s.toString()
-            }
-
-            override fun afterTextChanged(s: Editable?) {
-                resetTextButton.visibility = changeButtonVisibility(s)
-            }
-        }
-
-        inputEditText.addTextChangedListener(searchTextWatcher)
-
-        //Обработчик нажатия Done на клавиатуре
-        inputEditText.setOnEditorActionListener {_, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                if (textSearch.isNotEmpty()) {
-                    trackSearch()
-                }
-            }
-            false
-        }
-
         // Обработчик нажатия кнопки Обновить при проблемах со связью
         placeholderButton.setOnClickListener {
             trackSearch()
             viewTrackList.visibility = View.VISIBLE
+        }
+
+        // Логика показа истории треков
+        inputEditText.setOnFocusChangeListener { view, hasFocus ->
+            val isNotEmpty = searchHistory.getHistoryTrack().isNotEmpty()
+            viewTrackList.visibility = if (hasFocus && inputEditText.text.isEmpty()) {
+                if (isNotEmpty) {
+                    showHistoryTrack(searchHistory)
+                    View.VISIBLE
+                } else {
+                    View.GONE
+                }
+            } else {
+                View.GONE
+            }
         }
     }
 
@@ -137,6 +181,17 @@ class SearchActivity : AppCompatActivity() {
         } else {
             View.VISIBLE
         }
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    private fun showHistoryTrack(searchHistory: SearchHistory) {
+        val rvHistory = findViewById<RecyclerView>(R.id.rv_history)
+
+        trackHistoryAdapter.trackList = searchHistory.getHistoryTrack()
+        rvHistory.adapter = trackHistoryAdapter
+        trackHistoryAdapter.notifyDataSetChanged()
+
+        rvHistory.visibility = View.VISIBLE
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -166,28 +221,41 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    private fun trackSearch () {
+    private fun trackSearch() {
         textSearch = inputEditText.text.toString()
 
         iTunesService.search(textSearch).enqueue(object : Callback<ITunesResponse> {
             @SuppressLint("NotifyDataSetChanged")
-            override fun onResponse(call: Call<ITunesResponse>, response: Response<ITunesResponse>) {
+            override fun onResponse(
+                call: Call<ITunesResponse>,
+                response: Response<ITunesResponse>
+            ) {
+                val results = response.body()?.results
+
                 if (response.code() == 200) {
                     trackList.clear()
-                    if (response.body()?.results?.isNotEmpty() == true) {
-                        trackList.addAll(response.body()?.results!!)
+                    if (results?.isNotEmpty() == true) {
+                        trackList.addAll(results)
                         trackAdapter.notifyDataSetChanged()
                         lastRequest = ""
                     }
                     if (trackList.isEmpty()) {
-                        showMessage(getString(R.string.not_found), R.drawable.il_nothing_found, false)
+                        showMessage(
+                            getString(R.string.not_found),
+                            R.drawable.il_nothing_found,
+                            false
+                        )
                         trackAdapter.notifyDataSetChanged()
                     }
                 }
             }
 
             override fun onFailure(call: Call<ITunesResponse>, t: Throwable) {
-                showMessage(getString(R.string.not_connection), R.drawable.il_connection_error, true)
+                showMessage(
+                    getString(R.string.not_connection),
+                    R.drawable.il_connection_error,
+                    true
+                )
             }
         })
     }

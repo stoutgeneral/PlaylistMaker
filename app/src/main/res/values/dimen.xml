@@ -2,7 +2,7 @@
 <resources>
     <dimen name="basic_text_size">22sp</dimen>
     <dimen name="text_size_additional_screens">16sp</dimen>
-    <dimen name="icon_offset_from_text">8dp</dimen>
+    <dimen name="offset_from_text">8dp</dimen>
     <dimen name="rounding_buttons">16dp</dimen>
     <dimen name="low_padding">16dp</dimen>
     <dimen name="medium_padding">18dp</dimen>

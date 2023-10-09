@@ -8,6 +8,7 @@
         <item name="colorSecondary">@color/YP_black</item>
         <item name="colorSecondaryVariant">@color/YP_text_gray</item>
         <item name="colorOnBackground">@color/YP_light_gray</item>
+        <item name="colorOnSecondary">@color/YP_text_gray</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->

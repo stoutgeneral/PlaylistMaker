@@ -9,9 +9,10 @@ class TrackHistoryAdapter (): RecyclerView.Adapter<TrackViewHolder>() {
     var trackList = ArrayList<Track>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
-        return TrackViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.music_view, parent, false)
-        )
+        val view = LayoutInflater
+            .from(parent.context)
+            .inflate(R.layout.music_view, parent, false)
+        return TrackViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {

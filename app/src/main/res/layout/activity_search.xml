@@ -83,7 +83,7 @@
     <LinearLayout
         android:id="@+id/history_list_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="gone">
 
@@ -98,21 +98,20 @@
             android:text="@string/you_search"
             android:textColor="?attr/colorSecondary"
             android:textFontWeight="500"
-            android:textSize="@dimen/medium_text_size"
-            android:visibility="visible" />
+            android:textSize="@dimen/medium_text_size"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:visibility="gone"
             android:id="@+id/rv_history"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
         <Button
             android:id="@+id/clear_history"
             style="@style/SmallButton"
-            android:text="@string/clear_history"
-            android:visibility="visible" />
-
+            android:text="@string/clear_history"/>
     </LinearLayout>
 
     <LinearLayout

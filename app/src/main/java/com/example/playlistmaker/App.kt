@@ -1,6 +1,7 @@
 package com.example.playlistmaker
 
 import android.app.Application
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
 
 class App : Application() {
@@ -10,16 +11,17 @@ class App : Application() {
     }
 
     var darkTheme = false
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate() {
         super.onCreate()
 
-        val sharedPreferences = getSharedPreferences(SHARE_PREFS, MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences(SHARE_PREFS, MODE_PRIVATE)
         darkTheme = sharedPreferences.getBoolean(THEME_KEY, false)
+        installTheme(darkTheme)
     }
 
-    fun switchTheme(darkThemeEnabled: Boolean) {
-        darkTheme = darkThemeEnabled
+    fun installTheme(darkThemeEnabled: Boolean) {
         AppCompatDelegate.setDefaultNightMode(
             if (darkThemeEnabled) {
                 AppCompatDelegate.MODE_NIGHT_YES
@@ -27,5 +29,14 @@ class App : Application() {
                 AppCompatDelegate.MODE_NIGHT_NO
             }
         )
+    }
+
+    fun switchTheme (darkThemeEnabled: Boolean) {
+        darkTheme = darkThemeEnabled
+        sharedPreferences.edit()
+            .putBoolean(THEME_KEY, darkThemeEnabled)
+            .apply()
+
+        installTheme(darkThemeEnabled)
     }
 }

@@ -16,7 +16,6 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.playlistmaker.SearchHistory.Companion.HISTORY_TRACK_KEY
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,6 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 class SearchActivity : AppCompatActivity() {
     companion object {
         const val SEARCH_BAR = "SEARCH_BAR"
+        const val SHARED_PREFERENCES = "SHARED_PREFERENCES"
     }
 
     private val iTunesBaseUrl = "https://itunes.apple.com"
@@ -37,23 +37,25 @@ class SearchActivity : AppCompatActivity() {
     private val iTunesService = retrofit.create(ITunesApi::class.java)
     private val trackList = ArrayList<Track>() // tracks
 
-    private lateinit var trackAdapter: TrackAdapter
-    private lateinit var inputEditText: EditText
-    private lateinit var rvTracks: RecyclerView
-    private lateinit var rvHistory: RecyclerView
-    private lateinit var placeholderMessage: LinearLayout
     private lateinit var placeholderImage: ImageView
     private lateinit var placeholderText: TextView
     private lateinit var placeholderButton: Button
+    private lateinit var placeholderMessage: LinearLayout
     private lateinit var viewTrackList: LinearLayout
+    private lateinit var trackAdapter: TrackAdapter
+    private lateinit var inputEditText: EditText
+    private lateinit var rvTracks: RecyclerView
     private lateinit var resetTextButton: Button
-    private lateinit var buttonClearHistory: Button
-    private lateinit var titleTextHistory: TextView
 
-    private lateinit var searchHistory: SearchHistory
-    private lateinit var sharePrefListener: OnSharedPreferenceChangeListener
-
+    // ---------------------------------
     private val trackHistoryAdapter = TrackHistoryAdapter()
+    private lateinit var historyListView: LinearLayout
+    private lateinit var sharePrefListener: OnSharedPreferenceChangeListener
+    private lateinit var searchHistory: SearchHistory
+    private lateinit var rvHistory: RecyclerView
+    // ---------------------------------
+    private lateinit var buttonClearHistory: Button
+
     private var textSearch = ""
     private var lastRequest = ""
 
@@ -62,7 +64,7 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-        val sharePref = getSharedPreferences(HISTORY_TRACK_KEY, MODE_PRIVATE)
+        val sharePref = getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE)
         trackAdapter = TrackAdapter(sharePref)
         searchHistory = SearchHistory(sharePref)
 
@@ -76,6 +78,8 @@ class SearchActivity : AppCompatActivity() {
         placeholderButton = findViewById(R.id.placeholder_button)
         inputEditText = findViewById(R.id.search_bar)
         viewTrackList = findViewById(R.id.track_list_view)
+        historyListView = findViewById(R.id.history_list_view) // searchResults
+        buttonClearHistory = findViewById(R.id.clear_history)
 
         // Выход из экрана настроек
         val arrowBack: ImageView = findViewById(R.id.arrow_back_search)
@@ -83,20 +87,24 @@ class SearchActivity : AppCompatActivity() {
             finish()
         }
 
-        // Кнопка "Очистить историю"
-        buttonClearHistory = findViewById(R.id.clear_history)
-        buttonClearHistory.setOnClickListener {
-            searchHistory.clearHistoryTrack()
-            viewTrackList.visibility = View.GONE
+        // Сброс введенных значений на экране поиск
+        resetTextButton = findViewById(R.id.reset_text)
+        resetTextButton.setOnClickListener {
+            inputEditText.setText("")
+            inputEditText.clearFocus()
+            historyListView.requestFocus()
+            trackList.clear()
+            trackAdapter.notifyDataSetChanged()
+
+            val inputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            inputMethodManager?.hideSoftInputFromWindow(window.decorView.windowToken, 0)
+
+            placeholderMessage.visibility = View.GONE
+            viewTrackList.visibility = View.VISIBLE
+            historyListView.visibility = View.GONE
         }
 
-        sharePrefListener = OnSharedPreferenceChangeListener { sharedPreferences, key ->
-            if (key == HISTORY_TRACK_KEY) {
-                showHistoryTrack(searchHistory)
-            }
-        }
-
-        sharePref.registerOnSharedPreferenceChangeListener(sharePrefListener)
         // Работа с экраном поиск.
         val searchTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -104,39 +112,39 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 textSearch = s.toString()
-
             }
 
             override fun afterTextChanged(s: Editable?) {
                 resetTextButton.visibility = changeButtonVisibility(s)
-                viewTrackList.visibility = if (inputEditText.hasFocus() && s?.isEmpty() == true) View.VISIBLE else View.GONE
+                historyListView.visibility = if (inputEditText.hasFocus() && s?.isEmpty() == true) View.VISIBLE else View.GONE
+
             }
         }
-
         inputEditText.addTextChangedListener(searchTextWatcher)
+
+        // Логика показа истории треков
+        inputEditText.setOnFocusChangeListener { view, hasFocus ->
+            val showTrackListHistory = searchHistory.getHistoryTrack()
+            if (showTrackListHistory.isNotEmpty()) {
+                val isHistoryListVisible = hasFocus && textSearch.isEmpty()
+                historyListView.visibility = if (isHistoryListVisible) View.VISIBLE else View.GONE
+                viewTrackList.visibility = if (isHistoryListVisible) View.GONE else View.VISIBLE
+                showHistoryTrack(searchHistory)
+            } else {
+                historyListView.visibility = View.GONE
+                viewTrackList.visibility = View.VISIBLE
+            }
+        }
 
         //Обработчик нажатия Done на клавиатуре
         inputEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 if (textSearch.isNotEmpty()) {
+                    viewTrackList.visibility = View.VISIBLE
                     trackSearch()
                 }
             }
             false
-        }
-
-        // Сброс введенных значений на экране поиск
-        resetTextButton = findViewById(R.id.reset_text)
-        resetTextButton.setOnClickListener {
-            inputEditText.setText("")
-            trackList.clear()
-            trackAdapter.notifyDataSetChanged()
-            val inputMethodManager =
-                getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-            inputMethodManager?.hideSoftInputFromWindow(window.decorView.windowToken, 0)
-
-            placeholderMessage.visibility = View.GONE
-            viewTrackList.visibility = View.VISIBLE
         }
 
         // Обработчик нажатия кнопки Обновить при проблемах со связью
@@ -145,19 +153,17 @@ class SearchActivity : AppCompatActivity() {
             viewTrackList.visibility = View.VISIBLE
         }
 
-        // Логика показа истории треков
-        inputEditText.setOnFocusChangeListener { view, hasFocus ->
-            val isNotEmpty = searchHistory.getHistoryTrack().isNotEmpty()
-            viewTrackList.visibility = if (hasFocus && inputEditText.text.isEmpty()) {
-                if (isNotEmpty) {
-                    showHistoryTrack(searchHistory)
-                    View.VISIBLE
-                } else {
-                    View.GONE
-                }
-            } else {
-                View.GONE
+        sharePrefListener = OnSharedPreferenceChangeListener { sharedPreferences, key ->
+            if (key == SHARED_PREFERENCES) {
+                showHistoryTrack(searchHistory)
             }
+        }
+        sharePref.registerOnSharedPreferenceChangeListener(sharePrefListener)
+
+        // Кнопка "Очистить историю"
+        buttonClearHistory.setOnClickListener {
+            searchHistory.clearHistoryTrack()
+            historyListView.visibility = View.GONE
         }
     }
 
@@ -185,7 +191,7 @@ class SearchActivity : AppCompatActivity() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun showHistoryTrack(searchHistory: SearchHistory) {
-        val rvHistory = findViewById<RecyclerView>(R.id.rv_history)
+        rvHistory = findViewById(R.id.rv_history)
 
         trackHistoryAdapter.trackList = searchHistory.getHistoryTrack()
         rvHistory.adapter = trackHistoryAdapter

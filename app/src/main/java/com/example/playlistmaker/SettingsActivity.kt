@@ -21,7 +21,8 @@ class SettingsActivity : AppCompatActivity() {
         val themeSwitcher = findViewById<SwitchMaterial>(R.id.theme_switcher)
 
         themeSwitcher.setOnCheckedChangeListener { switcher, checked ->
-            (applicationContext as App).switchTheme(checked)
+            val app = applicationContext as App
+            app.switchTheme(checked)
         }
 
         // Возврат на главный экран

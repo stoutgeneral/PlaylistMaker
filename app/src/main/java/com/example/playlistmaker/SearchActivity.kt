@@ -35,7 +35,7 @@ class SearchActivity : AppCompatActivity() {
         .build()
 
     private val iTunesService = retrofit.create(ITunesApi::class.java)
-    private val trackList = ArrayList<Track>() // tracks
+    private val trackList = ArrayList<Track>()
 
     private lateinit var placeholderImage: ImageView
     private lateinit var placeholderText: TextView
@@ -47,13 +47,11 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var rvTracks: RecyclerView
     private lateinit var resetTextButton: Button
 
-    // ---------------------------------
     private val trackHistoryAdapter = TrackHistoryAdapter()
     private lateinit var historyListView: LinearLayout
     private lateinit var sharePrefListener: OnSharedPreferenceChangeListener
     private lateinit var searchHistory: SearchHistory
     private lateinit var rvHistory: RecyclerView
-    // ---------------------------------
     private lateinit var buttonClearHistory: Button
 
     private var textSearch = ""
@@ -78,7 +76,7 @@ class SearchActivity : AppCompatActivity() {
         placeholderButton = findViewById(R.id.placeholder_button)
         inputEditText = findViewById(R.id.search_bar)
         viewTrackList = findViewById(R.id.track_list_view)
-        historyListView = findViewById(R.id.history_list_view) // searchResults
+        historyListView = findViewById(R.id.history_list_view)
         buttonClearHistory = findViewById(R.id.clear_history)
 
         // Выход из экрана настроек

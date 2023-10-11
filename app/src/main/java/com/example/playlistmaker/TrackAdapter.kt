@@ -1,5 +1,6 @@
 package com.example.playlistmaker
 
+import android.content.Intent
 import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -13,7 +14,7 @@ class TrackAdapter(sharedPreferences: SharedPreferences) : RecyclerView.Adapter<
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
         val view = LayoutInflater
             .from(parent.context)
-            .inflate(R.layout.music_view, parent, false)
+            .inflate(R.layout.activity_track, parent, false)
         return TrackViewHolder(view)
     }
 
@@ -23,6 +24,10 @@ class TrackAdapter(sharedPreferences: SharedPreferences) : RecyclerView.Adapter<
 
         holder.itemView.setOnClickListener {
             searchHistory.addTrackHistory(track)
+
+            val intent = Intent (holder.itemView.context, AudioPlayer::class.java)
+            intent.putExtra("track", track.trackId)
+            holder.itemView.context.startActivity(intent)
         }
     }
 

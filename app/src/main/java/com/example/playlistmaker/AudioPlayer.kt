@@ -5,8 +5,6 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.isGone
-import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.google.gson.Gson
@@ -15,6 +13,9 @@ import java.time.Instant
 import java.util.*
 
 class AudioPlayer : AppCompatActivity() {
+    companion object {
+        const val TRACK = "track"
+    }
 
     private lateinit var track: Track
     private lateinit var trackName: TextView
@@ -36,7 +37,7 @@ class AudioPlayer : AppCompatActivity() {
             finish()
         }
 
-        val dataTrack = intent.getStringExtra("track")
+        val dataTrack = intent.getStringExtra(TRACK)
         track = Gson().fromJson(dataTrack, Track::class.java)
 
         val yearRelease = Date.from(Instant.parse(track.releaseDate))
@@ -55,7 +56,7 @@ class AudioPlayer : AppCompatActivity() {
         primaryGenreName.text = track.primaryGenreName
         country.text = track.country
         releaseDate.text = SimpleDateFormat("yyyy",Locale.getDefault()).format(yearRelease)
-        time.text = SimpleDateFormat("mm:ss", Locale.getDefault()).format(track.trackTime)
+        time.text = track.getSimpleDateFormat(track.trackTime)
 
         Glide
             .with(this)

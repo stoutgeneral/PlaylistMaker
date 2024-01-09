@@ -1,7 +1,11 @@
 package com.example.playlistmaker
 
+import android.media.MediaPlayer
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -14,7 +18,12 @@ import java.util.*
 
 class AudioPlayer : AppCompatActivity() {
     companion object {
-        const val TRACK = "track"
+        private const val TRACK = "track"
+        private const val STATE_DEFAULT = 0
+        private const val STATE_PREPARED = 1
+        private const val STATE_PLAYING = 2
+        private const val STATE_PAUSED = 3
+        private const val DELAY = 1000L
     }
 
     private lateinit var track: Track
@@ -27,6 +36,15 @@ class AudioPlayer : AppCompatActivity() {
     private lateinit var country: TextView
     private lateinit var cover: ImageView
     private lateinit var album: TextView
+
+    private lateinit var buttonPlay: ImageButton
+    private lateinit var segmentTime: TextView
+    private lateinit var playerRunnable: Runnable
+
+    private var mediaPlayer = MediaPlayer()
+    private var playerState = STATE_DEFAULT
+    private var playBackIconCondition = 0
+    private var handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,13 +68,16 @@ class AudioPlayer : AppCompatActivity() {
         cover = findViewById(R.id.track_cover)
         album = findViewById(R.id.album)
         collectionName = findViewById(R.id.album_name)
+        buttonPlay = findViewById(R.id.button_play_track)
+        segmentTime = findViewById(R.id.track_timer)
 
         trackName.text = track.trackName
         artistName.text = track.artistName
         primaryGenreName.text = track.primaryGenreName
         country.text = track.country
-        releaseDate.text = SimpleDateFormat("yyyy",Locale.getDefault()).format(yearRelease)
+        releaseDate.text = SimpleDateFormat("yyyy", Locale.getDefault()).format(yearRelease)
         time.text = track.getSimpleDateFormat(track.trackTime)
+        segmentTime.text = "00:30"
 
         Glide
             .with(this)
@@ -74,5 +95,91 @@ class AudioPlayer : AppCompatActivity() {
             collectionName.visibility = View.VISIBLE
             collectionName.text = track.collectionName
         }
+
+        buttonPlay.setOnClickListener {
+            playbackControl()
+        }
+
+        mediaPlayer.setDataSource(track.previewUrl)
+        preparePlayer()
     }
+
+
+    private fun starTimer(duration: Long) {
+        val startTime = System.currentTimeMillis()
+        playerRunnable = createUpdateTimerTask(startTime, duration * DELAY)
+        handler.post(playerRunnable)
+    }
+
+    private fun createUpdateTimerTask(startTime: Long, duration: Long): Runnable {
+        return object : Runnable {
+            override fun run() {
+                // Сколько прошло времени с момента запуска таймера
+                val elapsedTime = System.currentTimeMillis() - startTime
+                // Сколько осталось до конца
+                val remainingTime = duration - elapsedTime
+
+                if (remainingTime > 0) {
+                    // Если всё ещё отсчитываем секунды —
+                    // обновляем UI и снова планируем задачу
+                    val seconds = remainingTime / DELAY
+                    segmentTime.text = String.format("%d:%02d", seconds / 60, seconds % 60)
+                    handler.postDelayed(this, DELAY)
+                } else {
+                    pausePlayer()
+                }
+            }
+        }
+    }
+
+    private fun preparePlayer() {
+        mediaPlayer.prepareAsync()
+        mediaPlayer.setOnPreparedListener {
+            playerState = STATE_PREPARED
+        }
+        mediaPlayer.setOnCompletionListener {
+            playerState = STATE_PREPARED
+        }
+    }
+
+    private fun starPlayer() {
+        val count = segmentTime.text
+            .toString()
+            .replace(":", "")
+            .toLong()
+
+        if (count > 0) {
+            mediaPlayer.start()
+            buttonPlay.setImageResource(R.drawable.pause_track)
+            playerState = STATE_PLAYING
+            starTimer(count)
+        }
+    }
+
+    private fun pausePlayer() {
+        mediaPlayer.pause()
+        buttonPlay.setImageResource(R.drawable.play_track)
+        playerState = STATE_PAUSED
+        handler.removeCallbacks(playerRunnable)
+    }
+
+    private fun playbackControl() {
+        when (playerState) {
+            STATE_PLAYING -> pausePlayer()
+            STATE_PREPARED, STATE_PAUSED -> starPlayer()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        pausePlayer()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mediaPlayer.release()
+    }
+
 }
+
+

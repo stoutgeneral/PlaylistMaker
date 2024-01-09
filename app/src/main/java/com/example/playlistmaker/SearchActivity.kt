@@ -5,6 +5,8 @@ import android.content.Context
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -14,7 +16,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
 import retrofit2.Callback
@@ -26,6 +30,7 @@ class SearchActivity : AppCompatActivity() {
     companion object {
         const val SEARCH_BAR = "SEARCH_BAR"
         const val SHARED_PREFERENCES = "SHARED_PREFERENCES"
+        const val SEARCH_DEBOUNCE_DELAY = 2000L
     }
 
     private val iTunesBaseUrl = "https://itunes.apple.com"
@@ -36,6 +41,7 @@ class SearchActivity : AppCompatActivity() {
 
     private val iTunesService = retrofit.create(ITunesApi::class.java)
     private val trackList = ArrayList<Track>()
+    private val handler = Handler(Looper.getMainLooper())
 
     private lateinit var placeholderImage: ImageView
     private lateinit var placeholderText: TextView
@@ -46,6 +52,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var inputEditText: EditText
     private lateinit var rvTracks: RecyclerView
     private lateinit var resetTextButton: Button
+    private lateinit var progressBar: ProgressBar
 
     private val trackHistoryAdapter = TrackHistoryAdapter()
     private lateinit var historyListView: LinearLayout
@@ -101,6 +108,7 @@ class SearchActivity : AppCompatActivity() {
             placeholderMessage.visibility = View.GONE
             viewTrackList.visibility = View.VISIBLE
             historyListView.visibility = View.GONE
+
         }
 
         // Работа с экраном поиск.
@@ -109,7 +117,9 @@ class SearchActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                textSearch = s.toString()
+                textSearch = inputEditText.text.toString()
+                val searchRunnable = Runnable {trackSearch()}
+                searchDebounce(searchRunnable)
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -123,6 +133,7 @@ class SearchActivity : AppCompatActivity() {
         // Логика показа истории треков
         inputEditText.setOnFocusChangeListener { view, hasFocus ->
             val showTrackListHistory = searchHistory.getHistoryTrack()
+
             if (showTrackListHistory.isNotEmpty()) {
                 val isHistoryListVisible = hasFocus && textSearch.isEmpty()
                 historyListView.visibility = if (isHistoryListVisible) View.VISIBLE else View.GONE
@@ -134,7 +145,7 @@ class SearchActivity : AppCompatActivity() {
             }
         }
 
-        //Обработчик нажатия Done на клавиатуре
+        /*Обработчик нажатия Done на клавиатуре
         inputEditText.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 if (textSearch.isNotEmpty()) {
@@ -143,7 +154,7 @@ class SearchActivity : AppCompatActivity() {
                 }
             }
             false
-        }
+        }*/
 
         // Обработчик нажатия кнопки Обновить при проблемах со связью
         placeholderButton.setOnClickListener {
@@ -228,12 +239,16 @@ class SearchActivity : AppCompatActivity() {
     private fun trackSearch() {
         textSearch = inputEditText.text.toString()
 
+        progressBar = findViewById(R.id.progress_bar)
+        progressBar.visibility = View.VISIBLE
+
         iTunesService.search(textSearch).enqueue(object : Callback<ITunesResponse> {
             @SuppressLint("NotifyDataSetChanged")
             override fun onResponse(
                 call: Call<ITunesResponse>,
                 response: Response<ITunesResponse>
             ) {
+                progressBar.visibility = View.GONE
                 val results = response.body()?.results
 
                 if (response.code() == 200) {
@@ -255,6 +270,7 @@ class SearchActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<ITunesResponse>, t: Throwable) {
+                progressBar.visibility = View.GONE
                 showMessage(
                     getString(R.string.not_connection),
                     R.drawable.il_connection_error,
@@ -262,5 +278,10 @@ class SearchActivity : AppCompatActivity() {
                 )
             }
         })
+    }
+
+    private fun searchDebounce (searchRunnable: Runnable) {
+        handler.removeCallbacks(searchRunnable)
+        handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
     }
 }

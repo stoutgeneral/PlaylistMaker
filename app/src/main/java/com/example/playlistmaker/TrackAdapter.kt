@@ -2,6 +2,8 @@ package com.example.playlistmaker
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +13,8 @@ class TrackAdapter(sharedPreferences: SharedPreferences) : RecyclerView.Adapter<
 
     var trackList = ArrayList<Track>()
     private val searchHistory = SearchHistory(sharedPreferences)
+    private var isClickAvailability = true
+    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
         val view = LayoutInflater
@@ -26,13 +30,28 @@ class TrackAdapter(sharedPreferences: SharedPreferences) : RecyclerView.Adapter<
         holder.itemView.setOnClickListener {
             searchHistory.addTrackHistory(track)
 
-            val audioIntent = Intent (it.context, AudioPlayer::class.java)
-            audioIntent.putExtra("track", Gson().toJson(trackList[position]))
-            it.context.startActivity(audioIntent)
+            if (clickDebounce()) {
+                val audioIntent = Intent(it.context, AudioPlayer::class.java)
+                audioIntent.putExtra("track", Gson().toJson(trackList[position]))
+                it.context.startActivity(audioIntent)
+            }
         }
     }
 
     override fun getItemCount(): Int {
         return trackList.size
     }
+
+    private fun clickDebounce(): Boolean {
+        val condition = isClickAvailability
+
+        if (isClickAvailability) {
+            isClickAvailability = false
+            handler.postDelayed({ isClickAvailability = true },
+                TrackHistoryAdapter.CLICK_DEBOUNCE_DELAY
+            )
+        }
+        return condition
+    }
+
 }

@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 
 class TrackAdapter(sharedPreferences: SharedPreferences) : RecyclerView.Adapter<TrackViewHolder>() {
 
@@ -25,9 +26,9 @@ class TrackAdapter(sharedPreferences: SharedPreferences) : RecyclerView.Adapter<
         holder.itemView.setOnClickListener {
             searchHistory.addTrackHistory(track)
 
-            val intent = Intent (holder.itemView.context, AudioPlayer::class.java)
-            intent.putExtra("track", track.trackId)
-            holder.itemView.context.startActivity(intent)
+            val audioIntent = Intent (it.context, AudioPlayer::class.java)
+            audioIntent.putExtra("track", Gson().toJson(trackList[position]))
+            it.context.startActivity(audioIntent)
         }
     }
 

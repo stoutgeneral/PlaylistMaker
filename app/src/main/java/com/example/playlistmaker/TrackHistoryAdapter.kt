@@ -4,6 +4,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.google.gson.Gson
 
 class TrackHistoryAdapter (): RecyclerView.Adapter<TrackViewHolder>() {
 
@@ -18,6 +19,12 @@ class TrackHistoryAdapter (): RecyclerView.Adapter<TrackViewHolder>() {
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
         holder.bind(trackList[position])
+
+        holder.itemView.setOnClickListener {
+            val audioIntent = Intent (it.context, AudioPlayer::class.java)
+            audioIntent.putExtra("track", Gson().toJson(trackList[position]))
+            it.context.startActivity(audioIntent)
+        }
     }
 
     override fun getItemCount(): Int {

@@ -105,10 +105,8 @@ class SearchActivity : AppCompatActivity() {
                 getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(window.decorView.windowToken, 0)
 
-            placeholderMessage.visibility = View.GONE
             viewTrackList.visibility = View.VISIBLE
             historyListView.visibility = View.GONE
-
         }
 
         // Работа с экраном поиск.
@@ -118,13 +116,14 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 textSearch = inputEditText.text.toString()
-                val searchRunnable = Runnable {trackSearch()}
+                val searchRunnable = Runnable { trackSearch() }
                 searchDebounce(searchRunnable)
             }
 
             override fun afterTextChanged(s: Editable?) {
                 resetTextButton.visibility = changeButtonVisibility(s)
-                historyListView.visibility = if (inputEditText.hasFocus() && s?.isEmpty() == true) View.VISIBLE else View.GONE
+                historyListView.visibility =
+                    if (inputEditText.hasFocus() && s?.isEmpty() == true) View.VISIBLE else View.GONE
 
             }
         }
@@ -144,17 +143,6 @@ class SearchActivity : AppCompatActivity() {
                 viewTrackList.visibility = View.VISIBLE
             }
         }
-
-        /*Обработчик нажатия Done на клавиатуре
-        inputEditText.setOnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_DONE) {
-                if (textSearch.isNotEmpty()) {
-                    viewTrackList.visibility = View.VISIBLE
-                    trackSearch()
-                }
-            }
-            false
-        }*/
 
         // Обработчик нажатия кнопки Обновить при проблемах со связью
         placeholderButton.setOnClickListener {
@@ -233,6 +221,7 @@ class SearchActivity : AppCompatActivity() {
         } else {
             placeholderMessage.visibility = View.GONE
             viewTrackList.visibility = View.VISIBLE
+            progressBar.visibility = View.GONE
         }
     }
 
@@ -241,6 +230,7 @@ class SearchActivity : AppCompatActivity() {
 
         progressBar = findViewById(R.id.progress_bar)
         progressBar.visibility = View.VISIBLE
+        viewTrackList.visibility = View.GONE
 
         iTunesService.search(textSearch).enqueue(object : Callback<ITunesResponse> {
             @SuppressLint("NotifyDataSetChanged")
@@ -249,6 +239,7 @@ class SearchActivity : AppCompatActivity() {
                 response: Response<ITunesResponse>
             ) {
                 progressBar.visibility = View.GONE
+                viewTrackList.visibility = View.VISIBLE
                 val results = response.body()?.results
 
                 if (response.code() == 200) {
@@ -271,6 +262,7 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<ITunesResponse>, t: Throwable) {
                 progressBar.visibility = View.GONE
+                viewTrackList.visibility = View.VISIBLE
                 showMessage(
                     getString(R.string.not_connection),
                     R.drawable.il_connection_error,
@@ -280,8 +272,12 @@ class SearchActivity : AppCompatActivity() {
         })
     }
 
-    private fun searchDebounce (searchRunnable: Runnable) {
-        handler.removeCallbacks(searchRunnable)
-        handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
+    private fun searchDebounce(searchRunnable: Runnable) {
+        if (textSearch.isEmpty()) {
+            progressBar.visibility = View.GONE
+        } else {
+            handler.removeCallbacks(searchRunnable)
+            handler.postDelayed(searchRunnable, SEARCH_DEBOUNCE_DELAY)
+        }
     }
 }

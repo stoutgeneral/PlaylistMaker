@@ -17,13 +17,16 @@ import java.time.Instant
 import java.util.*
 
 class AudioPlayer : AppCompatActivity() {
+    enum class State {
+        DEFAULT,
+        PREPARED,
+        PLAYING,
+        PAUSED
+    }
+
     companion object {
         private const val TRACK = "track"
-        private const val STATE_DEFAULT = 0
-        private const val STATE_PREPARED = 1
-        private const val STATE_PLAYING = 2
-        private const val STATE_PAUSED = 3
-        private const val DELAY = 1000L
+        private const val DELAY_MILLIS = 1000L
     }
 
     private lateinit var track: Track
@@ -42,7 +45,7 @@ class AudioPlayer : AppCompatActivity() {
     private lateinit var playerRunnable: Runnable
 
     private var mediaPlayer = MediaPlayer()
-    private var playerState = STATE_DEFAULT
+    private var playerState = State.DEFAULT
     private var playBackIconCondition = 0
     private var handler = Handler(Looper.getMainLooper())
 
@@ -107,7 +110,7 @@ class AudioPlayer : AppCompatActivity() {
 
     private fun starTimer(duration: Long) {
         val startTime = System.currentTimeMillis()
-        playerRunnable = createUpdateTimerTask(startTime, duration * DELAY)
+        playerRunnable = createUpdateTimerTask(startTime, duration * DELAY_MILLIS)
         handler.post(playerRunnable)
     }
 
@@ -122,9 +125,9 @@ class AudioPlayer : AppCompatActivity() {
                 if (remainingTime > 0) {
                     // Если всё ещё отсчитываем секунды —
                     // обновляем UI и снова планируем задачу
-                    val seconds = remainingTime / DELAY
+                    val seconds = remainingTime / DELAY_MILLIS
                     segmentTime.text = String.format("%d:%02d", seconds / 60, seconds % 60)
-                    handler.postDelayed(this, DELAY)
+                    handler.postDelayed(this, DELAY_MILLIS)
                 } else {
                     pausePlayer()
                 }
@@ -135,10 +138,10 @@ class AudioPlayer : AppCompatActivity() {
     private fun preparePlayer() {
         mediaPlayer.prepareAsync()
         mediaPlayer.setOnPreparedListener {
-            playerState = STATE_PREPARED
+            playerState = State.PREPARED
         }
         mediaPlayer.setOnCompletionListener {
-            playerState = STATE_PREPARED
+            playerState = State.PREPARED
         }
     }
 
@@ -151,7 +154,7 @@ class AudioPlayer : AppCompatActivity() {
         if (count > 0) {
             mediaPlayer.start()
             buttonPlay.setImageResource(R.drawable.pause_track)
-            playerState = STATE_PLAYING
+            playerState = State.PLAYING
             starTimer(count)
         }
     }
@@ -159,14 +162,15 @@ class AudioPlayer : AppCompatActivity() {
     private fun pausePlayer() {
         mediaPlayer.pause()
         buttonPlay.setImageResource(R.drawable.play_track)
-        playerState = STATE_PAUSED
+        playerState = State.PAUSED
         handler.removeCallbacks(playerRunnable)
     }
 
     private fun playbackControl() {
         when (playerState) {
-            STATE_PLAYING -> pausePlayer()
-            STATE_PREPARED, STATE_PAUSED -> starPlayer()
+            State.PLAYING -> pausePlayer()
+            State.PREPARED, State.PAUSED -> starPlayer()
+            else -> {}
         }
     }
 

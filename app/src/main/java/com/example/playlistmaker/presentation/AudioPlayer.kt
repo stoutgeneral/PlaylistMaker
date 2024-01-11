@@ -1,4 +1,4 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.presentation
 
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -11,6 +11,10 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.example.playlistmaker.Creator
+import com.example.playlistmaker.R
+import com.example.playlistmaker.domain.PlayerInteractor
+import com.example.playlistmaker.domain.models.Track
 import com.google.gson.Gson
 import java.text.SimpleDateFormat
 import java.time.Instant
@@ -44,9 +48,9 @@ class AudioPlayer : AppCompatActivity() {
     private lateinit var segmentTime: TextView
     private lateinit var playerRunnable: Runnable
 
-    private var mediaPlayer = MediaPlayer()
     private var playerState = State.DEFAULT
-    private var playBackIconCondition = 0
+    private var mediaPlayer = MediaPlayer()
+    //private val playerInteractor: PlayerInteractor = Creator.providePlayerInteractor()
     private var handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -182,6 +186,7 @@ class AudioPlayer : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         mediaPlayer.release()
+        handler.removeCallbacksAndMessages(null)
     }
 
 }

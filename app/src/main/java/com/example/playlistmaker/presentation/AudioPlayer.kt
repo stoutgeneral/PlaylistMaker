@@ -1,10 +1,8 @@
 package com.example.playlistmaker.presentation
 
-import android.media.MediaPlayer
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
@@ -13,7 +11,9 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.Creator
 import com.example.playlistmaker.R
-import com.example.playlistmaker.domain.PlayerInteractor
+import com.example.playlistmaker.domain.AudioPlayerInteractor
+import com.example.playlistmaker.domain.AudioPlayerRepository
+import com.example.playlistmaker.domain.models.State
 import com.example.playlistmaker.domain.models.Track
 import com.google.gson.Gson
 import java.text.SimpleDateFormat
@@ -21,12 +21,6 @@ import java.time.Instant
 import java.util.*
 
 class AudioPlayer : AppCompatActivity() {
-    enum class State {
-        DEFAULT,
-        PREPARED,
-        PLAYING,
-        PAUSED
-    }
 
     companion object {
         private const val TRACK = "track"
@@ -48,19 +42,12 @@ class AudioPlayer : AppCompatActivity() {
     private lateinit var segmentTime: TextView
     private lateinit var playerRunnable: Runnable
 
-    private var playerState = State.DEFAULT
-    private var mediaPlayer = MediaPlayer()
-    //private val playerInteractor: PlayerInteractor = Creator.providePlayerInteractor()
+    private val audioPlayerInteractor: AudioPlayerInteractor = Creator.provideAudioPlayerInteractor()
     private var handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_audio_player)
-
-        val buttonBack = findViewById<ImageView>(R.id.arrow_back_media_player)
-        buttonBack.setOnClickListener {
-            finish()
-        }
 
         val dataTrack = intent.getStringExtra(TRACK)
         track = Gson().fromJson(dataTrack, Track::class.java)
@@ -92,27 +79,56 @@ class AudioPlayer : AppCompatActivity() {
             .placeholder(R.drawable.placeholder)
             .centerCrop()
             .transform(RoundedCorners(10))
-            .into(cover)
-
-        if (track.collectionName?.isEmpty() == null) {
-            album.visibility = View.GONE
-            collectionName.visibility = View.GONE
-        } else {
-            album.visibility = View.VISIBLE
-            collectionName.visibility = View.VISIBLE
-            collectionName.text = track.collectionName
-        }
+            .into(this.findViewById(R.id.track_cover))
 
         buttonPlay.setOnClickListener {
             playbackControl()
         }
 
-        mediaPlayer.setDataSource(track.previewUrl)
-        preparePlayer()
+        buttonPlay.isEnabled = false
+        audioPlayerInteractor.preparePlayer(track.previewUrl) { state ->
+            when (state) {
+                State.PREPARED -> buttonPlay.isEnabled = true
+                else -> {}
+            }
+        }
+
+        val buttonBack = findViewById<ImageView>(R.id.arrow_back_media_player)
+        buttonBack.setOnClickListener {
+            finish()
+        }
     }
 
+    private fun pausePlayer() {
+        audioPlayerInteractor.pausePlayer()
+        buttonPlay.setImageResource(R.drawable.play_track)
+        handler.removeCallbacksAndMessages(null)
+    }
 
-    private fun starTimer(duration: Long) {
+    private fun playbackControl() {
+        val count = segmentTime.text
+            .toString()
+            .replace(":", "")
+            .toLong()
+
+        if (count > 0) {
+            audioPlayerInteractor.changingPlayer { state ->
+                when (state) {
+                    State.PLAYING -> {
+                        buttonPlay.setImageResource(R.drawable.pause_track)
+                        startTimer(count)
+                    }
+                    State.PREPARED, State.PAUSED -> {
+                        buttonPlay.setImageResource(R.drawable.play_track)
+                        handler.removeCallbacks(playerRunnable)
+                    }
+                    else -> {}
+                }
+            }
+        }
+    }
+
+    private fun startTimer(duration: Long) {
         val startTime = System.currentTimeMillis()
         playerRunnable = createUpdateTimerTask(startTime, duration * DELAY_MILLIS)
         handler.post(playerRunnable)
@@ -139,45 +155,6 @@ class AudioPlayer : AppCompatActivity() {
         }
     }
 
-    private fun preparePlayer() {
-        mediaPlayer.prepareAsync()
-        mediaPlayer.setOnPreparedListener {
-            playerState = State.PREPARED
-        }
-        mediaPlayer.setOnCompletionListener {
-            playerState = State.PREPARED
-        }
-    }
-
-    private fun starPlayer() {
-        val count = segmentTime.text
-            .toString()
-            .replace(":", "")
-            .toLong()
-
-        if (count > 0) {
-            mediaPlayer.start()
-            buttonPlay.setImageResource(R.drawable.pause_track)
-            playerState = State.PLAYING
-            starTimer(count)
-        }
-    }
-
-    private fun pausePlayer() {
-        mediaPlayer.pause()
-        buttonPlay.setImageResource(R.drawable.play_track)
-        playerState = State.PAUSED
-        handler.removeCallbacks(playerRunnable)
-    }
-
-    private fun playbackControl() {
-        when (playerState) {
-            State.PLAYING -> pausePlayer()
-            State.PREPARED, State.PAUSED -> starPlayer()
-            else -> {}
-        }
-    }
-
     override fun onPause() {
         super.onPause()
         pausePlayer()
@@ -185,10 +162,9 @@ class AudioPlayer : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        mediaPlayer.release()
+        audioPlayerInteractor.stoppingPlayer()
         handler.removeCallbacksAndMessages(null)
     }
-
 }
 
 

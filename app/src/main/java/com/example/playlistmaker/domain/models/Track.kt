@@ -20,5 +20,3 @@ data class Track(
     fun getCoverArtwork() = artworkUrl100.replaceAfterLast('/',"512x512bb.jpg")
     fun getSimpleDateFormat(variableChange: Long) = SimpleDateFormat("mm:ss", Locale.getDefault()).format(variableChange)
 }
-
-

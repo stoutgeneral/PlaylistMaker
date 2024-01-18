@@ -18,26 +18,28 @@ import com.example.playlistmaker.presentation.mapper.TrackMapper
 import com.example.playlistmaker.presentation.search.SearchViewModel
 import com.example.playlistmaker.ui.audioplayer.AudioPlayerActivivty
 
-class SearchActivity : AppCompatActivity() { // есть вероятность, что я намудрил с методами и ресайклерами.
+class SearchActivity : AppCompatActivity() {
+
     companion object {
-        const val SHARED_PREFERENCES = "SHARED_PREFERENCES"
-        const val TRACK = "track"
+        const val SEARCH_EDITTEXT = "SEARCH_EDITTEXT"
+        const val EMPTY_FIELD = ""
     }
 
     private lateinit var trackAdapter: TrackAdapter
-    private lateinit var searchAdapter: TrackAdapter
+    private lateinit var searchResultsAdapter: TrackAdapter
     private lateinit var binding: ActivitySearchBinding
     private lateinit var viewModel: SearchViewModel
+    private lateinit var previousRequest: String
 
-    private lateinit var lastSearch: String
-
-    private var searchTextWatcher: TextWatcher? = null
+    private var simpleTextWatcher: TextWatcher? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProvider(this, SearchViewModel.getViewModelFactory()) [SearchViewModel::class.java]
+        binding = ActivitySearchBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
+        viewModel = ViewModelProvider(this, SearchViewModel.getViewModelFactory()) [SearchViewModel::class.java]
         viewModel.observeState().observe(this) {
             render(it)
         }
@@ -46,42 +48,34 @@ class SearchActivity : AppCompatActivity() { // есть вероятность,
             showSearchHistory(it)
         }
 
-        binding = ActivitySearchBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
         trackAdapter = TrackAdapter(setAdapterListener())
-        searchAdapter = TrackAdapter(setAdapterListener())
+        searchResultsAdapter = TrackAdapter(setAdapterListener())
 
         binding.rvTrack.adapter = trackAdapter
 
-        // Выход из экрана настроек
-        binding.arrowBackSearch.setOnClickListener {
-            finish()
-        }
-
-        val searchTextWatcher = object : TextWatcher {
+        val simpleTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 if (!s.isNullOrEmpty()) {
-                    binding.resetText.visibility = View.VISIBLE
+                    binding.clearText.visibility = View.VISIBLE
                 }
-                lastSearch = s?.toString() ?: ""
-                viewModel.searchDebounce(text = lastSearch)
+                previousRequest = s?.toString() ?: EMPTY_FIELD
+                viewModel.searchDebounce(changedText = previousRequest)
 
-                binding.trackListView.visibility = if (binding.searchBar.hasFocus() && s?.isEmpty() == true) View.VISIBLE else View.GONE
+                binding.historyListView.visibility = if (binding.searchBar.hasFocus() && s?.isEmpty() == true) View.VISIBLE else View.GONE
             }
 
             override fun afterTextChanged(s: Editable?) {
             }
         }
 
-        searchTextWatcher.let { binding.searchBar.addTextChangedListener(it) }
+        simpleTextWatcher.let { binding.searchBar.addTextChangedListener(it) }
 
-        binding.resetText.setOnClickListener {
-            binding.searchBar.setText("")
-            binding.resetText.visibility = View.GONE
+        binding.clearText.setOnClickListener {
+            binding.searchBar.setText(EMPTY_FIELD)
+            binding.clearText.visibility = View.GONE
             binding.searchBar.clearFocus()
             clearContent()
         }
@@ -89,7 +83,7 @@ class SearchActivity : AppCompatActivity() { // есть вероятность,
         binding.searchBar.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 if (binding.searchBar.text.isNotEmpty()) {
-                    lastSearch = binding.searchBar.text.toString()
+                    previousRequest = binding.searchBar.text.toString()
                     viewModel.searchDebounce(binding.searchBar.text.toString())
                 }
             }
@@ -97,115 +91,122 @@ class SearchActivity : AppCompatActivity() { // есть вероятность,
         }
 
         binding.searchBar.setOnFocusChangeListener { _, hasFocus ->
-            viewModel.getSearchHistory()
-            binding.trackListView.visibility =
+            viewModel.getTrackSearchHistory()
+            binding.historyListView.visibility =
                 if (hasFocus && binding.searchBar.text.isEmpty()) View.VISIBLE else View.GONE
         }
 
-        binding.resetText.setOnClickListener {
-            binding.searchBar.setText(lastSearch)
-            viewModel.searchDebounce(lastSearch)
+        binding.placeholderButton.setOnClickListener {
+            binding.searchBar.setText(previousRequest)
+            viewModel.searchDebounce(previousRequest)
         }
 
-        binding.resetText.setOnClickListener {
+        binding.clearHistory.setOnClickListener {
             viewModel.clearHistory()
-            binding.trackListView.visibility = View.GONE
+            binding.historyListView.visibility = View.GONE
         }
-    }
 
-    private fun clearContent() {
-        trackAdapter.trackList.clear()
-        trackAdapter.notifyDataSetChanged()
-    }
-
-    private fun render(state: TrackState) {
-        when (state) {
-            is TrackState.Content -> showContent(state.track)
-            is TrackState.Empty -> showEmpty()
-            is TrackState.Error -> showError()
-            is TrackState.Loading -> showLoading()
-        }
-    }
-
-    private fun showContent (trackList: List<Track>) {
-        trackAdapter.trackList.clear()
-        trackAdapter.trackList.addAll(trackList)
-        trackAdapter.notifyDataSetChanged()
-
-        binding.rvTrack.visibility = View.VISIBLE
-        binding.progressBar.visibility = View.GONE
-        binding.placeholderMessage.visibility = View.GONE
-        binding.trackListView.visibility = View.GONE
-    }
-
-    private fun showLoading () {
-        binding.progressBar.visibility = View.VISIBLE
-        binding.placeholderMessage.visibility = View.GONE
-        binding.rvTrack.visibility = View.GONE
-        binding.trackListView.visibility = View.GONE
-    }
-
-    private fun showError () {
-        binding.placeholderImage.setImageResource(R.drawable.il_connection_error)
-        binding.placeholderText.setText(R.string.not_connection)
-        binding.placeholderMessage.visibility = View.VISIBLE
-        binding.progressBar.visibility = View.GONE
-        binding.rvTrack.visibility = View.GONE
-        binding.trackListView.visibility = View.GONE
-
-        binding.placeholderButton.visibility = View.VISIBLE
-    }
-
-    private fun showEmpty () {
-        binding.placeholderImage.setImageResource(R.drawable.il_nothing_found)
-        binding.placeholderText.setText(R.string.not_found)
-        binding.placeholderButton.visibility = View.GONE
-    }
-
-    private fun showSearchHistory (trackList: ArrayList<Track>) {
-        searchAdapter.trackList = trackList
-        binding.rvTrack.adapter = searchAdapter
-        searchAdapter.notifyDataSetChanged()
-
-        binding.rvTrack.visibility = View.VISIBLE
-        binding.rvHistory.visibility = View.GONE
-        binding.progressBar.visibility = View.GONE
-        binding.placeholderMessage.visibility = View.GONE
-        binding.trackListView.visibility = View.VISIBLE
-    }
-
-    private fun setAdapterListener(): TrackAdapter.Listener {
-        return object : TrackAdapter.Listener {
-            override fun onClick(track: Track) {
-                viewModel.onClick(track = track)
-                val intent = Intent (this@SearchActivity, AudioPlayerActivivty::class.java)
-                intent.putExtra(TRACK, TrackMapper.map(track))
-                startActivity(intent)
-            }
+        binding.arrowBackSearch.setOnClickListener {
+            this.finish()
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        searchTextWatcher?.let { binding.searchBar.removeTextChangedListener(it) }
+        simpleTextWatcher?.let { binding.searchBar.removeTextChangedListener(it) }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putString(SHARED_PREFERENCES, binding.searchBar.text.toString())
-
+        outState.putString(SEARCH_EDITTEXT, binding.searchBar.text.toString())
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        binding.searchBar.setText(savedInstanceState.getString(SHARED_PREFERENCES))
+        binding.searchBar.setText(savedInstanceState.getString(SEARCH_EDITTEXT))
     }
 
-    override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         if (currentFocus != null) {
-            val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
         }
         return super.dispatchTouchEvent(ev)
+    }
+
+    private fun setAdapterListener(): TrackAdapter.Listener {
+        return object : TrackAdapter.Listener {
+            override fun onClick(track: Track) {
+                viewModel.onClick(track)
+
+                val intent = Intent(this@SearchActivity, AudioPlayerActivivty::class.java)
+                intent.putExtra("track", TrackMapper.map(track))
+                startActivity(intent)
+            }
+        }
+    }
+
+    private fun render(state: TracksState) {
+        when (state) {
+            is TracksState.Loading -> showLoading()
+            is TracksState.Error -> showError()
+            is TracksState.Empty -> showEmpty()
+            is TracksState.Content -> showContent(state.tracks)
+        }
+    }
+
+    private fun showLoading() {
+        binding.progressBar.visibility = View.VISIBLE
+        binding.placeholderMessage.visibility = View.GONE
+        binding.rvTrack.visibility = View.GONE
+        binding.historyListView.visibility = View.GONE
+    }
+
+    private fun showError() {
+        binding.placeholderImage.setImageResource(R.drawable.il_connection_error)
+        binding.placeholderText.setText(R.string.not_connection)
+        binding.placeholderMessage.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.GONE
+        binding.rvTrack.visibility = View.GONE
+        binding.historyListView.visibility = View.GONE
+
+        binding.placeholderButton.visibility = View.VISIBLE
+    }
+
+
+    private fun showEmpty() {
+        binding.placeholderMessage.visibility = View.VISIBLE
+        binding.placeholderImage.setImageResource(R.drawable.il_nothing_found)
+        binding.placeholderText.setText(R.string.not_found)
+        binding.placeholderButton.visibility = View.GONE
+        binding.progressBar.visibility = View.GONE
+    }
+
+    private fun showContent(newTracksList: List<Track>) {
+        trackAdapter.tracks.clear()
+        trackAdapter.tracks.addAll(newTracksList)
+        trackAdapter.notifyDataSetChanged()
+
+        binding.rvTrack.visibility = View.VISIBLE
+        binding.progressBar.visibility = View.GONE
+        binding.placeholderMessage.visibility = View.GONE
+        binding.historyListView.visibility = View.GONE
+    }
+
+    private fun clearContent() {
+        trackAdapter.tracks.clear()
+        trackAdapter.notifyDataSetChanged()
+    }
+
+    private fun showSearchHistory(tracks: ArrayList<Track>) {
+        searchResultsAdapter.tracks = tracks
+        binding.rvHistory.adapter = searchResultsAdapter
+        searchResultsAdapter.notifyDataSetChanged()
+
+        binding.rvHistory.visibility = View.VISIBLE
+        binding.rvTrack.visibility = View.GONE
+        binding.progressBar.visibility = View.GONE
+        binding.placeholderMessage.visibility = View.GONE
+        binding.historyListView.visibility = View.VISIBLE
     }
 }

@@ -1,6 +1,5 @@
 package com.example.playlistmaker.ui.search
 
-import android.content.Intent
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
@@ -8,8 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmaker.R
 import com.example.playlistmaker.domain.models.Track
-import com.example.playlistmaker.ui.audioplayer.AudioPlayerActivivty
-import com.google.gson.Gson
 
 class TrackAdapter(private var listener: Listener) : RecyclerView.Adapter<TrackViewHolder>() {
 
@@ -17,7 +14,7 @@ class TrackAdapter(private var listener: Listener) : RecyclerView.Adapter<TrackV
         private const val CLICK_DEBOUNCE_DELAY = 1000L
     }
 
-    var trackList = ArrayList<Track>()
+    var tracks = ArrayList<Track>()
     private var isClickAvailability = true
     private val handler = Handler(Looper.getMainLooper())
 
@@ -29,7 +26,7 @@ class TrackAdapter(private var listener: Listener) : RecyclerView.Adapter<TrackV
     }
 
     override fun onBindViewHolder(holder: TrackViewHolder, position: Int) {
-        val track = trackList[position]
+        val track = tracks[position]
         holder.bind(track)
 
         holder.itemView.setOnClickListener {
@@ -40,17 +37,14 @@ class TrackAdapter(private var listener: Listener) : RecyclerView.Adapter<TrackV
     }
 
     override fun getItemCount(): Int {
-        return trackList.size
+        return tracks.size
     }
 
     private fun clickDebounce(): Boolean {
         val condition = isClickAvailability
-
         if (isClickAvailability) {
             isClickAvailability = false
-            handler.postDelayed({ isClickAvailability = true },
-                CLICK_DEBOUNCE_DELAY
-            )
+            handler.postDelayed({ isClickAvailability = true }, CLICK_DEBOUNCE_DELAY)
         }
         return condition
     }
@@ -58,4 +52,10 @@ class TrackAdapter(private var listener: Listener) : RecyclerView.Adapter<TrackV
     interface Listener {
         fun onClick(track: Track)
     }
+
 }
+
+
+
+
+

@@ -6,15 +6,15 @@ import java.util.*
 
 data class TrackDetails(
     val trackId: Int,
-    val trackName: String, // Название композиции
-    val artistName: String, // Имя исполнителя
-    val trackTime: String, // Продолжительность трека в формате mm:ss
-    val artworkUrl100: String, // Ссылка на изображение обложки
-    val collectionName: String, // Название альбома
-    val releaseYear: String, // Год выпуска трека
-    val primaryGenreName: String, // жанр
-    val country: String, // Страна исполнителя
-    val previewUrl: String, // отрывок трека
+    val trackName: String,
+    val artistName: String,
+    val trackTime: String,
+    val artworkUrl100: String,
+    val collectionName: String,
+    val releaseYear: String,
+    val primaryGenreName: String,
+    val country: String,
+    val previewUrl: String,
 ) : Serializable {
     fun getCoverArtwork() = artworkUrl100.replaceAfterLast('/',"512x512bb.jpg")
 }

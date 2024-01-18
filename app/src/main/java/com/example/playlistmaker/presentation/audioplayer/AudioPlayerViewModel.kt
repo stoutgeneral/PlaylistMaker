@@ -20,7 +20,7 @@ class AudioPlayerViewModel : ViewModel() {
 
     companion object {
         private const val DELAY_MILLIS = 1000L
-        private val SEARCH_REQUEST_TOKEN = Any()
+        private val SEARCH_REQUEST_TOKEN = null
     }
 
     private val audioPlayerInteractor: AudioPlayerRepository =
@@ -30,12 +30,12 @@ class AudioPlayerViewModel : ViewModel() {
     private val handler = Handler(Looper.getMainLooper())
 
     private val playState = MutableLiveData<Boolean>()
-    private val playEnableState = MutableLiveData<Boolean>()
-    private val secondState = MutableLiveData<Long>()
-    private val track = MutableLiveData<TrackDetails>()
-
     fun observePlayState(): LiveData<Boolean> = playState
+
+    private val playEnableState = MutableLiveData<Boolean>()
     fun observePlayButtonState(): LiveData<Boolean> = playEnableState
+
+    private val secondState = MutableLiveData<Long>()
     fun observeSecondState(): LiveData<Long> = secondState
 
     override fun onCleared() {
@@ -52,11 +52,6 @@ class AudioPlayerViewModel : ViewModel() {
         }
     }
 
-    fun setTrackData(trackData: String) {
-        val trackObj = Gson().fromJson(trackData, TrackDetails::class.java)
-        track.value = trackObj
-    }
-
     fun playbackControl(count: Long) {
         if (count > 0) {
             audioPlayerInteractor.changingPlayer { state ->
@@ -66,7 +61,7 @@ class AudioPlayerViewModel : ViewModel() {
                         handler.removeCallbacks(playerRunnable)
                     }
                     StateAudioPlayer.PLAYING -> {
-                        playState.postValue(true)
+                        playState.postValue(false)
                         startTimer(count)
                     }
                     else -> {}
@@ -91,14 +86,10 @@ class AudioPlayerViewModel : ViewModel() {
     fun createUpdateTimerTask(startTime: Long, duration: Long): Runnable {
         return object : Runnable {
             override fun run() {
-                // Сколько прошло времени с момента запуска таймера
                 val elapsedTime = System.currentTimeMillis() - startTime
-                // Сколько осталось до конца
                 val remainingTime = duration - elapsedTime
 
                 if (remainingTime > 0) {
-                    // Если всё ещё отсчитываем секунды —
-                    // обновляем UI и снова планируем задачу
                     secondState.postValue(remainingTime / DELAY_MILLIS)
                     handler.postDelayed(this, DELAY_MILLIS)
                 } else {
@@ -108,7 +99,3 @@ class AudioPlayerViewModel : ViewModel() {
         }
     }
 }
-
-/*
-
- */

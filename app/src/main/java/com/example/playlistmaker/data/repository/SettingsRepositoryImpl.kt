@@ -11,12 +11,12 @@ class SettingsRepositoryImpl(context: Context) : SettingsRepository {
     companion object {
         const val SHARE_PREFS = "SHARE_PLAYLIST_MAKER"
         const val THEME_STATUS = "DARK_STATE"
+
+        private val map = ThemeStatus.values().associateBy(ThemeStatus::themeState)
+        fun getThemeFromInt(type: Int) = map[type]
     }
 
-    private val map = ThemeStatus.values().associateBy(ThemeStatus::themeState)
     private var sharePrefs = context.getSharedPreferences(SHARE_PREFS, Context.MODE_PRIVATE)
-
-    fun getThemeFromInt (type: Int) = map[type]
 
     private fun installingDarkTheme (condition: ThemeStatus) {
         AppCompatDelegate.setDefaultNightMode(

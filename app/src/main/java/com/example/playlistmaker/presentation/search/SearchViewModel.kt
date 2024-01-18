@@ -12,10 +12,11 @@ import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.AP
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.playlistmaker.creator.Creator
+import com.example.playlistmaker.domain.TrackInteractor
 import com.example.playlistmaker.domain.models.Track
-import com.example.playlistmaker.ui.search.TrackState
+import com.example.playlistmaker.ui.search.TracksState
 
-class SearchViewModel(application: Application) : AndroidViewModel(application) {
+class SearchViewModel(application: Application): AndroidViewModel(application) {
 
     companion object {
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
@@ -28,55 +29,73 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    private val trackInteractor by lazy { Creator.provideTrackInteractor(context = getApplication()) } // есть несоответствие
-    private val searchHistoryInteractor by lazy { Creator.provideSearchHistoryInteractor(context = getApplication()) }
-
+    private val trackInteractor by lazy { Creator.provideTrackInteractor(context = getApplication()) }
+    private val historyInteractor by lazy { Creator.provideSearchHistoryInteractor(context = getApplication()) }
     private val handler = Handler(Looper.getMainLooper())
-    private val stateLiveData = MutableLiveData<TrackState>()
-    private val historyLiveData = MutableLiveData<ArrayList<Track>>()
 
-    fun observeState(): LiveData<TrackState> = stateLiveData
+    private val trackStateLiveData = MutableLiveData<TracksState>()
+    fun observeState(): LiveData<TracksState> = trackStateLiveData
+
+    private val historyLiveData = MutableLiveData<ArrayList<Track>>()
     fun observeHistoryState(): LiveData<ArrayList<Track>> = historyLiveData
 
     override fun onCleared() {
         handler.removeCallbacksAndMessages(SEARCH_REQUEST_TOKEN)
     }
 
-    private fun trackSearch(expression: String) { // пока выглядит всрато, возможно не правильная реализация
-        trackInteractor.searchTrack(expression) { foundTracks, errorMessage ->
-            when {
-                errorMessage != null -> renderState(TrackState.Error)
-                foundTracks.isNullOrEmpty() -> renderState(TrackState.Empty)
-                else -> renderState(TrackState.Content(track = foundTracks))
-            }
-        }
-    }
-
-    fun searchDebounce(text: String) {
+    fun searchDebounce(changedText: String) {
         handler.removeCallbacksAndMessages(SEARCH_REQUEST_TOKEN)
 
-        val searchRunnable = Runnable { trackSearch(text) }
+        val searchRunnable = Runnable { trackSearch(changedText) }
+
+
         val postTime = SystemClock.uptimeMillis() + SEARCH_DEBOUNCE_DELAY
         handler.postAtTime(
             searchRunnable,
             SEARCH_REQUEST_TOKEN,
-            postTime
+            postTime,
         )
     }
 
+    fun getTrackSearchHistory() {
+        historyLiveData.postValue(historyInteractor.getHistoryTrack())
+    }
+
+    fun clearHistory() {
+        historyInteractor.clearHistory()
+    }
+
     fun onClick(track: Track) {
-        searchHistoryInteractor.addTrackHistory(track)
+        historyInteractor.addTrackHistory(track)
     }
 
-    fun clearHistory () {
-        searchHistoryInteractor.clearHistoryTrack()
+    private fun renderState(state: TracksState) {
+        trackStateLiveData.postValue(state)
     }
 
-    private fun renderState(state: TrackState) {
-        stateLiveData.postValue(state)
-    }
+    private fun trackSearch(text: String) {
+        if (text.isNotEmpty()) {
+            renderState(TracksState.Loading)
 
-    fun getSearchHistory() {
-        historyLiveData.postValue(searchHistoryInteractor.getHistoryTrack())
+            trackInteractor.searchTracks(text, object : TrackInteractor.TracksConsumer {
+                override fun consume(foundTracks: List<Track>?, errorMessage: Int?) {
+                    when {
+                        errorMessage != null -> {
+                            renderState(TracksState.Error)
+                        }
+                        foundTracks.isNullOrEmpty() -> {
+                            renderState(TracksState.Empty)
+                        }
+                        else -> {
+                            renderState(
+                                TracksState.Content(
+                                    tracks =  foundTracks
+                                )
+                            )
+                        }
+                    }
+                }
+            })
+        }
     }
 }

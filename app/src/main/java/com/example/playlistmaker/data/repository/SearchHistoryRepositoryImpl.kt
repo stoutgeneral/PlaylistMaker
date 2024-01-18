@@ -1,33 +1,28 @@
 package com.example.playlistmaker.data.repository
 
 import android.content.Context
+import android.content.SharedPreferences
+import com.example.playlistmaker.domain.models.ThemeStatus
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.domain.repository.SearchHistoryRepository
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class SearchHistoryRepositoryImpl(context: Context): SearchHistoryRepository {
+class SearchHistoryRepositoryImpl(context: Context) : SearchHistoryRepository {
+
     companion object {
-        const val SHARE_PREF = "SHARE_PLAYLIST_MAKER"
-        const val HISTORY_TRACK_KEY = "HISTORY_TRACK_KEY"
-        const val HISTORY_SIZE = 9
+        const val SHARED_PREFS = "playlist_maker"
+        const val HISTORY_KEY = "HISTORY_KEY"
+        const val SIZE_TRACK_HISTORY = 9
     }
 
+    private var sharedPrefs = context.getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE)
+    private val localSharedPrefs = sharedPrefs
     private var tracks = ArrayList<Track>()
-    private val sharePrefs = context.getSharedPreferences(SHARE_PREF, Context.MODE_PRIVATE)
-    private val localeShareFrefs = sharePrefs
-
-    override fun getHistoryTrack(): ArrayList<Track> {
-        val trackList = localeShareFrefs.getString(HISTORY_TRACK_KEY, null)
-        if (trackList != null) {
-            return Gson().fromJson(trackList, object : TypeToken<ArrayList<Track>>() {}.type)
-        }
-        return ArrayList()
-    }
 
     override fun addTrackHistory(track: Track) {
-        tracks = getHistoryTrack()
-        if (tracks.size > HISTORY_SIZE) {
+        tracks = getFromHistory()
+        if (tracks.size > SIZE_TRACK_HISTORY) {
             tracks.removeLast()
         } else {
             val duplicateTrack = tracks.find { it.trackId == track.trackId }
@@ -39,13 +34,23 @@ class SearchHistoryRepositoryImpl(context: Context): SearchHistoryRepository {
     }
 
     private fun saveHistoryTrack(tracks: ArrayList<Track>) {
-        localeShareFrefs.edit()
-            .putString(HISTORY_TRACK_KEY, Gson().toJson(tracks))
+        localSharedPrefs.edit()
+            .putString(HISTORY_KEY, Gson().toJson(tracks))
             .apply()
     }
 
+    override fun getFromHistory(): ArrayList<Track> {
+        val stringTracks = localSharedPrefs.getString(HISTORY_KEY, null)
+
+        if (stringTracks != null) {
+            return Gson().fromJson(stringTracks, object :
+                TypeToken<ArrayList<Track>>() {}.type)
+        }
+        return ArrayList()
+    }
+
     override fun clearHistoryTrack() {
-        localeShareFrefs.edit()
+        localSharedPrefs.edit()
             .clear()
             .apply()
     }

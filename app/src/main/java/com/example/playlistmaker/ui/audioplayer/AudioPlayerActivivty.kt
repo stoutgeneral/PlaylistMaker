@@ -1,5 +1,6 @@
 package com.example.playlistmaker.ui.audioplayer
 
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -10,6 +11,8 @@ import com.example.playlistmaker.databinding.ActivityAudioPlayerBinding
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.presentation.audioplayer.AudioPlayerViewModel
 import com.example.playlistmaker.presentation.models.TrackDetails
+import com.google.gson.Gson
+import java.io.Serializable
 
 class AudioPlayerActivivty: AppCompatActivity() {
 
@@ -26,17 +29,18 @@ class AudioPlayerActivivty: AppCompatActivity() {
         binding = ActivityAudioPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        trackDetails = getSerializable(TRACK, TrackDetails::class.java)
+
         binding.arrowBackMediaPlayer.setOnClickListener {
             finish()
         }
-
-        // я все еще не сделал трек детаилс
 
         binding.artistName.text = trackDetails.artistName
         binding.trackName.text = trackDetails.trackName
         binding.countryName.text = trackDetails.country
         binding.genreName.text = trackDetails.primaryGenreName
         binding.durationTime.text = trackDetails.trackTime
+        binding.albumName.text = trackDetails.collectionName
         binding.yearRelease.text = trackDetails.releaseYear
         binding.trackTimer.text = "00:30"
 
@@ -53,6 +57,12 @@ class AudioPlayerActivivty: AppCompatActivity() {
             updateTimer(it)
         }
 
+        viewModel.preparePlayer(url = trackDetails.previewUrl)
+
+        binding.buttonPlayTrack.setOnClickListener {
+            playbackControl()
+        }
+
         Glide
             .with(this)
             .load(trackDetails.getCoverArtwork())
@@ -60,12 +70,6 @@ class AudioPlayerActivivty: AppCompatActivity() {
             .centerCrop()
             .transform(RoundedCorners(10))
             .into(this.findViewById(R.id.track_cover))
-
-        viewModel.preparePlayer(url = trackDetails.previewUrl)
-
-        binding.buttonPlayTrack.setOnClickListener {
-            playbackControl()
-        }
     }
 
     private fun updatePlayButton (isPaused: Boolean) {
@@ -96,6 +100,14 @@ class AudioPlayerActivivty: AppCompatActivity() {
             .replace(":", "")
             .toLong()
         viewModel.playbackControl(count = count)
+    }
+
+    private fun <T : Serializable?> getSerializable(name: String, clazz: Class<T>): T
+    {
+        return if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+            intent.getSerializableExtra(name, clazz)!!
+        else
+            intent.getSerializableExtra(name) as T
     }
 }
 

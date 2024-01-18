@@ -5,13 +5,13 @@ import com.example.playlistmaker.domain.models.Track
 import java.text.SimpleDateFormat
 import java.util.*
 
-object TrackMap {
+object TrackMapper {
     fun trackMap (trackDto: TrackDto): Track {
         return Track(
             trackId = trackDto.trackId,
             trackName = trackDto.trackName,
             artistName = trackDto.artistName,
-            trackTime = getSimpleDateFormat(trackDto.trackTime),
+            trackTime = getSimpleDateFormat(trackDto.trackTimeMillis),
             artworkUrl100 = trackDto.artworkUrl100,
             collectionName = trackDto.collectionName,
             releaseDate = trackDto.releaseDate,

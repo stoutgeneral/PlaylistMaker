@@ -9,6 +9,20 @@ import com.example.playlistmaker.data.dto.TrackSearchRequest
 
 class RetrofitNetworkCustomer(private val context: Context) : NetworkClient {
 
+    override fun doRequest(dto: Any): Response {
+        if (!isConnected()) {
+            return Response().apply { resultCount = -1  }
+        }
+        if (dto !is TrackSearchRequest) {
+            return Response().apply { resultCount = 400 }
+        }
+
+        val response = RetrofitCustomer.api.search(dto.expression).execute()
+        val body = response.body() ?: Response()
+
+        return body.apply { resultCount = response.code() }
+    }
+
     private fun isConnected(): Boolean {
         val connectivityManager = context.getSystemService(
             Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -21,19 +35,5 @@ class RetrofitNetworkCustomer(private val context: Context) : NetworkClient {
             }
         }
         return false
-    }
-
-    override fun doRequest(dto: Any): Response {
-        if (!isConnected()) {
-            return Response().apply { resultCount = -1 }
-        }
-        if (dto !is TrackSearchRequest) {
-            return Response().apply { resultCount = 400 }
-        }
-
-        val response = RetrofitCustomer.api.search(dto.expression).execute()
-        val body = response.body() ?: Response()
-
-        return body.apply { resultCount = response.code() }
     }
 }

@@ -1,23 +1,19 @@
 package com.example.playlistmaker.domain.impl
 
 import com.example.playlistmaker.domain.TrackInteractor
-import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.domain.repository.TrackRepository
 import com.example.playlistmaker.util.Resource
-import java.util.concurrent.Executors
 
-class TrackInteractorImpl (private val trackRepository: TrackRepository) : TrackInteractor{
+class TrackInteractorImpl(private val repository: TrackRepository) : TrackInteractor {
 
-    private val executor = Executors.newCachedThreadPool()
+    private val executor = java.util.concurrent.Executors.newCachedThreadPool()
 
-    override fun searchTrack(expression: String, consumer: (List<Track>?, Int?) -> Unit) {
+    override fun searchTracks(expression: String, consumer: TrackInteractor.TracksConsumer) {
         executor.execute {
-            when (val resource = trackRepository.searchTrack(expression)) {
-                is Resource.Success -> consumer(resource.data, null)
-                is Resource.Error -> consumer(null, resource.message)
+            when(val resource = repository.searchTrack(expression)) {
+                is Resource.Success -> { consumer.consume(resource.data, null) }
+                is Resource.Error -> { consumer.consume(null, resource.message) }
             }
         }
     }
-
-    override fun consume(foundTrack: List<Track>?, errorMessage: Int?) {}
 }

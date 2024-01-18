@@ -50,7 +50,7 @@
             android:textSize="@dimen/text_size_additional_screens" />
 
         <Button
-            android:id="@+id/reset_text"
+            android:id="@+id/clear_text"
             android:layout_width="46dp"
             android:layout_height="wrap_content"
             android:layout_alignEnd="@+id/search_bar"
@@ -63,28 +63,23 @@
             android:visibility="invisible" />
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/track_list_view"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_track"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="visible">
+        android:layout_marginTop="24dp"
+        android:visibility="gone"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:visibility="visible" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_track"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="24dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-    </LinearLayout>
-
-    <ProgressBar android:id="@+id/progress_bar"
+    <ProgressBar
+        android:id="@+id/progress_bar"
         android:layout_width="44dp"
         android:layout_height="44dp"
         android:layout_gravity="center"
         android:layout_marginTop="148dp"
         android:indeterminateTint="@color/YP_blue"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/history_list_view"
@@ -104,28 +99,27 @@
             android:text="@string/you_search"
             android:textColor="?attr/colorSecondary"
             android:textFontWeight="500"
-            android:textSize="@dimen/medium_text_size"/>
+            android:textSize="@dimen/medium_text_size" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_history"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:visibility="gone"
-            android:id="@+id/rv_history"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
         <Button
             android:id="@+id/clear_history"
             style="@style/SmallButton"
-            android:text="@string/clear_history"/>
+            android:text="@string/clear_history" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/placeholder_message"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="visible">
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/placeholder_image"

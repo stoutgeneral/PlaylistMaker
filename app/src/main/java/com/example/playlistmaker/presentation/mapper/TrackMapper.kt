@@ -16,13 +16,13 @@ object TrackMapper {
             trackTime = track.trackTime,
             artworkUrl100 = track.artworkUrl100,
             collectionName = track.collectionName,
-            releaseYear = convertToYear(track.releaseDate),
+            releaseYear = yearInConvert(track.releaseDate),
             primaryGenreName = track.primaryGenreName,
             country = track.country,
             previewUrl = track.previewUrl
         )
     }
-    private fun convertToYear(releaseDate: String): String {
+    private fun yearInConvert(releaseDate: String): String {
         return SimpleDateFormat("yyyy", Locale.getDefault()).format(Date.from(Instant.parse(releaseDate)))
     }
 }

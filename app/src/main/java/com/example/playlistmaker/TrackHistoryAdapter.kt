@@ -6,6 +6,8 @@ import android.os.Looper
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.playlistmaker.domain.models.Track
+import com.example.playlistmaker.presentation.AudioPlayer
 import com.google.gson.Gson
 
 class TrackHistoryAdapter() : RecyclerView.Adapter<TrackViewHolder>() {

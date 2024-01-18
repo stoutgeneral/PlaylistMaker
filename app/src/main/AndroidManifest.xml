@@ -24,7 +24,7 @@
             android:name=".SettingsActivity"
             android:exported="true"/>
         <activity
-            android:name=".AudioPlayer"
+            android:name=".presentation.AudioPlayer"
             android:exported="false"/>
         <activity
             android:name=".MainActivity"

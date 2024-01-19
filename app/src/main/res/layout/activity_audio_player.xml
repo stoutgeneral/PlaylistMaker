@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.AudioPlayer">
+    tools:context=".ui.audioplayer.AudioPlayerActivivty">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineLeft"

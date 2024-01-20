@@ -16,15 +16,12 @@ import com.example.playlistmaker.ui.audioplayer.AudioPlayerActivivty
 import com.google.gson.Gson
 import kotlinx.coroutines.Runnable
 
-class AudioPlayerViewModel : ViewModel() {
+class AudioPlayerViewModel (private val audioPlayerInteractor: AudioPlayerRepository): ViewModel() {
 
     companion object {
         private const val DELAY_MILLIS = 1000L
         private val SEARCH_REQUEST_TOKEN = null
     }
-
-    private val audioPlayerInteractor: AudioPlayerRepository =
-        Creator.provideAudioPlayerInteractor()
 
     private lateinit var playerRunnable: Runnable
     private val handler = Handler(Looper.getMainLooper())

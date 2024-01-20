@@ -4,10 +4,9 @@ import android.media.MediaPlayer
 import com.example.playlistmaker.domain.repository.AudioPlayerRepository
 import com.example.playlistmaker.domain.models.StateAudioPlayer
 
-class AudioPlayerRepositoryImpl :
+class AudioPlayerRepositoryImpl (private val mediaPlayer: MediaPlayer):
     AudioPlayerRepository {
 
-    private var mediaPlayer = MediaPlayer()
     private var playerState = StateAudioPlayer.DEFAULT
 
     override fun startPlayer() {

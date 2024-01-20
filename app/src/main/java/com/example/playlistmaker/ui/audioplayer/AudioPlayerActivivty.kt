@@ -3,16 +3,14 @@ package com.example.playlistmaker.ui.audioplayer
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.ActivityAudioPlayerBinding
-import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.presentation.audioplayer.AudioPlayerViewModel
 import com.example.playlistmaker.presentation.models.TrackDetails
-import com.google.gson.Gson
 import java.io.Serializable
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AudioPlayerActivivty: AppCompatActivity() {
 
@@ -20,9 +18,10 @@ class AudioPlayerActivivty: AppCompatActivity() {
         private const val TRACK = "track"
     }
 
-    private lateinit var viewModel: AudioPlayerViewModel
     private lateinit var binding: ActivityAudioPlayerBinding
     private lateinit var trackDetails: TrackDetails
+
+    private val viewModel: AudioPlayerViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +43,6 @@ class AudioPlayerActivivty: AppCompatActivity() {
         binding.yearRelease.text = trackDetails.releaseYear
         binding.trackTimer.text = "00:30"
 
-        viewModel = ViewModelProvider(this) [AudioPlayerViewModel::class.java]
         viewModel.observePlayState().observe(this) {
             updatePlayButton(it)
         }

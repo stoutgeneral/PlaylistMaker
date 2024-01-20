@@ -1,36 +1,26 @@
 package com.example.playlistmaker.presentation.search
 
-import android.app.Application
 import android.os.Handler
 import android.os.Looper
 import android.os.SystemClock
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
-import com.example.playlistmaker.creator.Creator
+import androidx.lifecycle.ViewModel
+import com.example.playlistmaker.domain.SearchHistoryInteractor
 import com.example.playlistmaker.domain.TrackInteractor
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.ui.search.TracksState
 
-class SearchViewModel(application: Application): AndroidViewModel(application) {
+class SearchViewModel(
+    private val trackInteractor: TrackInteractor,
+    private val searchHistoryInteractor: SearchHistoryInteractor
+) : ViewModel() {
 
     companion object {
         private const val SEARCH_DEBOUNCE_DELAY = 2000L
         private val SEARCH_REQUEST_TOKEN = Any()
-
-        fun getViewModelFactory(): ViewModelProvider.Factory = viewModelFactory {
-            initializer {
-                SearchViewModel(this[APPLICATION_KEY] as Application)
-            }
-        }
     }
 
-    private val trackInteractor by lazy { Creator.provideTrackInteractor(context = getApplication()) }
-    private val historyInteractor by lazy { Creator.provideSearchHistoryInteractor(context = getApplication()) }
     private val handler = Handler(Looper.getMainLooper())
 
     private val trackStateLiveData = MutableLiveData<TracksState>()
@@ -58,15 +48,15 @@ class SearchViewModel(application: Application): AndroidViewModel(application) {
     }
 
     fun getTrackSearchHistory() {
-        historyLiveData.postValue(historyInteractor.getHistoryTrack())
+        historyLiveData.postValue(searchHistoryInteractor.getHistoryTrack())
     }
 
     fun clearHistory() {
-        historyInteractor.clearHistory()
+        searchHistoryInteractor.clearHistory()
     }
 
     fun onClick(track: Track) {
-        historyInteractor.addTrackHistory(track)
+        searchHistoryInteractor.addTrackHistory(track)
     }
 
     private fun renderState(state: TracksState) {
@@ -89,7 +79,7 @@ class SearchViewModel(application: Application): AndroidViewModel(application) {
                         else -> {
                             renderState(
                                 TracksState.Content(
-                                    tracks =  foundTracks
+                                    tracks = foundTracks
                                 )
                             )
                         }

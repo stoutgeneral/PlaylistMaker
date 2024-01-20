@@ -6,14 +6,20 @@ import android.os.Bundle
 import android.widget.Button
 import com.example.playlistmaker.ui.library.LibraryActivity
 import com.example.playlistmaker.R
+import com.example.playlistmaker.presentation.main.MainViewModel
 import com.example.playlistmaker.ui.search.SearchActivity
 import com.example.playlistmaker.ui.settings.SettingsActivity
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
+
+    private val viewModel: MainViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        viewModel.setAppTheme()
 
         val searchButton = findViewById<Button>(R.id.search_button)
         val libraryButton = findViewById<Button>(R.id.library_button)

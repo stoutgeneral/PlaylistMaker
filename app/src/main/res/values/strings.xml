@@ -13,6 +13,11 @@
     <string name="message">Спасибо разработчикам и разработчицам за крутое приложение!</string>
     <string name="user_agreement_link">https://yandex.ru/legal/practicum_offer/</string>
     <string name="not_found">Ничего не нашлось</string>
+    <string name="favorites_track">Избранные треки</string>
+    <string name="library_playlist">Плейлисты</string>
+    <string name="empty_favorites">Ваша медиатека пуста</string>
+    <string name="empty_library">Вы не создали ни одного плейлиста</string>
+    <string name="new_playlist">Новый плейлист</string>
     <string name="not_connection">Проблема со связью\n\nЗагрузка не удалась. Проверьте подключение к интернету</string>
     <string name="refreshButton">Обновить</string>
     <string name="you_search">Вы искали</string>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_empty_favorites"
+            android:src="@drawable/il_nothing_found"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="106dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_empty_favorites"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/low_padding"
+            android:fontFamily="@font/ys_display_medium"
+            android:paddingHorizontal="@dimen/high_padding"
+            android:text="@string/empty_favorites"
+            android:textAlignment="center"
+            android:textColor="?attr/colorSecondary"
+            android:textSize="@dimen/medium_text_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_empty_favorites" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

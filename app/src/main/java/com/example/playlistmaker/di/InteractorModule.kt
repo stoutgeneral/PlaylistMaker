@@ -9,25 +9,25 @@ import com.example.playlistmaker.domain.repository.AudioPlayerRepository
 import org.koin.dsl.module
 
 val interactorModule = module {
-    single<TrackInteractor> {
+    factory<TrackInteractor> {
         TrackInteractorImpl(get())
     }
 
-    single<SearchHistoryInteractor> {
+    factory<SearchHistoryInteractor> {
         SearchHistoryInteractorImpl(get())
     }
 
 
-    factory<AudioPlayerRepository> {
+    single<AudioPlayerRepository> {
         AudioPlayerInteractorImpl(get())
     }
 
 
-    single<SettingsInteractor> {
+    factory<SettingsInteractor> {
         SettingsInteractorImpl(get())
     }
 
-    single<ShareInteractor> {
+    factory<ShareInteractor> {
         ShareInteractorImpl(get())
     }
 }

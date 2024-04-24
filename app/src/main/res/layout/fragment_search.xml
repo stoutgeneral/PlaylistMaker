@@ -6,15 +6,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="?attr/colorPrimaryVariant"
-    tools:context=".ui.search.SearchActivity">
+    tools:context=".ui.search.SearchFragment">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="56dp">
-
-        <ImageView
-            android:id="@+id/arrow_back_search"
-            style="@style/ArrowBackButton" />
 
         <TextView
             style="@style/PanelHeaderNameActivity"

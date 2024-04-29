@@ -1,6 +1,5 @@
 package com.example.playlistmaker.ui.library
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

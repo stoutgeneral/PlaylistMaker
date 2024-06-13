@@ -10,10 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="56dp">
 
-        <ImageView
-            android:id="@+id/arrow_back_settings"
-            style="@style/ArrowBackButton"/>
-
         <TextView
             android:text="@string/settings"
             style="@style/PanelHeaderNameActivity"/>

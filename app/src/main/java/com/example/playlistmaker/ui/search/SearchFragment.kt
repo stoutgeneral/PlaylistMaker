@@ -5,46 +5,52 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentContainer
 import com.example.playlistmaker.R
-import com.example.playlistmaker.databinding.ActivitySearchBinding
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.presentation.mapper.TrackMapper
 import com.example.playlistmaker.presentation.search.SearchViewModel
 import com.example.playlistmaker.ui.audioplayer.AudioPlayerActivivty
+import com.example.playlistmaker.databinding.ActivityRootBinding
+import com.example.playlistmaker.databinding.FragmentSearchBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SearchActivity : AppCompatActivity() {
+class SearchFragment : Fragment() {
 
     companion object {
-        const val SEARCH_EDITTEXT = "SEARCH_EDITTEXT"
         const val EMPTY_FIELD = ""
     }
 
     private lateinit var trackAdapter: TrackAdapter
     private lateinit var searchResultsAdapter: TrackAdapter
-    private lateinit var binding: ActivitySearchBinding
+    private lateinit var binding: FragmentSearchBinding
     private lateinit var previousRequest: String
 
     private val viewModel: SearchViewModel by viewModel()
     private var simpleTextWatcher: TextWatcher? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        binding = FragmentSearchBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        binding = ActivitySearchBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        viewModel.observeState().observe(this) {
-            render(it)
+        viewModel.observeHistoryState().observe(viewLifecycleOwner) {
+            showSearchHistory(it)
         }
 
-        viewModel.observeHistoryState().observe(this) {
-            showSearchHistory(it)
+        viewModel.observeState().observe(viewLifecycleOwner) {
+            render(it)
         }
 
         trackAdapter = TrackAdapter(setAdapterListener())
@@ -69,7 +75,6 @@ class SearchActivity : AppCompatActivity() {
             override fun afterTextChanged(s: Editable?) {
             }
         }
-
         simpleTextWatcher.let { binding.searchBar.addTextChangedListener(it) }
 
         binding.clearText.setOnClickListener {
@@ -104,33 +109,11 @@ class SearchActivity : AppCompatActivity() {
             viewModel.clearHistory()
             binding.historyListView.visibility = View.GONE
         }
-
-        binding.arrowBackSearch.setOnClickListener {
-            this.finish()
-        }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    override fun onDestroyView() {
+        super.onDestroyView()
         simpleTextWatcher?.let { binding.searchBar.removeTextChangedListener(it) }
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString(SEARCH_EDITTEXT, binding.searchBar.text.toString())
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        binding.searchBar.setText(savedInstanceState.getString(SEARCH_EDITTEXT))
-    }
-
-    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
-        if (currentFocus != null) {
-            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            imm.hideSoftInputFromWindow(currentFocus!!.windowToken, 0)
-        }
-        return super.dispatchTouchEvent(ev)
     }
 
     private fun setAdapterListener(): TrackAdapter.Listener {
@@ -138,7 +121,7 @@ class SearchActivity : AppCompatActivity() {
             override fun onClick(track: Track) {
                 viewModel.onClick(track)
 
-                val intent = Intent(this@SearchActivity, AudioPlayerActivivty::class.java)
+                val intent = Intent(requireContext(), AudioPlayerActivivty::class.java)
                 intent.putExtra("track", TrackMapper.map(track))
                 startActivity(intent)
             }

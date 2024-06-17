@@ -26,7 +26,7 @@
         tools:layout="@layout/fragment_settings" />
     <activity
         android:id="@+id/audioPlayerActivity"
-        android:name="com.example.playlistmaker.ui.audioplayer.AudioPlayerActivivty"
+        android:name="com.example.playlistmaker.ui.audioplayer.AudioPlayerActivity"
         android:label="activity_audio_player"
         tools:layout="@layout/activity_audio_player" />
 </navigation>

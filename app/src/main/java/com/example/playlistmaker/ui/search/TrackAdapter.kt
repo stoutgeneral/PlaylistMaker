@@ -8,15 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmaker.R
 import com.example.playlistmaker.domain.models.Track
 
-class TrackAdapter(private var listener: Listener) : RecyclerView.Adapter<TrackViewHolder>() {
-
-    companion object {
-        private const val CLICK_DEBOUNCE_DELAY = 1000L
-    }
+class TrackAdapter(private val listener: Listener) : RecyclerView.Adapter<TrackViewHolder>() {
 
     var tracks = ArrayList<Track>()
-    private var isClickAvailability = true
-    private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrackViewHolder {
         val view = LayoutInflater
@@ -30,9 +24,7 @@ class TrackAdapter(private var listener: Listener) : RecyclerView.Adapter<TrackV
         holder.bind(track)
 
         holder.itemView.setOnClickListener {
-            if (clickDebounce()) {
                 listener.onClick(track = track)
-            }
         }
     }
 
@@ -40,16 +32,7 @@ class TrackAdapter(private var listener: Listener) : RecyclerView.Adapter<TrackV
         return tracks.size
     }
 
-    private fun clickDebounce(): Boolean {
-        val condition = isClickAvailability
-        if (isClickAvailability) {
-            isClickAvailability = false
-            handler.postDelayed({ isClickAvailability = true }, CLICK_DEBOUNCE_DELAY)
-        }
-        return condition
-    }
-
-    interface Listener {
+    fun interface Listener {
         fun onClick(track: Track)
     }
 

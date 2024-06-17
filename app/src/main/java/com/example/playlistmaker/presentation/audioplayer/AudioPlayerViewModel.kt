@@ -1,97 +1,98 @@
 package com.example.playlistmaker.presentation.audioplayer
 
+
+import android.icu.text.SimpleDateFormat
 import android.os.Handler
 import android.os.Looper
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.playlistmaker.R
-import com.example.playlistmaker.creator.Creator
-import com.example.playlistmaker.domain.impl.AudioPlayerInteractorImpl
-import com.example.playlistmaker.domain.models.StateAudioPlayer
-import com.example.playlistmaker.domain.models.Track
+import androidx.lifecycle.viewModelScope
+import com.example.playlistmaker.domain.models.State
+import com.example.playlistmaker.ui.audioplayer.StateAudioPlayer
 import com.example.playlistmaker.domain.repository.AudioPlayerRepository
-import com.example.playlistmaker.presentation.models.TrackDetails
-import com.example.playlistmaker.ui.audioplayer.AudioPlayerActivivty
-import com.google.gson.Gson
-import kotlinx.coroutines.Runnable
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.util.Locale
 
-class AudioPlayerViewModel (private val audioPlayerInteractor: AudioPlayerRepository): ViewModel() {
+
+class AudioPlayerViewModel(private val audioPlayerInteractor: AudioPlayerRepository) : ViewModel() {
 
     companion object {
-        private const val DELAY_MILLIS = 1000L
-        private val SEARCH_REQUEST_TOKEN = null
+        private const val DELAY_MILLIS = 300L
     }
 
-    private lateinit var playerRunnable: Runnable
-    private val handler = Handler(Looper.getMainLooper())
+    private var timerJob: Job? = null
 
-    private val playState = MutableLiveData<Boolean>()
-    fun observePlayState(): LiveData<Boolean> = playState
+    private val playState = MutableLiveData<StateAudioPlayer>(StateAudioPlayer.Default())
+    fun observePlayState(): LiveData<StateAudioPlayer> = playState
 
-    private val playEnableState = MutableLiveData<Boolean>()
+    /*
+    private val playEnableState = MutableLiveData<Boolean>() // У нее нет этих методов
     fun observePlayButtonState(): LiveData<Boolean> = playEnableState
 
-    private val secondState = MutableLiveData<Long>()
+    private val secondState = MutableLiveData<Long>() // этих методов у нее тоже нет
     fun observeSecondState(): LiveData<Long> = secondState
 
+     */
+
     override fun onCleared() {
+        super.onCleared()
+        timerJob?.cancel()
+        stoppingPlayer()
+    }
+
+    fun onPause() {
+        pausePlayer()
+    }
+
+    private fun stoppingPlayer() {
         audioPlayerInteractor.stoppingPlayer()
-        handler.removeCallbacksAndMessages(SEARCH_REQUEST_TOKEN)
+        StateAudioPlayer.Default()
+    }
+
+    fun playbackControl() {
+        if (audioPlayerInteractor.getCurrentState() == State.PLAYING) {
+            pausePlayer()
+        } else {
+            startPlayer()
+        }
     }
 
     fun preparePlayer(url: String) {
-        audioPlayerInteractor.preparePlayer(url = url) { state ->
-            when (state) {
-                StateAudioPlayer.PREPARED -> playEnableState.postValue(true)
-                else -> {}
-            }
+        audioPlayerInteractor.preparePlayer(url = url) {
+            playState.postValue(StateAudioPlayer.Prepared())
+            timerJob?.cancel()
         }
+        playState.postValue(StateAudioPlayer.Prepared())
     }
 
-    fun playbackControl(count: Long) {
-        if (count > 0) {
-            audioPlayerInteractor.changingPlayer { state ->
-                when (state) {
-                    StateAudioPlayer.PREPARED, StateAudioPlayer.PAUSED -> {
-                        playState.postValue(true)
-                        handler.removeCallbacks(playerRunnable)
-                    }
-                    StateAudioPlayer.PLAYING -> {
-                        playState.postValue(false)
-                        startTimer(count)
-                    }
-                    else -> {}
-                }
-            }
-        }
-    }
 
     fun pausePlayer() {
         audioPlayerInteractor.pausePlayer()
-        playState.postValue(false)
-        handler.removeCallbacksAndMessages(SEARCH_REQUEST_TOKEN)
+        playState.postValue(StateAudioPlayer.Paused(getCurrentPlayerPosition()))
+        timerJob?.cancel()
     }
 
-    fun startTimer(duration: Long) {
-        val startTime = System.currentTimeMillis()
-        playerRunnable =
-            createUpdateTimerTask(startTime, duration * DELAY_MILLIS)
-        handler.post(playerRunnable)
+    private fun startPlayer() {
+        audioPlayerInteractor.startPlayer()
+        playState.postValue(StateAudioPlayer.Playing(getCurrentPlayerPosition()))
+        startTimer()
     }
 
-    fun createUpdateTimerTask(startTime: Long, duration: Long): Runnable {
-        return object : Runnable {
-            override fun run() {
-                val elapsedTime = System.currentTimeMillis() - startTime
-                val remainingTime = duration - elapsedTime
+    private fun getCurrentPlayerPosition(): String {
+        return SimpleDateFormat(
+            "mm:ss",
+            Locale.getDefault()
+        ).format(audioPlayerInteractor.getCurrentPosition()) ?: "00:00"
+    }
 
-                if (remainingTime > 0) {
-                    secondState.postValue(remainingTime / DELAY_MILLIS)
-                    handler.postDelayed(this, DELAY_MILLIS)
-                } else {
-                    pausePlayer()
-                }
+    private fun startTimer() {
+        timerJob = viewModelScope.launch {
+            while (audioPlayerInteractor.getCurrentState() == State.PLAYING) {
+                delay(DELAY_MILLIS)
+                playState.postValue(StateAudioPlayer.Playing(getCurrentPlayerPosition()))
             }
         }
     }

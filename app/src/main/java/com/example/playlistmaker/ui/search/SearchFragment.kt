@@ -1,41 +1,46 @@
 package com.example.playlistmaker.ui.search
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainer
+import androidx.lifecycle.lifecycleScope
 import com.example.playlistmaker.R
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.presentation.mapper.TrackMapper
 import com.example.playlistmaker.presentation.search.SearchViewModel
-import com.example.playlistmaker.ui.audioplayer.AudioPlayerActivivty
-import com.example.playlistmaker.databinding.ActivityRootBinding
+import com.example.playlistmaker.ui.audioplayer.AudioPlayerActivity
 import com.example.playlistmaker.databinding.FragmentSearchBinding
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchFragment : Fragment() {
 
     companion object {
         const val EMPTY_FIELD = ""
+        const val CLICK_DEBOUNCE = 1000L
     }
 
-    private lateinit var trackAdapter: TrackAdapter
-    private lateinit var searchResultsAdapter: TrackAdapter
     private lateinit var binding: FragmentSearchBinding
     private lateinit var previousRequest: String
 
     private val viewModel: SearchViewModel by viewModel()
     private var simpleTextWatcher: TextWatcher? = null
+    private var isClickAllowed = true
+
+    private val trackAdapter = TrackAdapter {
+        switchToPlayer(it)
+    }
+
+    private val searchResultsAdapter = TrackAdapter {
+        switchToPlayer(it)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentSearchBinding.inflate(inflater, container, false)
@@ -52,9 +57,6 @@ class SearchFragment : Fragment() {
         viewModel.observeState().observe(viewLifecycleOwner) {
             render(it)
         }
-
-        trackAdapter = TrackAdapter(setAdapterListener())
-        searchResultsAdapter = TrackAdapter(setAdapterListener())
 
         binding.rvTrack.adapter = trackAdapter
 
@@ -114,18 +116,6 @@ class SearchFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         simpleTextWatcher?.let { binding.searchBar.removeTextChangedListener(it) }
-    }
-
-    private fun setAdapterListener(): TrackAdapter.Listener {
-        return object : TrackAdapter.Listener {
-            override fun onClick(track: Track) {
-                viewModel.onClick(track)
-
-                val intent = Intent(requireContext(), AudioPlayerActivivty::class.java)
-                intent.putExtra("track", TrackMapper.map(track))
-                startActivity(intent)
-            }
-        }
     }
 
     private fun render(state: TracksState) {
@@ -190,5 +180,27 @@ class SearchFragment : Fragment() {
         binding.progressBar.visibility = View.GONE
         binding.placeholderMessage.visibility = View.GONE
         binding.historyListView.visibility = View.VISIBLE
+    }
+
+    private fun clickDebounce(): Boolean {
+        val current = isClickAllowed
+        if (isClickAllowed) {
+            isClickAllowed = false
+            viewLifecycleOwner.lifecycleScope.launch {
+                delay(CLICK_DEBOUNCE)
+                isClickAllowed = true
+            }
+        }
+        return current
+    }
+
+    private fun switchToPlayer(track: Track) {
+        if (clickDebounce()) {
+            viewModel.onClick(track)
+
+            val displayIntent = Intent(requireContext(), AudioPlayerActivity::class.java)
+            displayIntent.putExtra("track", TrackMapper.map(track))
+            startActivity(displayIntent)
+        }
     }
 }

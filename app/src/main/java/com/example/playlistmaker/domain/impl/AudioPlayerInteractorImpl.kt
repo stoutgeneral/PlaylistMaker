@@ -27,7 +27,7 @@ class AudioPlayerInteractorImpl (private val audioPlayerRepository: AudioPlayerR
     }
 
     override fun getCurrentState(): State {
-        return State.DEFAULT
+        return audioPlayerRepository.getCurrentState()
     }
 
     override fun getCurrentPosition(): Int = audioPlayerRepository.getCurrentPosition()

@@ -54,10 +54,8 @@ class AudioPlayerRepositoryImpl (private val mediaPlayer: MediaPlayer):
     }
 
     override fun getCurrentState(): State {
-        TODO("Not yet implemented")
+        return playerState
     }
 
-    override fun getCurrentPosition(): Int {
-        TODO("Not yet implemented")
-    }
+    override fun getCurrentPosition(): Int = mediaPlayer.currentPosition
 }

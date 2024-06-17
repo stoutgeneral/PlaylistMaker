@@ -28,15 +28,6 @@ class AudioPlayerViewModel(private val audioPlayerInteractor: AudioPlayerReposit
     private val playState = MutableLiveData<StateAudioPlayer>(StateAudioPlayer.Default())
     fun observePlayState(): LiveData<StateAudioPlayer> = playState
 
-    /*
-    private val playEnableState = MutableLiveData<Boolean>() // У нее нет этих методов
-    fun observePlayButtonState(): LiveData<Boolean> = playEnableState
-
-    private val secondState = MutableLiveData<Long>() // этих методов у нее тоже нет
-    fun observeSecondState(): LiveData<Long> = secondState
-
-     */
-
     override fun onCleared() {
         super.onCleared()
         timerJob?.cancel()

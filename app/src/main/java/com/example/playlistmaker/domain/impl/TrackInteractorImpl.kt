@@ -21,13 +21,3 @@ class TrackInteractorImpl(private val repository: TrackRepository) : TrackIntera
         }
     }
 }
-
-
-/*
-        executor.execute {
-            when(val resource = repository.searchTrack(expression)) {
-                is Resource.Success -> { consumer.consume(resource.data, null) }
-                is Resource.Error -> { consumer.consume(null, resource.message) }
-            }
-        }
- */

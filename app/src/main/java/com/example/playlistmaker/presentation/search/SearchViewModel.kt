@@ -70,14 +70,16 @@ class SearchViewModel(
         }
     }
 
-    private fun displaySearchResult (selectedTrack: List<Track>?, errorMessage: Int?) {
+    private fun displaySearchResult(selectedTrack: List<Track>?, errorMessage: Int?) {
         when {
             selectedTrack.isNullOrEmpty() -> {
                 renderState(TracksState.Empty)
             }
+
             errorMessage != null -> {
                 renderState(TracksState.Error)
             }
+
             else -> {
                 renderState(TracksState.Content(tracks = selectedTrack))
             }

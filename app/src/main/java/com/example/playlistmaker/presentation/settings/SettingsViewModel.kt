@@ -5,7 +5,10 @@ import com.example.playlistmaker.domain.SettingsInteractor
 import com.example.playlistmaker.domain.ShareInteractor
 import com.example.playlistmaker.domain.models.ThemeStatus
 
-class SettingsViewModel(private val settingsInteractor: SettingsInteractor, private val shareInteractor: ShareInteractor) : ViewModel() {
+class SettingsViewModel(
+    private val settingsInteractor: SettingsInteractor,
+    private val shareInteractor: ShareInteractor
+) : ViewModel() {
 
 
     fun shareApp(url: String) {

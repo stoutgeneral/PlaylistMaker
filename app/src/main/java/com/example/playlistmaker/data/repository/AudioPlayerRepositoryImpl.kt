@@ -1,54 +1,61 @@
 package com.example.playlistmaker.data.repository
 
 import android.media.MediaPlayer
+import com.example.playlistmaker.domain.models.State
 import com.example.playlistmaker.domain.repository.AudioPlayerRepository
-import com.example.playlistmaker.domain.models.StateAudioPlayer
+import com.example.playlistmaker.ui.audioplayer.StateAudioPlayer
 
 class AudioPlayerRepositoryImpl (private val mediaPlayer: MediaPlayer):
     AudioPlayerRepository {
 
-    private var playerState = StateAudioPlayer.DEFAULT
+    private var playerState = State.DEFAULT
 
     override fun startPlayer() {
         mediaPlayer.start()
-        playerState = StateAudioPlayer.PLAYING
+        playerState = State.PLAYING
     }
 
     override fun pausePlayer() {
         mediaPlayer.pause()
-        playerState = StateAudioPlayer.PAUSED
+        playerState = State.PAUSED
     }
 
-    override fun preparePlayer(url: String, statusBeenChanged: (s: StateAudioPlayer) -> Unit) {
+    override fun preparePlayer(url: String, statusBeenChanged: (s: State) -> Unit) {
         mediaPlayer.setDataSource(url)
         mediaPlayer.prepareAsync()
         mediaPlayer.setOnCompletionListener {
-            playerState = StateAudioPlayer.PREPARED
-            statusBeenChanged(StateAudioPlayer.PREPARED)
+            playerState = State.PREPARED
+            statusBeenChanged(State.PREPARED)
         }
         mediaPlayer.setOnPreparedListener {
-            playerState = StateAudioPlayer.PREPARED
-            statusBeenChanged(StateAudioPlayer.PREPARED)
+            playerState = State.PREPARED
+            statusBeenChanged(State.PREPARED)
         }
     }
 
-    override fun changingPlayer(statusBeenChanged: (s: StateAudioPlayer) -> Unit) {
+    override fun changingPlayer(statusBeenChanged: (s: State) -> Unit) {
         when (playerState) {
-            StateAudioPlayer.PLAYING -> {
+            State.PLAYING -> {
                 mediaPlayer.pause()
-                playerState = StateAudioPlayer.PAUSED
+                playerState = State.PAUSED
                 statusBeenChanged(playerState)
             }
-            StateAudioPlayer.PREPARED, StateAudioPlayer.PAUSED -> {
+            State.PREPARED, State.PAUSED -> {
                 mediaPlayer.start()
-                playerState = StateAudioPlayer.PLAYING
+                playerState = State.PLAYING
                 statusBeenChanged(playerState)
             }
-            StateAudioPlayer.DEFAULT -> {}
+            State.DEFAULT -> {}
         }
     }
 
     override fun stoppingPlayer() {
         mediaPlayer.release()
     }
+
+    override fun getCurrentState(): State {
+        return playerState
+    }
+
+    override fun getCurrentPosition(): Int = mediaPlayer.currentPosition
 }

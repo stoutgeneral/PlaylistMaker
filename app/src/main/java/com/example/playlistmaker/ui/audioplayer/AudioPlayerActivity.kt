@@ -12,7 +12,7 @@ import com.example.playlistmaker.presentation.models.TrackDetails
 import java.io.Serializable
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class AudioPlayerActivivty: AppCompatActivity() {
+class AudioPlayerActivity : AppCompatActivity() {
 
     companion object {
         private const val TRACK = "track"
@@ -20,8 +20,9 @@ class AudioPlayerActivivty: AppCompatActivity() {
 
     private lateinit var binding: ActivityAudioPlayerBinding
     private lateinit var trackDetails: TrackDetails
-
     private val viewModel: AudioPlayerViewModel by viewModel()
+
+    private lateinit var timeInterval: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,21 +45,16 @@ class AudioPlayerActivivty: AppCompatActivity() {
         binding.trackTimer.text = "00:30"
 
         viewModel.observePlayState().observe(this) {
-            updatePlayButton(it)
-        }
-
-        viewModel.observePlayButtonState().observe(this) {
-            enablePlayButton(it)
-        }
-
-        viewModel.observeSecondState().observe(this) {
-            updateTimer(it)
+            timeInterval = it.progress
+            binding.buttonPlayTrack.isEnabled = it.checkingButtonStatus
+            binding.buttonPlayTrack.setImageResource(it.buttonState)
+            binding.trackTimer.text = it.progress
         }
 
         viewModel.preparePlayer(url = trackDetails.previewUrl)
 
         binding.buttonPlayTrack.setOnClickListener {
-            playbackControl()
+            viewModel.playbackControl()
         }
 
         Glide
@@ -70,39 +66,29 @@ class AudioPlayerActivivty: AppCompatActivity() {
             .into(this.findViewById(R.id.track_cover))
     }
 
-    private fun updatePlayButton (isPaused: Boolean) {
-        if (isPaused) {
-            binding.buttonPlayTrack.setImageResource(R.drawable.play_track)
-        }
-        else {
-            binding.buttonPlayTrack.setImageResource(R.drawable.pause_track)
-        }
-    }
-
-    private fun updateTimer (unitTime: Long) {
+    private fun updateTimer(unitTime: Long) {
         binding.trackTimer.text = String.format("%02d:%02d", unitTime / 60, unitTime % 60)
     }
 
-    private fun enablePlayButton (enabled: Boolean) {
+    private fun enablePlayButton(enabled: Boolean) {
         binding.buttonPlayTrack.isEnabled = enabled
     }
 
     override fun onPause() {
         super.onPause()
-        viewModel.pausePlayer()
+        viewModel.onPause()
     }
 
-    private fun playbackControl() {
+    /*private fun playbackControl() {
         val count = binding.trackTimer.text
             .toString()
             .replace(":", "")
             .toLong()
         viewModel.playbackControl(count = count)
-    }
+    }*/
 
-    private fun <T : Serializable?> getSerializable(name: String, clazz: Class<T>): T
-    {
-        return if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
+    private fun <T : Serializable?> getSerializable(name: String, clazz: Class<T>): T {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
             intent.getSerializableExtra(name, clazz)!!
         else
             intent.getSerializableExtra(name) as T

@@ -6,10 +6,13 @@ import android.net.NetworkCapabilities
 import com.example.playlistmaker.data.NetworkClient
 import com.example.playlistmaker.data.dto.Response
 import com.example.playlistmaker.data.dto.TrackSearchRequest
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import okhttp3.Dispatcher
 
 class RetrofitNetworkCustomer(private val iTunesApi: ITunesApi, private val context: Context) : NetworkClient {
 
-    override fun doRequest(dto: Any): Response {
+    override suspend fun doRequest(dto: Any): Response {
         if (!isConnected()) {
             return Response().apply { resultCount = -1  }
         }
@@ -17,10 +20,14 @@ class RetrofitNetworkCustomer(private val iTunesApi: ITunesApi, private val cont
             return Response().apply { resultCount = 400 }
         }
 
-        val response = iTunesApi.search(dto.expression).execute()
-        val body = response.body() ?: Response()
-
-        return body.apply { resultCount = response.code() }
+        return withContext(Dispatchers.IO) {
+            try {
+                val response = iTunesApi.search(dto.expression)
+                response.apply { resultCount = 200 }
+            } catch (e: Throwable) {
+                Response().apply { resultCount = 500 }
+            }
+        }
     }
 
     private fun isConnected(): Boolean {

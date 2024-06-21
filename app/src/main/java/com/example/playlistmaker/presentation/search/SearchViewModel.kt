@@ -43,7 +43,10 @@ class SearchViewModel(
     }
 
     fun getTrackSearchHistory() {
-        historyLiveData.postValue(searchHistoryInteractor.getHistoryTrack())
+        viewModelScope.launch {
+            val history = searchHistoryInteractor.getHistoryTrack()
+            historyLiveData.postValue(history)
+        }
     }
 
     fun clearHistory() {
@@ -67,6 +70,8 @@ class SearchViewModel(
                     displaySearchResult(pair.first, pair.second)
                 }
             }
+        } else {
+            renderState(TracksState.Default)
         }
     }
 

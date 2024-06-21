@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.playlistmaker.R
 import com.example.playlistmaker.domain.models.Track
-import com.example.playlistmaker.presentation.mapper.TrackMapper
 import com.example.playlistmaker.presentation.search.SearchViewModel
 import com.example.playlistmaker.ui.audioplayer.AudioPlayerActivity
 import com.example.playlistmaker.databinding.FragmentSearchBinding
@@ -98,8 +97,6 @@ class SearchFragment : Fragment() {
 
         binding.searchBar.setOnFocusChangeListener { _, hasFocus ->
             viewModel.getTrackSearchHistory()
-            binding.historyListView.visibility =
-                if (hasFocus && binding.searchBar.text.isEmpty()) View.VISIBLE else View.GONE
         }
 
         binding.placeholderButton.setOnClickListener {
@@ -113,6 +110,11 @@ class SearchFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        viewModel.getTrackSearchHistory()
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         simpleTextWatcher?.let { binding.searchBar.removeTextChangedListener(it) }
@@ -124,7 +126,14 @@ class SearchFragment : Fragment() {
             is TracksState.Error -> showError()
             is TracksState.Empty -> showEmpty()
             is TracksState.Content -> showContent(state.tracks)
+            is TracksState.Default -> allGone()
         }
+    }
+
+    private fun allGone() {
+        binding.progressBar.visibility = View.GONE
+        binding.placeholderMessage.visibility = View.GONE
+        binding.rvTrack.visibility = View.GONE
     }
 
     private fun showLoading() {
@@ -199,7 +208,7 @@ class SearchFragment : Fragment() {
             viewModel.onClick(track)
 
             val displayIntent = Intent(requireContext(), AudioPlayerActivity::class.java)
-            displayIntent.putExtra("track", TrackMapper.map(track))
+            displayIntent.putExtra("track", track)
             startActivity(displayIntent)
         }
     }

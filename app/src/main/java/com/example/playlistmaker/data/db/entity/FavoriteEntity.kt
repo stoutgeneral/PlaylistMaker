@@ -1,8 +1,11 @@
-package com.example.playlistmaker.domain.models
+package com.example.playlistmaker.data.db.entity
 
-import java.io.Serializable
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-data class Track(
+@Entity(tableName = "favorite_entity")
+data class FavoriteEntity(
+    @PrimaryKey
     val trackId: Int,
     val trackName: String,
     val artistName: String,
@@ -13,7 +16,5 @@ data class Track(
     val primaryGenreName: String,
     val country: String,
     val previewUrl: String,
-    var isFavorite: Boolean = false
-) : Serializable {
-    fun getCoverArtwork() = artworkUrl100?.replaceAfterLast('/', "512x512bb.jpg")
-}
+    val insertTimeStamp: Long = System.currentTimeMillis()
+)

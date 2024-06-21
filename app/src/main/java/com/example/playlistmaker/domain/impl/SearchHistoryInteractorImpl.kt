@@ -12,7 +12,7 @@ class SearchHistoryInteractorImpl(
         searchHistoryRepository.addTrackHistory(track = track)
     }
 
-    override fun getHistoryTrack(): ArrayList<Track> {
+    override suspend fun getHistoryTrack(): ArrayList<Track> {
         return searchHistoryRepository.getFromHistory()
     }
 

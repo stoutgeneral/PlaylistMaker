@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.playlistmaker.data.db.entity.FavoriteEntity
 import com.example.playlistmaker.domain.FavoriteInteractor
 import com.example.playlistmaker.domain.models.State
 import com.example.playlistmaker.domain.models.Track
@@ -28,7 +29,7 @@ class AudioPlayerViewModel(private val audioPlayerInteractor: AudioPlayerReposit
     private val playState = MutableLiveData<StateAudioPlayer>(StateAudioPlayer.Default())
     fun observePlayState(): LiveData<StateAudioPlayer> = playState
 
-    private val isFavorite = MutableLiveData<Boolean>()
+    private var isFavorite = MutableLiveData<Boolean>()
     fun observeFavoriteState(): LiveData<Boolean> = isFavorite
 
     override fun onCleared() {
@@ -63,7 +64,7 @@ class AudioPlayerViewModel(private val audioPlayerInteractor: AudioPlayerReposit
     }
 
 
-    fun pausePlayer() {
+    private fun pausePlayer() {
         audioPlayerInteractor.pausePlayer()
         playState.postValue(StateAudioPlayer.Paused(getCurrentPlayerPosition()))
         timerJob?.cancel()
@@ -71,12 +72,14 @@ class AudioPlayerViewModel(private val audioPlayerInteractor: AudioPlayerReposit
 
     fun onFavoriteClicked(track: Track) {
         viewModelScope.launch {
-            if (track.isFavorite) {
+            val isTrackFavorite = favoriteInteractor.isTrackFavorite(track.trackId)
+
+            if (isTrackFavorite) {
                 favoriteInteractor.delete(track)
             } else {
                 favoriteInteractor.add(track)
             }
-            isFavorite.postValue(!track.isFavorite)
+            isFavorite.postValue(!isTrackFavorite)
         }
     }
 

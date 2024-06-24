@@ -25,8 +25,12 @@ class FavoriteRepositoryImpl(private val appDataBase: AppDataBase, private val f
         appDataBase.getFavoriteDao().delete(favoriteMapper.map(track))
     }
 
+    override suspend fun isTrackFavorite(trackId: Int): Boolean {
+        val trackIds = appDataBase.getFavoriteDao().getId()
+        return trackIds?.contains(trackId)?: false
+    }
+
     private fun convertFavoritesEntity(tracks: List<FavoriteEntity>): List<Track> {
         return tracks.map {favoriteMapper.map(it)}
     }
-
 }

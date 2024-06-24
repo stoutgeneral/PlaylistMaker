@@ -39,15 +39,6 @@ class AudioPlayerActivity : AppCompatActivity() {
             finish()
         }
 
-        binding.artistName.text = track.artistName
-        binding.trackName.text = track.trackName
-        binding.countryName.text = track.country
-        binding.genreName.text = track.primaryGenreName
-        binding.durationTime.text = track.trackTime
-        binding.albumName.text = track.collectionName
-        binding.yearRelease.text = convertToYear(track.releaseDate)
-        binding.trackTimer.text = "00:30"
-
         viewModel.observePlayState().observe(this) {
             timeInterval = it.progress
             binding.buttonPlayTrack.isEnabled = it.checkingButtonStatus
@@ -61,7 +52,19 @@ class AudioPlayerActivity : AppCompatActivity() {
             } else {
                 binding.buttonFavorites.setImageResource(R.drawable.add_favorites)
             }
+            track.isFavorite = !isFavorite
         }
+
+        binding.artistName.text = track.artistName
+        binding.trackName.text = track.trackName
+        binding.countryName.text = track.country
+        binding.genreName.text = track.primaryGenreName
+        binding.durationTime.text = track.trackTime
+        binding.albumName.text = track.collectionName
+        binding.yearRelease.text = convertToYear(track.releaseDate)
+        binding.trackTimer.text = "00:30"
+
+        if (track.isFavorite) binding.buttonFavorites.setImageResource(R.drawable.added_favorite)
 
         viewModel.preparePlayer(url = track.previewUrl)
 

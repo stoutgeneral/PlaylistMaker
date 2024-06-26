@@ -7,6 +7,7 @@ sealed interface TracksState {
     object Loading : TracksState
     object Error : TracksState
     object Empty : TracksState
+    object Default : TracksState
 
     data class Content(
         val tracks: List<Track>

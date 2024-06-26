@@ -27,4 +27,26 @@
     <string name="year">Год</string>
     <string name="genre">Жанр</string>
     <string name="country">Страна</string>
+    <string name="title">Название</string>
+    <string name="description">Описание</string>
+    <string name="create">Создать</string>
+    <string name="playlist_add">Добавить плейлист</string>
+    <string name="playlist_created">Плейлист "%s" создан</string>
+    <string name="playlist_track_has_already_add">Трек уже добавлен в плейлист "%s"</string>
+    <string name="playlist_track_has_been_added">Добавлено в плейлист "%s"</string>
+    <string name="image_is_not_selected">Картинка не выбрана</string>
+    <string name="playlist_alert_title">Завершить создание плейлиста?</string>
+    <string name="playlist_alert_message">Все несохраненные данные будут потеряны</string>
+    <string name="playlist_alert_cancel">Отмена</string>
+    <string name="playlist_alert_confirm">Завершить</string>
+    <string name="notification_permission">Это разрешения необходимо для добавления картинки к плейлисту</string>
+
+    <plurals name="track_counter">
+        <item quantity="zero">%1$d треков</item>
+        <item quantity="one">%1$d трек</item>
+        <item quantity="two">%1$d трека</item>
+        <item quantity="few">%1$d трека</item>
+        <item quantity="many">%1$d треков</item>
+        <item quantity="other">%1$d треков</item>
+    </plurals>
 </resources>

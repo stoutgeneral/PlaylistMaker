@@ -13,6 +13,8 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 import com.example.playlistmaker.data.db.dao.FavoriteDao;
 import com.example.playlistmaker.data.db.dao.FavoriteDao_Impl;
+import com.example.playlistmaker.data.db.dao.PlaylistDao;
+import com.example.playlistmaker.data.db.dao.PlaylistDao_Impl;
 import java.lang.Class;
 import java.lang.Override;
 import java.lang.String;
@@ -28,20 +30,24 @@ import java.util.Set;
 public final class AppDataBase_Impl extends AppDataBase {
   private volatile FavoriteDao _favoriteDao;
 
+  private volatile PlaylistDao _playlistDao;
+
   @Override
   @NonNull
   protected SupportSQLiteOpenHelper createOpenHelper(@NonNull final DatabaseConfiguration config) {
-    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(1) {
+    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(2) {
       @Override
       public void createAllTables(@NonNull final SupportSQLiteDatabase db) {
         db.execSQL("CREATE TABLE IF NOT EXISTS `favorite_entity` (`trackId` INTEGER NOT NULL, `trackName` TEXT NOT NULL, `artistName` TEXT NOT NULL, `trackTime` TEXT NOT NULL, `artworkUrl100` TEXT NOT NULL, `collectionName` TEXT NOT NULL, `releaseDate` TEXT NOT NULL, `primaryGenreName` TEXT NOT NULL, `country` TEXT NOT NULL, `previewUrl` TEXT NOT NULL, `insertTimeStamp` INTEGER NOT NULL, PRIMARY KEY(`trackId`))");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `playlist_entity` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT, `description` TEXT, `uri` TEXT, `tracks` TEXT, `trackCounter` INTEGER NOT NULL)");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'fb410473af92cf9af12a82ba5f952747')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '79b2df3d76a35d671966787388a1f6b3')");
       }
 
       @Override
       public void dropAllTables(@NonNull final SupportSQLiteDatabase db) {
         db.execSQL("DROP TABLE IF EXISTS `favorite_entity`");
+        db.execSQL("DROP TABLE IF EXISTS `playlist_entity`");
         final List<? extends RoomDatabase.Callback> _callbacks = mCallbacks;
         if (_callbacks != null) {
           for (RoomDatabase.Callback _callback : _callbacks) {
@@ -106,9 +112,25 @@ public final class AppDataBase_Impl extends AppDataBase {
                   + " Expected:\n" + _infoFavoriteEntity + "\n"
                   + " Found:\n" + _existingFavoriteEntity);
         }
+        final HashMap<String, TableInfo.Column> _columnsPlaylistEntity = new HashMap<String, TableInfo.Column>(6);
+        _columnsPlaylistEntity.put("id", new TableInfo.Column("id", "INTEGER", false, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPlaylistEntity.put("name", new TableInfo.Column("name", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPlaylistEntity.put("description", new TableInfo.Column("description", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPlaylistEntity.put("uri", new TableInfo.Column("uri", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPlaylistEntity.put("tracks", new TableInfo.Column("tracks", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPlaylistEntity.put("trackCounter", new TableInfo.Column("trackCounter", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysPlaylistEntity = new HashSet<TableInfo.ForeignKey>(0);
+        final HashSet<TableInfo.Index> _indicesPlaylistEntity = new HashSet<TableInfo.Index>(0);
+        final TableInfo _infoPlaylistEntity = new TableInfo("playlist_entity", _columnsPlaylistEntity, _foreignKeysPlaylistEntity, _indicesPlaylistEntity);
+        final TableInfo _existingPlaylistEntity = TableInfo.read(db, "playlist_entity");
+        if (!_infoPlaylistEntity.equals(_existingPlaylistEntity)) {
+          return new RoomOpenHelper.ValidationResult(false, "playlist_entity(com.example.playlistmaker.data.db.entity.PlaylistEntity).\n"
+                  + " Expected:\n" + _infoPlaylistEntity + "\n"
+                  + " Found:\n" + _existingPlaylistEntity);
+        }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "fb410473af92cf9af12a82ba5f952747", "befa74440cdc05621c6f11abbace7d53");
+    }, "79b2df3d76a35d671966787388a1f6b3", "106f6608cc92269e6a7abbd8604a4815");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;
@@ -119,7 +141,7 @@ public final class AppDataBase_Impl extends AppDataBase {
   protected InvalidationTracker createInvalidationTracker() {
     final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     final HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "favorite_entity");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "favorite_entity","playlist_entity");
   }
 
   @Override
@@ -129,6 +151,7 @@ public final class AppDataBase_Impl extends AppDataBase {
     try {
       super.beginTransaction();
       _db.execSQL("DELETE FROM `favorite_entity`");
+      _db.execSQL("DELETE FROM `playlist_entity`");
       super.setTransactionSuccessful();
     } finally {
       super.endTransaction();
@@ -144,6 +167,7 @@ public final class AppDataBase_Impl extends AppDataBase {
   protected Map<Class<?>, List<Class<?>>> getRequiredTypeConverters() {
     final HashMap<Class<?>, List<Class<?>>> _typeConvertersMap = new HashMap<Class<?>, List<Class<?>>>();
     _typeConvertersMap.put(FavoriteDao.class, FavoriteDao_Impl.getRequiredConverters());
+    _typeConvertersMap.put(PlaylistDao.class, PlaylistDao_Impl.getRequiredConverters());
     return _typeConvertersMap;
   }
 
@@ -172,6 +196,20 @@ public final class AppDataBase_Impl extends AppDataBase {
           _favoriteDao = new FavoriteDao_Impl(this);
         }
         return _favoriteDao;
+      }
+    }
+  }
+
+  @Override
+  public PlaylistDao getPlaylistDao() {
+    if (_playlistDao != null) {
+      return _playlistDao;
+    } else {
+      synchronized(this) {
+        if(_playlistDao == null) {
+          _playlistDao = new PlaylistDao_Impl(this);
+        }
+        return _playlistDao;
       }
     }
   }

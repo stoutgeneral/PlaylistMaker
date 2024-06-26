@@ -4,12 +4,14 @@ import android.content.Context
 import android.media.MediaPlayer
 import androidx.room.Room
 import com.example.playlistmaker.data.ExternalNavigator
+import com.example.playlistmaker.data.ImageStorage
 import com.example.playlistmaker.data.NetworkClient
 import com.example.playlistmaker.data.db.AppDataBase
 import com.example.playlistmaker.data.impl.ExternalNavigatorImpl
 import com.example.playlistmaker.data.network.ITunesApi
 import com.example.playlistmaker.data.network.RetrofitNetworkCustomer
 import com.example.playlistmaker.data.repository.SearchHistoryRepositoryImpl
+import com.example.playlistmaker.data.storage.ImageStorageImpl
 import com.example.playlistmaker.domain.repository.SearchHistoryRepository
 import com.google.gson.Gson
 import org.koin.android.ext.koin.androidContext
@@ -49,6 +51,12 @@ val dataModule = module {
     }
 
     single {
-        Room.databaseBuilder(androidContext(), AppDataBase::class.java, "playlist.db").build()
+        Room.databaseBuilder(androidContext(), AppDataBase::class.java, "playlist.db")
+            .fallbackToDestructiveMigration()
+            .build()
+    }
+
+    single<ImageStorage> {
+        ImageStorageImpl(get())
     }
 }

@@ -43,6 +43,14 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_empty_playlist" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rv_playlists"
+            android:paddingHorizontal="@dimen/low_padding"
+            android:layout_marginTop="@dimen/low_padding"
+            app:layout_constraintBaseline_toBottomOf="@id/bt_new_playlist"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>

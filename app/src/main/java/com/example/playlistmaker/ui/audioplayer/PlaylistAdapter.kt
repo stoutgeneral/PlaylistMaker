@@ -23,6 +23,10 @@ class PlaylistAdapter(private val listener: Listener) : RecyclerView.Adapter<Pla
     override fun onBindViewHolder(holder: PlaylistViewHolder, position: Int) {
         val playlist = playlists[position]
         holder.bind(playlist)
+
+        holder.itemView.setOnClickListener {
+            listener.onClick(playlist)
+        }
     }
 
     fun interface Listener {

@@ -22,7 +22,6 @@ import androidx.annotation.RequiresApi
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
@@ -36,6 +35,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.markodevcic.peko.PermissionRequester
 import com.markodevcic.peko.PermissionResult
 import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CreatePlaylistsFragment : Fragment() {
 
@@ -47,17 +47,8 @@ class CreatePlaylistsFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentCreatePlaylistsBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
     private lateinit var binding: FragmentCreatePlaylistsBinding
-    private val viewModel: CreatePlaylistFragmentViewModel by viewModels() // хм [2]
+    private val viewModel: CreatePlaylistFragmentViewModel by viewModel()
 
     private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) {
         if (it != null) {
@@ -71,6 +62,15 @@ class CreatePlaylistsFragment : Fragment() {
         } else {
             Log.d("PhotoPicker", R.string.image_is_not_selected.toString())
         }
+    }
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentCreatePlaylistsBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     private val requester = PermissionRequester.instance()

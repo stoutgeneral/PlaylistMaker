@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.playlistmaker.ui.root.RootActivity">
+    tools:context="com.example.playlistmaker.ui.library.CreatePlaylistsFragment">
 
     <ImageView
         android:id="@+id/back"
@@ -116,6 +116,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:layout_marginBottom="@dimen/distance_between_elements"
         android:text="@string/create"
         android:textSize="@dimen/text_size_additional_screens"
         android:textAllCaps="false"

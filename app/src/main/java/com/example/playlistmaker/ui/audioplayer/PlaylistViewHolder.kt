@@ -14,9 +14,8 @@ import com.example.playlistmaker.domain.models.Playlist
 class PlaylistViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val playlistName: TextView = itemView.findViewById(R.id.playlist_add_name)
-    private val cover: ImageView = itemView.findViewById(R.id.playlist_cover)
-    private val playlistTrackCounter: TextView =
-        itemView.findViewById(R.id.playlist_add_track_counter)
+    private val cover: ImageView = itemView.findViewById(R.id.playlist_add_cover)
+    private val playlistTrackCounter: TextView = itemView.findViewById(R.id.playlist_add_track_counter)
 
     @SuppressLint("CheckResult")
     fun bind(item: Playlist) {

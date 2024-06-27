@@ -46,8 +46,8 @@ class AudioPlayerViewModel(
     private val playlistState = MutableLiveData<PlaylistState>(PlaylistState.Empty)
     fun observePlaylistState(): LiveData<PlaylistState> = playlistState
 
-    private val addedPlaylistState = MutableLiveData<PlaylistStateTrack>()
-    fun observeAddedPlaylistState(): LiveData<PlaylistStateTrack> = addedPlaylistState
+    private val addedToPlaylistState = MutableLiveData<PlaylistStateTrack>()
+    fun observeAddedPlaylistState(): LiveData<PlaylistStateTrack> = addedToPlaylistState
 
     override fun onCleared() {
         super.onCleared()
@@ -134,17 +134,15 @@ class AudioPlayerViewModel(
     }
 
     fun addTrackInPlaylist(playlist: Playlist, track: Track) {
-        when {
-            playlist.tracks.isEmpty() -> {
+        if (playlist.tracks.isEmpty()) {
+            addTrackToPlaylist(playlist, track.trackId)
+            addedToPlaylistState.postValue(PlaylistStateTrack.Added(playlist.name))
+        } else {
+            if (playlist.tracks.contains(track.trackId)) {
+                addedToPlaylistState.postValue(PlaylistStateTrack.Respond(playlist.name))
+            } else {
                 addTrackToPlaylist(playlist, track.trackId)
-                addedPlaylistState.postValue(PlaylistStateTrack.Added(playlist.name))
-            }
-            playlist.tracks.contains(track.trackId) -> {
-                addedPlaylistState.postValue(PlaylistStateTrack.Respond(playlist.name))
-            }
-            else -> {
-                addTrackToPlaylist(playlist, track.trackId)
-                addedPlaylistState.postValue(PlaylistStateTrack.Added(playlist.name))
+                addedToPlaylistState.postValue(PlaylistStateTrack.Added(playlist.name))
             }
         }
     }

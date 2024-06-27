@@ -117,17 +117,17 @@ class AudioPlayerActivity : AppCompatActivity() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
         })
 
-        viewModel.observeAddedPlaylistState().observe(this) {added ->
-            when (added) {
-                is PlaylistStateTrack.Respond -> renderToast(added.name?: "", false)
+        viewModel.observeAddedPlaylistState().observe(this) {addedToPlaylist ->
+            when (addedToPlaylist) {
+                is PlaylistStateTrack.Respond -> renderToast(addedToPlaylist.name, false)
                 is PlaylistStateTrack.Added -> {
                     bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
-                    renderToast(added.name?: "", true)
+                    renderToast(addedToPlaylist.name, true)
                 }
             }
         }
 
-        binding.addPlaylistButton.setOnClickListener {
+        binding.addPlaylistButton.setOnClickListener {// кнопка, которая добавляет трек в плейлист. Она работает, фрагмент вызывается.
             viewModel.getPlaylists()
             binding.overlay.visibility = View.VISIBLE
             bottomSheetBehavior.halfExpandedRatio = 0.65F
@@ -171,7 +171,9 @@ class AudioPlayerActivity : AppCompatActivity() {
     }
 
     private fun addTrackInPlaylist(playlist: Playlist) {
-        if (clickDebounce()) viewModel.addTrackInPlaylist(playlist, track)
+        if (clickDebounce()) {
+            viewModel.addTrackInPlaylist(playlist, track)
+        }
     }
 
     private fun clickDebounce(): Boolean {
@@ -190,6 +192,7 @@ class AudioPlayerActivity : AppCompatActivity() {
         when (state) {
             is PlaylistState.Empty -> showEmpty()
             is PlaylistState.Content -> showContent(state.playlists)
+            else -> {}
         }
     }
 
@@ -204,7 +207,7 @@ class AudioPlayerActivity : AppCompatActivity() {
         binding.recyclerPlaylistsInPLayer.visibility = View.VISIBLE
     }
 
-    private fun renderToast(playlistName: String, added: Boolean) {
+    private fun renderToast(playlistName: String?, added: Boolean) {
         if (added) {
             Toast.makeText(
                 this,

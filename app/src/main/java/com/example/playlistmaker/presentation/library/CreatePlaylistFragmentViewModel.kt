@@ -7,8 +7,8 @@ import com.example.playlistmaker.domain.PlaylistInteractor
 import com.example.playlistmaker.domain.models.Playlist
 
 class CreatePlaylistFragmentViewModel (private val playlistInteractor: PlaylistInteractor): ViewModel() {
-    private val playlist = Playlist (tracks = ArrayList())
 
+    private val playlist = Playlist (tracks = ArrayList())
     private val playlistState = MutableLiveData<Playlist>()
     fun observePlaylistState(): LiveData<Playlist> = playlistState
 

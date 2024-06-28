@@ -51,7 +51,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_end="@dimen/high_padding"/>
+        app:layout_constraintGuide_end="@dimen/medium_padding"/>
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/barrier_bottom_pl"
@@ -72,7 +72,7 @@
         app:layout_constraintEnd_toStartOf="@+id/right_border_pl_24"
         app:layout_constraintStart_toStartOf="@+id/left_border_pl_24"
         app:layout_constraintTop_toBottomOf="@+id/create_playlist_header"
-        app:layout_constraintBottom_toTopOf="@id/input_layout_name"/>
+        app:layout_constraintBottom_toTopOf="@id/input_layout_name" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/input_layout_name"
@@ -81,7 +81,7 @@
         app:layout_constraintTop_toBottomOf="@id/playlist_image"
         app:layout_constraintStart_toStartOf="@id/left_border_pl_16"
         app:layout_constraintEnd_toEndOf="@id/right_border_pl_16"
-        >
+        app:boxStrokeColor="@color/YP_blue">
         
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/input_edit_text_name"
@@ -89,7 +89,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="@dimen/text_size_additional_screens"
-            android:fontFamily="@font/ys_display_regular"/>
+            android:fontFamily="@font/ys_display_regular"
+            android:focusableInTouchMode="true"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -100,7 +101,8 @@
         app:layout_constraintTop_toBottomOf="@id/input_layout_name"
         app:layout_constraintStart_toStartOf="@id/left_border_pl_16"
         app:layout_constraintEnd_toEndOf="@id/right_border_pl_16"
-        app:layout_constraintBottom_toTopOf="@id/barrier_bottom_pl">
+        app:layout_constraintBottom_toTopOf="@id/barrier_bottom_pl"
+        app:boxStrokeColor="@color/YP_blue">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/input_edit_text_description"
@@ -108,7 +110,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="@dimen/text_size_additional_screens"
-            android:fontFamily="@font/ys_display_regular"/>
+            android:fontFamily="@font/ys_display_regular"
+            android:focusableInTouchMode="true" />
     </com.google.android.material.textfield.TextInputLayout>
     
     <androidx.appcompat.widget.AppCompatButton
@@ -125,6 +128,7 @@
         android:letterSpacing="0"
         android:enabled="false"
         android:maxLines="1"
+        android:background="@drawable/selector_button_playlist"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/right_border_pl_16"
         app:layout_constraintStart_toStartOf="@id/left_border_pl_16"/>

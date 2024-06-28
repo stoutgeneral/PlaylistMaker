@@ -211,13 +211,13 @@ class AudioPlayerActivity : AppCompatActivity() {
         if (added) {
             Toast.makeText(
                 this,
-                getString(R.string.playlist_track_has_already_add),
+                getString(R.string.playlist_track_has_been_added, playlistName),
                 Toast.LENGTH_SHORT
             ).show()
         } else {
             Toast.makeText(
                 this,
-                getString(R.string.playlist_track_has_been_added),
+                getString(R.string.playlist_track_has_already_add, playlistName),
                 Toast.LENGTH_SHORT
             ).show()
         }

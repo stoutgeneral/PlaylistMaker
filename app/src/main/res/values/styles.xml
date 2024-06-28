@@ -136,15 +136,15 @@
     <style name="AllertDialog" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
         <item name="colorSurface">@color/YP_white</item>
         <item name="materialAlertDialogTitleTextStyle">@style/MaterialAlertTitleText</item>
-        <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertBodyText</item>
+        <item name="materialAlertDialogBodyTextStyle">@style/MaterialAlertDialogBodyText</item>
     </style>
 
     <style name="MaterialAlertTitleText" parent="@style/MaterialAlertDialog.MaterialComponents.Title.Text">
-        <item name="android:textColor">@color/YP_black</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="MaterialAlertBodyText" parent="@style/MaterialAlertDialog.MaterialComponents.Body.Text">
-        <item name="android:textColor">@color/YP_black</item>
+    <style name="MaterialAlertDialogBodyText" parent="@style/MaterialAlertDialog.MaterialComponents.Body.Text">
+        <item name="android:textColor">@color/black</item>
         <item name="android:singleLine">false</item>
         <item name="android:maxLines">5</item>
     </style>

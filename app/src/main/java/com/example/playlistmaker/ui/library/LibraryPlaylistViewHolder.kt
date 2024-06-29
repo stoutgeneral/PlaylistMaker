@@ -28,7 +28,7 @@ class LibraryPlaylistViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
 
         Glide.with(itemView)
             .load(item.uri)
-            .placeholder(R.drawable.placeholder_image)
+            .placeholder(R.drawable.placeholder)
             .transform(CenterCrop(), RoundedCorners(itemView.context.resources.getDimensionPixelOffset(R.dimen.distance_between_elements)))
             .into(itemView.findViewById(R.id.playlist_cover))
     }

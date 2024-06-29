@@ -180,15 +180,18 @@ class SearchFragment : Fragment() {
     }
 
     private fun showSearchHistory(tracks: ArrayList<Track>) {
-        searchResultsAdapter.tracks = tracks
-        binding.rvHistory.adapter = searchResultsAdapter
-        searchResultsAdapter.notifyDataSetChanged()
-
-        binding.rvHistory.visibility = View.VISIBLE
-        binding.rvTrack.visibility = View.GONE
-        binding.progressBar.visibility = View.GONE
-        binding.placeholderMessage.visibility = View.GONE
-        binding.historyListView.visibility = View.VISIBLE
+        if (tracks.isEmpty()) {
+            binding.historyListView.visibility = View.GONE
+        } else {
+            searchResultsAdapter.tracks = tracks
+            binding.rvHistory.adapter = searchResultsAdapter
+            searchResultsAdapter.notifyDataSetChanged()
+            binding.rvHistory.visibility = View.VISIBLE
+            binding.rvTrack.visibility = View.GONE
+            binding.progressBar.visibility = View.GONE
+            binding.placeholderMessage.visibility = View.GONE
+            binding.historyListView.visibility = View.VISIBLE
+        }
     }
 
     private fun clickDebounce(): Boolean {

@@ -14,7 +14,7 @@
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/placeholder_image"
+        android:src="@drawable/placeholder"
         />
 
     <LinearLayout

@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintDimensionRatio="H,1:1"
-        tools:src="@drawable/placeholder_image"/>
+        tools:src="@drawable/placeholder"/>
 
     <TextView
         style="@style/PlaylistRv"

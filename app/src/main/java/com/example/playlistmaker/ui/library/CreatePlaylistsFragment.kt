@@ -166,7 +166,6 @@ class CreatePlaylistsFragment : Fragment() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun checkPermission(): Boolean {
         val permissionProvided = ContextCompat.checkSelfPermission(
             requireContext(),
@@ -175,9 +174,8 @@ class CreatePlaylistsFragment : Fragment() {
         return permissionProvided == PackageManager.PERMISSION_GRANTED
     }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun getPermissionType(): String {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) Manifest.permission.READ_MEDIA_IMAGES
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) Manifest.permission.READ_MEDIA_IMAGES
         else Manifest.permission.READ_EXTERNAL_STORAGE
     }
 

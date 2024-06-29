@@ -20,7 +20,9 @@ import kotlinx.coroutines.launch
 class FavoritesFragment : Fragment() {
 
     companion object {
-        fun newInstance() = FavoritesFragment()
+        fun newInstance() : FavoritesFragment {
+            return FavoritesFragment()
+        }
         private const val CLICK_DEBOUNCE = 1000L
     }
 

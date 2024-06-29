@@ -1,8 +1,10 @@
 package com.example.playlistmaker.di
 
 import com.example.playlistmaker.presentation.audioplayer.AudioPlayerViewModel
+import com.example.playlistmaker.presentation.library.CreatePlaylistFragmentViewModel
 import com.example.playlistmaker.presentation.library.FavoritesFragmentViewModel
 import com.example.playlistmaker.presentation.library.FragmentLibraryPlaylistViewModel
+import com.example.playlistmaker.presentation.library.PlaylistFragmentViewModel
 import com.example.playlistmaker.presentation.root.RootViewModel
 import com.example.playlistmaker.presentation.search.SearchViewModel
 import com.example.playlistmaker.presentation.settings.SettingsViewModel
@@ -15,7 +17,7 @@ val viewModule = module {
     }
 
     viewModel {
-        AudioPlayerViewModel(get(), get())
+        AudioPlayerViewModel(get(), get(), get())
     }
 
     viewModel {
@@ -31,7 +33,14 @@ val viewModule = module {
     }
 
     viewModel {
-        FragmentLibraryPlaylistViewModel()
+        FragmentLibraryPlaylistViewModel(get())
     }
 
+    viewModel {
+        PlaylistFragmentViewModel(get())
+    }
+
+    viewModel {
+        CreatePlaylistFragmentViewModel(get())
+    }
 }

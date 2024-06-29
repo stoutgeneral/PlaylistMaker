@@ -9,8 +9,7 @@ import com.example.playlistmaker.presentation.models.PlaylistState
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class FragmentLibraryPlaylistViewModel(private val playlistInteractor: PlaylistInteractor): ViewModel() {
-
+class PlaylistFragmentViewModel (private val playlistInteractor: PlaylistInteractor): ViewModel() {
     private val playlistState = MutableLiveData<PlaylistState>(PlaylistState.Empty)
     fun observePlaylistState(): LiveData<PlaylistState> = playlistState
 
@@ -20,14 +19,17 @@ class FragmentLibraryPlaylistViewModel(private val playlistInteractor: PlaylistI
 
     fun getPlaylist() {
         viewModelScope.launch {
-            playlistInteractor.getAll().collect {
-                if (it.isEmpty()) renderState(PlaylistState.Empty)
-                else renderState(PlaylistState.Content(it))
+            playlistInteractor.getAll().collect() {
+                if (it.isEmpty()) {
+                    render(PlaylistState.Empty)
+                } else {
+                    render(PlaylistState.Content(it))
+                }
             }
         }
     }
 
-    private fun renderState(state: PlaylistState) {
+    private fun render (state: PlaylistState) {
         playlistState.postValue(state)
     }
 }

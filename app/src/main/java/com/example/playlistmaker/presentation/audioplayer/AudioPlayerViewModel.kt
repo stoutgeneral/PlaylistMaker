@@ -6,19 +6,30 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.playlistmaker.data.db.entity.FavoriteEntity
 import com.example.playlistmaker.domain.FavoriteInteractor
+import com.example.playlistmaker.domain.PlaylistInteractor
+import com.example.playlistmaker.domain.models.Playlist
 import com.example.playlistmaker.domain.models.State
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.ui.audioplayer.StateAudioPlayer
 import com.example.playlistmaker.domain.repository.AudioPlayerRepository
+import com.example.playlistmaker.presentation.models.PlaylistState
+import com.example.playlistmaker.presentation.models.PlaylistStateTrack
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import okhttp3.Dispatcher
 import java.util.Locale
 
 
-class AudioPlayerViewModel(private val audioPlayerInteractor: AudioPlayerRepository, private val favoriteInteractor: FavoriteInteractor) : ViewModel() {
+class AudioPlayerViewModel(
+    private val audioPlayerInteractor: AudioPlayerRepository,
+    private val favoriteInteractor: FavoriteInteractor,
+    private val playlistInteractor: PlaylistInteractor
+) : ViewModel() {
 
     companion object {
         private const val DELAY_MILLIS = 300L
@@ -31,6 +42,12 @@ class AudioPlayerViewModel(private val audioPlayerInteractor: AudioPlayerReposit
 
     private var isFavorite = MutableLiveData<Boolean>()
     fun observeFavoriteState(): LiveData<Boolean> = isFavorite
+
+    private val playlistState = MutableLiveData<PlaylistState>(PlaylistState.Empty)
+    fun observePlaylistState(): LiveData<PlaylistState> = playlistState
+
+    private val addedToPlaylistState = MutableLiveData<PlaylistStateTrack>()
+    fun observeAddedPlaylistState(): LiveData<PlaylistStateTrack> = addedToPlaylistState
 
     override fun onCleared() {
         super.onCleared()
@@ -103,5 +120,46 @@ class AudioPlayerViewModel(private val audioPlayerInteractor: AudioPlayerReposit
                 playState.postValue(StateAudioPlayer.Playing(getCurrentPlayerPosition()))
             }
         }
+    }
+
+    private fun addTrackToPlaylist (playlist: Playlist, trackId: Int) {
+        playlist.tracks.add(trackId)
+        playlist.tracksCounter += 1
+
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                playlistInteractor.update(playlist)
+            }
+        }
+    }
+
+    fun addTrackInPlaylist(playlist: Playlist, track: Track) {
+        if (playlist.tracks.isEmpty()) {
+            addTrackToPlaylist(playlist, track.trackId)
+            addedToPlaylistState.postValue(PlaylistStateTrack.Added(playlist.name))
+        } else {
+            if (playlist.tracks.contains(track.trackId)) {
+                addedToPlaylistState.postValue(PlaylistStateTrack.Respond(playlist.name))
+            } else {
+                addTrackToPlaylist(playlist, track.trackId)
+                addedToPlaylistState.postValue(PlaylistStateTrack.Added(playlist.name))
+            }
+        }
+    }
+
+    fun getPlaylists () {
+        viewModelScope.launch {
+            playlistInteractor.getAll().collect() {
+                if (it.isEmpty()) {
+                    renderState(PlaylistState.Empty)
+                } else {
+                    renderState(PlaylistState.Content(it))
+                }
+            }
+        }
+    }
+
+    private fun renderState (state: PlaylistState) {
+        playlistState.postValue(state)
     }
 }

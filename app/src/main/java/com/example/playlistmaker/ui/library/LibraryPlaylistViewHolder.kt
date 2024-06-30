@@ -18,11 +18,11 @@ class LibraryPlaylistViewHolder(itemView: View) : RecyclerView.ViewHolder(itemVi
 
     fun bind(item: Playlist) {
         playlistName.text = item.name
-        playlistTrackCounter.text = item.tracksCounter.let {
+        playlistTrackCounter.text = item.trackTimeMillis.let {
             itemView.resources.getQuantityString(
                 R.plurals.track_counter,
                 it,
-                item.tracksCounter
+                item.trackTimeMillis
             )
         }
 

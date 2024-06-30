@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.playlistmaker.R
@@ -12,7 +13,8 @@ import com.example.playlistmaker.databinding.FragmentPlaylistBinding
 import com.example.playlistmaker.domain.models.Playlist
 import com.example.playlistmaker.presentation.library.FragmentLibraryPlaylistViewModel
 import com.example.playlistmaker.presentation.models.PlaylistState
-import com.example.playlistmaker.ui.audioplayer.PlaylistAdapter
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LibraryPlaylistFragment : Fragment() {
@@ -25,7 +27,8 @@ class LibraryPlaylistFragment : Fragment() {
 
     private val viewModel: FragmentLibraryPlaylistViewModel by viewModel()
     private lateinit var binding: FragmentPlaylistBinding
-    private val playlistAdapter = LibraryPlaylistAdapter()
+    private val playlistAdapter = LibraryPlaylistAdapter {switchToPlayer(it)}
+    private var isClickAllowed = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -45,13 +48,14 @@ class LibraryPlaylistFragment : Fragment() {
         binding.rvPlaylists.layoutManager = GridLayoutManager(requireContext(), 2)
         binding.rvPlaylists.adapter = playlistAdapter
         binding.btNewPlaylist.setOnClickListener {
-            findNavController().navigate(R.id.action_mediaFragment_to_createPlaylistFragment)
+            findNavController().navigate(R.id.action_libraryFragment_to_createPlaylistFragment)
         }
     }
 
     override fun onResume() {
         super.onResume()
         viewModel.getPlaylist()
+        isClickAllowed = true
     }
 
     private fun render(state: PlaylistState) {
@@ -77,5 +81,26 @@ class LibraryPlaylistFragment : Fragment() {
         playlistAdapter.notifyDataSetChanged()
 
         binding.rvPlaylists.visibility = View.VISIBLE
+    }
+
+    private fun switchToPlayer(playlist: Playlist) {
+        if (clickDebounce()) {
+            findNavController().navigate(
+                R.id.action_libraryFragment_to_detailsPlaylistFragment,
+                DetailsPlaylistFragment.createArgs(playlist.id)
+            )
+        }
+    }
+
+    private fun clickDebounce(): Boolean {
+        val current = isClickAllowed
+        if (isClickAllowed) {
+            isClickAllowed = false
+            viewLifecycleOwner.lifecycleScope.launch() {
+                delay(1000L)
+                isClickAllowed = true
+            }
+        }
+        return current
     }
 }

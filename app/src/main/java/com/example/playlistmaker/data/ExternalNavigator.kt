@@ -7,4 +7,5 @@ interface ExternalNavigator {
     fun shareApp(theme: String)
     fun userAgreement(url: String)
     fun writeToSupport(email: EmailData)
+    fun sharePlaylist (playlist: String)
 }

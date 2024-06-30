@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="basic_text_size">22sp</dimen>
-    <dimen name="medium_text_size">19sp</dimen>
-    <dimen name="text_size_additional_screens">16sp</dimen>
+
     <dimen name="text_size_low">12sp</dimen>
     <dimen name="offset_from_text">8dp</dimen>
     <dimen name="rounding_buttons">16dp</dimen>
@@ -11,4 +9,9 @@
     <dimen name="high_padding">24dp</dimen>
     <dimen name="distance_between_elements">8dp</dimen>
     <dimen name="meaning_13dp">13dp</dimen>
+    <dimen name="medium_text_size">19sp</dimen>
+    <dimen name="text_size_additional_screens">16sp</dimen>
+    <dimen name="high_text_size">24sp</dimen>
+    <dimen name="basic_text_size">22sp</dimen>
+    <dimen name="playlist_text_size">16sp</dimen>
 </resources>

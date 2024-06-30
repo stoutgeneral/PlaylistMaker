@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.playlistmaker.domain.FavoriteInteractor
 import com.example.playlistmaker.domain.PlaylistInteractor
 import com.example.playlistmaker.domain.models.Playlist
+import com.example.playlistmaker.domain.models.PlaylistTrack
 import com.example.playlistmaker.domain.models.State
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.ui.audioplayer.StateAudioPlayer
@@ -18,10 +19,8 @@ import com.example.playlistmaker.presentation.models.PlaylistStateTrack
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okhttp3.Dispatcher
 import java.util.Locale
 
 
@@ -122,26 +121,46 @@ class AudioPlayerViewModel(
         }
     }
 
-    private fun addTrackToPlaylist (playlist: Playlist, trackId: Int) {
-        playlist.tracks.add(trackId)
-        playlist.tracksCounter += 1
+    private fun addTrackToPlaylist (playlist: Playlist, track: Track) {
+        playlist.tracks.add(track.trackId)
+        playlist.trackTimeMillis += track.trackTimeMillis ?: 0
 
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 playlistInteractor.update(playlist)
             }
         }
+
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                val playlistTrack = PlaylistTrack (
+                    id = null,
+                    playlistId = playlist.id!!,
+                    trackId = track.trackId,
+                    trackName = track.trackName,
+                    artistName = track.artistName,
+                    trackTimeMillis = track.trackTimeMillis,
+                    artworkUrl100 = track.artworkUrl100,
+                    collectionName = track.collectionName,
+                    releaseDate = track.releaseDate,
+                    primaryGenreName = track.primaryGenreName,
+                    country = track.country,
+                    previewUrl = track.previewUrl
+                )
+                playlistInteractor.addPlaylistTrack(playlistTrack)
+            }
+        }
     }
 
     fun addTrackInPlaylist(playlist: Playlist, track: Track) {
         if (playlist.tracks.isEmpty()) {
-            addTrackToPlaylist(playlist, track.trackId)
+            addTrackToPlaylist(playlist, track)
             addedToPlaylistState.postValue(PlaylistStateTrack.Added(playlist.name))
         } else {
             if (playlist.tracks.contains(track.trackId)) {
                 addedToPlaylistState.postValue(PlaylistStateTrack.Respond(playlist.name))
             } else {
-                addTrackToPlaylist(playlist, track.trackId)
+                addTrackToPlaylist(playlist, track)
                 addedToPlaylistState.postValue(PlaylistStateTrack.Added(playlist.name))
             }
         }

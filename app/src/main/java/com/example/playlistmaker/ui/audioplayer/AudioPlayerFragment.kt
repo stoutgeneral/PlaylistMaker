@@ -1,41 +1,42 @@
 package com.example.playlistmaker.ui.audioplayer
 
 import android.icu.text.SimpleDateFormat
-import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.OnBackPressedCallback
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.playlistmaker.R
-import com.example.playlistmaker.databinding.ActivityAudioPlayerBinding
+import com.example.playlistmaker.databinding.FragmentAudioPlayerBinding
 import com.example.playlistmaker.domain.models.Playlist
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.presentation.audioplayer.AudioPlayerViewModel
 import com.example.playlistmaker.presentation.models.PlaylistState
 import com.example.playlistmaker.presentation.models.PlaylistStateTrack
-import com.example.playlistmaker.ui.library.CreatePlaylistsFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.io.Serializable
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.time.Instant
 import java.util.Date
 import java.util.Locale
 
-class AudioPlayerActivity : AppCompatActivity() {
+class AudioPlayerFragment : Fragment() {
 
     companion object {
         private const val TRACK = "track"
         private const val CLICK_DEBOUNCE_DM = 1000L
     }
 
-    private lateinit var binding: ActivityAudioPlayerBinding
+    private lateinit var binding: FragmentAudioPlayerBinding
     private lateinit var track: Track
     private val viewModel: AudioPlayerViewModel by viewModel()
     private var playlistIsClickAllowed = true
@@ -46,52 +47,72 @@ class AudioPlayerActivity : AppCompatActivity() {
         addTrackInPlaylist(it)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityAudioPlayerBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        binding = FragmentAudioPlayerBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        track = getSerializable(TRACK, Track::class.java)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding = FragmentAudioPlayerBinding.inflate(layoutInflater)
+
+        track = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) arguments?.getParcelable(
+            TRACK,
+            Track::class.java
+        )!! else arguments?.getParcelable(TRACK)!!
 
         binding.arrowBackMediaPlayer.setOnClickListener {
-            finish()
+            findNavController().popBackStack()
         }
 
-        viewModel.observePlayState().observe(this) {
+        requireActivity().onBackPressedDispatcher.addCallback(
+            viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().popBackStack()
+                }
+            }
+        )
+
+        viewModel.observePlayState().observe(viewLifecycleOwner) {
             this.timeInterval = it.progress
             binding.buttonPlayTrack.isEnabled = it.checkingButtonStatus
             binding.buttonPlayTrack.setImageResource(it.buttonState)
             binding.trackTimer.text = it.progress
         }
 
-        viewModel.observeFavoriteState().observe(this) { isFavorite ->
+        viewModel.observeFavoriteState().observe(viewLifecycleOwner) { isFavorite ->
             if (isFavorite) {
                 binding.buttonFavorites.setImageResource(R.drawable.added_favorite)
             } else {
                 binding.buttonFavorites.setImageResource(R.drawable.add_favorites)
             }
-            track.isFavorite = !isFavorite
+            track.isFavorite = isFavorite // !!!
         }
 
-        viewModel.observePlaylistState().observe(this) {
+        viewModel.observePlaylistState().observe(viewLifecycleOwner) {
             renderPlaylist(it)
         }
 
-        binding.recyclerPlaylistsInPLayer.layoutManager = LinearLayoutManager(this)
+        binding.recyclerPlaylistsInPLayer.layoutManager = LinearLayoutManager(requireContext())
         binding.recyclerPlaylistsInPLayer.adapter = playlistAdapter
 
         binding.artistName.text = track.artistName
         binding.trackName.text = track.trackName
         binding.countryName.text = track.country
         binding.genreName.text = track.primaryGenreName
-        binding.durationTime.text = track.trackTime
+        binding.durationTime.text = track.trackTimeMillis.toString()
         binding.albumName.text = track.collectionName
         binding.yearRelease.text = convertToYear(track.releaseDate)
         binding.trackTimer.text = "00:30"
 
         if (track.isFavorite) binding.buttonFavorites.setImageResource(R.drawable.added_favorite)
 
-        viewModel.preparePlayer(url = track.previewUrl)
+        track.previewUrl?.let { viewModel.preparePlayer(url = it) } // ..
 
         binding.buttonPlayTrack.setOnClickListener {
             viewModel.playbackControl()
@@ -106,7 +127,8 @@ class AudioPlayerActivity : AppCompatActivity() {
             state = BottomSheetBehavior.STATE_HIDDEN
         }
 
-        bottomSheetBehavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+        bottomSheetBehavior.addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 when (newState) {
                     BottomSheetBehavior.STATE_HIDDEN -> binding.overlay.visibility = View.GONE
@@ -117,17 +139,19 @@ class AudioPlayerActivity : AppCompatActivity() {
             override fun onSlide(bottomSheet: View, slideOffset: Float) {}
         })
 
-        viewModel.observeAddedPlaylistState().observe(this) {addedToPlaylist ->
+        viewModel.observeAddedPlaylistState().observe(viewLifecycleOwner) { addedToPlaylist ->
             when (addedToPlaylist) {
                 is PlaylistStateTrack.Respond -> renderToast(addedToPlaylist.name, false)
                 is PlaylistStateTrack.Added -> {
                     bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
                     renderToast(addedToPlaylist.name, true)
                 }
+
+                else -> {} // ..
             }
         }
 
-        binding.addPlaylistButton.setOnClickListener {// кнопка, которая добавляет трек в плейлист. Она работает, фрагмент вызывается.
+        binding.addPlaylistButton.setOnClickListener {
             viewModel.getPlaylists()
             binding.overlay.visibility = View.VISIBLE
             bottomSheetBehavior.halfExpandedRatio = 0.65F
@@ -135,10 +159,7 @@ class AudioPlayerActivity : AppCompatActivity() {
         }
 
         binding.buttonNewPlaylist.setOnClickListener {
-            val fragmentTransaction = supportFragmentManager.beginTransaction()
-            fragmentTransaction.replace(R.id.playlist_fragment_container, CreatePlaylistsFragment.newInstance(true))
-            fragmentTransaction.addToBackStack(null)
-            fragmentTransaction.commit()
+            findNavController().navigate(R.id.action_audioPlayerFragment_to_createPlaylistFragment)
 
             bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
             binding.mainPlayerScreen.visibility = View.GONE // ??
@@ -151,11 +172,17 @@ class AudioPlayerActivity : AppCompatActivity() {
             .placeholder(R.drawable.placeholder)
             .centerCrop()
             .transform(RoundedCorners(10))
-            .into(this.findViewById(R.id.track_cover))
+            .into(binding.trackCover)
     }
 
     private fun convertToYear(releaseDate: String?): String? {
-        return SimpleDateFormat("yyyy", Locale.getDefault()).format(Date.from(Instant.parse(releaseDate)))
+        return SimpleDateFormat("yyyy", Locale.getDefault()).format(
+            Date.from(
+                Instant.parse(
+                    releaseDate
+                )
+            )
+        )
     }
 
     override fun onPause() {
@@ -163,11 +190,9 @@ class AudioPlayerActivity : AppCompatActivity() {
         viewModel.onPause()
     }
 
-    private fun <T : Serializable?> getSerializable(name: String, clazz: Class<T>): T {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)
-            intent.getSerializableExtra(name, clazz)!!
-        else
-            intent.getSerializableExtra(name) as T
+    override fun onResume() {
+        super.onResume()
+        viewModel.onPause()
     }
 
     private fun addTrackInPlaylist(playlist: Playlist) {
@@ -192,7 +217,6 @@ class AudioPlayerActivity : AppCompatActivity() {
         when (state) {
             is PlaylistState.Empty -> showEmpty()
             is PlaylistState.Content -> showContent(state.playlists)
-            else -> {}
         }
     }
 
@@ -210,13 +234,13 @@ class AudioPlayerActivity : AppCompatActivity() {
     private fun renderToast(playlistName: String?, added: Boolean) {
         if (added) {
             Toast.makeText(
-                this,
+                requireContext(),
                 getString(R.string.playlist_track_has_been_added, playlistName),
                 Toast.LENGTH_SHORT
             ).show()
         } else {
             Toast.makeText(
-                this,
+                requireContext(),
                 getString(R.string.playlist_track_has_already_add, playlistName),
                 Toast.LENGTH_SHORT
             ).show()

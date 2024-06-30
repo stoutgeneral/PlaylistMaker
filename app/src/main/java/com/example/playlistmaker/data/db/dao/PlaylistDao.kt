@@ -16,6 +16,12 @@ interface PlaylistDao {
     @Update(entity = PlaylistEntity::class, onConflict = OnConflictStrategy.REPLACE)
     suspend fun update(playlistEntity: PlaylistEntity)
 
+    @Query("DELETE FROM playlist_entity WHERE id = :id")
+    suspend fun delete(id: Int): Int
+
     @Query("SELECT * FROM playlist_entity ORDER BY id ASC")
     suspend fun getAll(): List<PlaylistEntity>?
+
+    @Query("SELECT * FROM playlist_entity WHERE id = :id")
+    suspend fun getId(id: Int): PlaylistEntity
 }

@@ -30,9 +30,10 @@
     <string name="title">Название*</string>
     <string name="description">Описание</string>
     <string name="create">Создать</string>
+    <string name="save">Сохранить</string>
     <string name="track_delete">Удалить трек?</string>
-    <string name="track_delete_question">Хотите удалить трек?</string>
-    <string name="track_delete_prove">Удалить</string>
+    <string name="track_delete_question">Вы уверенны, что хотите удалить трек из плейлиста?</string>
+    <string name="delete_prove">Удалить</string>
     <string name="playlist_add">Добавить плейлист</string>
     <string name="playlist_created">Плейлист "%s" создан</string>
     <string name="playlist_track_has_already_add">Трек уже добавлен в плейлист "%s"</string>
@@ -40,7 +41,8 @@
     <string name="playlist_track_empty">В плейлисте нет треков</string>
     <string name="playlist_alert_title">Завершить создание плейлиста?</string>
     <string name="playlist_alert_message">Все несохраненные данные будут потеряны</string>
-    <string name="playlist_alert_cancel">Отмена</string>
+    <string name="playlist_alert_delete_message">Вы уверены, что хотите удалить этот плейлист?</string>
+    <string name="alert_cancel">Отмена</string>
     <string name="playlist_alert_confirm">Завершить</string>
     <string name="playlist_not_track_to_share">В этом плейлисте нет списка треков, которым можно поделиться</string>
     <string name="notification_permission">Это разрешения необходимо для добавления картинки к плейлисту</string>

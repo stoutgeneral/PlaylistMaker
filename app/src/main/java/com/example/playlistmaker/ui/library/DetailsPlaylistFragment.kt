@@ -249,9 +249,9 @@ class DetailsPlaylistFragment : Fragment() {
         MaterialAlertDialogBuilder(requireContext(), R.style.AllertDialog)
             .setTitle(R.string.track_delete)
             .setMessage(R.string.track_delete_question)
-            .setNegativeButton(R.string.no) { _, _ ->
+            .setNegativeButton(R.string.alert_cancel) { _, _ ->
             }
-            .setPositiveButton(R.string.yes) { _, _ ->
+            .setPositiveButton(R.string.delete_prove) { _, _ ->
                 val playlistId = requireArguments().getInt(PLAYLIST_ID, 0)
                 if (playlistId > 0)
                     viewModel.deletePlaylistTrack(playlistId, trackId)
@@ -261,10 +261,10 @@ class DetailsPlaylistFragment : Fragment() {
     private fun showDeletePlaylistDialog() {
         MaterialAlertDialogBuilder(requireContext(), R.style.AllertDialog)
             .setTitle(R.string.playlist_delete)
-            .setMessage(R.string.playlist_alert_message)
-            .setNegativeButton(R.string.no) { _, _ ->
+            .setMessage(R.string.playlist_alert_delete_message)
+            .setNegativeButton(R.string.alert_cancel) { _, _ ->
             }
-            .setPositiveButton(R.string.yes) { _, _ ->
+            .setPositiveButton(R.string.delete_prove) { _, _ ->
                 val playlistId = requireArguments().getInt(PLAYLIST_ID, 0)
                 if (playlistId > 0) {
                     viewModel.deletePlaylist(playlistId)

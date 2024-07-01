@@ -21,6 +21,7 @@ import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.presentation.audioplayer.AudioPlayerViewModel
 import com.example.playlistmaker.presentation.models.PlaylistState
 import com.example.playlistmaker.presentation.models.PlaylistStateTrack
+import com.example.playlistmaker.util.ConvertTime
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -58,7 +59,7 @@ class AudioPlayerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = FragmentAudioPlayerBinding.inflate(layoutInflater)
+        //binding = FragmentAudioPlayerBinding.inflate(layoutInflater)
 
         track = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) arguments?.getParcelable(
             TRACK,
@@ -105,7 +106,7 @@ class AudioPlayerFragment : Fragment() {
         binding.trackName.text = track.trackName
         binding.countryName.text = track.country
         binding.genreName.text = track.primaryGenreName
-        binding.durationTime.text = track.trackTimeMillis.toString()
+        binding.durationTime.text = ConvertTime.convertToMinAndSec(track.trackTimeMillis)
         binding.albumName.text = track.collectionName
         binding.yearRelease.text = convertToYear(track.releaseDate)
         binding.trackTimer.text = "00:30"

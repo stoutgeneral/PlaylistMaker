@@ -88,7 +88,7 @@ open class CreatePlaylistsFragment : Fragment() {
         confirmDialog = MaterialAlertDialogBuilder(requireContext(), R.style.AllertDialog)
             .setTitle(R.string.playlist_alert_title)
             .setMessage(R.string.playlist_alert_message)
-            .setNeutralButton(R.string.playlist_alert_cancel) { _, _ -> }
+            .setNeutralButton(R.string.alert_cancel) { _, _ -> }
             .setPositiveButton(R.string.playlist_alert_confirm) { _, _ ->
                 navigateBack()
             }

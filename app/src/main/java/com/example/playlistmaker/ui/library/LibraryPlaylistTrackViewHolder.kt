@@ -11,7 +11,7 @@ import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.util.ConvertTime
 
 class LibraryPlaylistTrackViewHolder (item: View) : RecyclerView.ViewHolder(item) {
-    private val trackName: TextView = item.findViewById(R.id.playlist_add_name)
+    private val trackName: TextView = item.findViewById(R.id.track_name)
     private val cover: ImageView = item.findViewById(R.id.track_cover)
     private val artistName: TextView = item.findViewById(R.id.artist_name)
     private val trackTime: TextView = item.findViewById(R.id.track_time)

@@ -21,9 +21,7 @@ class PlaylistViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(item: Playlist) {
         playlistName.text = item.name
         cover.contentDescription = item.name
-        playlistTrackCounter.text = item.trackTimeMillis.let {
-            itemView.resources.getQuantityString(R.plurals.track_counter, it, item.trackTimeMillis)
-        }
+        playlistTrackCounter.text = itemView.resources.getQuantityString(R.plurals.track_counter, item.tracks.size,item.tracks.size)
 
         Glide.with(itemView)
             .load(item.uri)

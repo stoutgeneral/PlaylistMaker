@@ -42,7 +42,7 @@
             android:textSize="11sp"
             android:textColor="@color/YP_text_gray"
             android:fontFamily="@font/ys_display_regular"
-            tools:text="Добавить плейлист"
+            tools:text="сколько то треков"
             android:maxLines="1"
             android:ellipsize="end"
             />

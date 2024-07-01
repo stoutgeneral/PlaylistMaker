@@ -30,7 +30,7 @@
     <string name="title">Название*</string>
     <string name="description">Описание</string>
     <string name="create">Создать</string>
-    <string name="track_delete">Удалить трек</string>
+    <string name="track_delete">Удалить трек?</string>
     <string name="track_delete_question">Хотите удалить трек?</string>
     <string name="track_delete_prove">Удалить</string>
     <string name="playlist_add">Добавить плейлист</string>

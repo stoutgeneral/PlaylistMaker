@@ -32,7 +32,7 @@ class EditPlaylistFragment : CreatePlaylistsFragment() {
         if (playlistId > 0) viewModel.getPlaylist(playlistId) else findNavController().popBackStack()
 
         binding.createPlaylistHeader.text = getText(R.string.playlist_edit)
-        binding.createPlaylistBt.text = getText(R.string.playlist_created)
+        binding.createPlaylistBt.text = getText(R.string.create)
         binding.back.setOnClickListener {
             findNavController().popBackStack()
         }

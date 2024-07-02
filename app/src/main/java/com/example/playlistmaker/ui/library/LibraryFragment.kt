@@ -64,19 +64,6 @@ class LibraryFragment : Fragment() {
         super.onDestroyView()
         tabLayoutMediator.detach()
     }
-
-    /*override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putInt(STATE_TAB, binding.viewPager.currentItem)
-    }
-
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        super.onViewStateRestored(savedInstanceState)
-        if (savedInstanceState != null) {
-            val savedTabIndex = savedInstanceState.getInt(STATE_TAB, 0)
-            binding.viewPager.setCurrentItem(savedTabIndex, false)
-        }
-    }*/
 }
 
 

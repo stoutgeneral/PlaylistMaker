@@ -10,10 +10,11 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.example.playlistmaker.R
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.presentation.search.SearchViewModel
-import com.example.playlistmaker.ui.audioplayer.AudioPlayerActivity
+import com.example.playlistmaker.ui.audioplayer.AudioPlayerFragment
 import com.example.playlistmaker.databinding.FragmentSearchBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -24,6 +25,7 @@ class SearchFragment : Fragment() {
     companion object {
         const val EMPTY_FIELD = ""
         const val CLICK_DEBOUNCE = 1000L
+        const val TRACK = "track"
     }
 
     private lateinit var binding: FragmentSearchBinding
@@ -112,7 +114,10 @@ class SearchFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewModel.getTrackSearchHistory()
+        if (binding.searchBar.text.isEmpty()) {
+            viewModel.getTrackSearchHistory()
+        }
+        isClickAllowed = true
     }
 
     override fun onDestroyView() {
@@ -210,9 +215,12 @@ class SearchFragment : Fragment() {
         if (clickDebounce()) {
             viewModel.onClick(track)
 
-            val displayIntent = Intent(requireContext(), AudioPlayerActivity::class.java)
-            displayIntent.putExtra("track", track)
-            startActivity(displayIntent)
+            val bundle = Bundle()
+            bundle.putParcelable(TRACK, track)
+            findNavController().navigate(
+                R.id.actionGlobalPlayer,
+                bundle
+            )
         }
     }
 }

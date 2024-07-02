@@ -19,7 +19,7 @@ class PlaylistMapper {
             uri = playlistEntity.uri,
             description = playlistEntity.description,
             tracks = tracks,
-            tracksCounter = playlistEntity.trackCounter
+            trackTimeMillis = playlistEntity.trackTimeMillis
         )
     }
 
@@ -30,7 +30,7 @@ class PlaylistMapper {
                 uri = playlist.uri,
                 description = playlist.description,
                 tracks = convertToJson(playlist.tracks),
-                trackCounter = playlist.tracksCounter
+                trackTimeMillis = playlist.trackTimeMillis
         )
     }
 

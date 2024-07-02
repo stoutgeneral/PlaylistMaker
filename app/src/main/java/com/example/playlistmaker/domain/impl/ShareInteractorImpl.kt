@@ -21,4 +21,8 @@ class ShareInteractorImpl (private val externalNavigator: ExternalNavigator) : S
             text = text
         ))
     }
+
+    override fun sharePlaylist(playlist: String) {
+        externalNavigator.sharePlaylist(playlist)
+    }
 }

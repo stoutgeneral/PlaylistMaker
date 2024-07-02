@@ -1,20 +1,33 @@
 package com.example.playlistmaker.ui.library
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.FragmentLibraryBinding
+import com.example.playlistmaker.presentation.library.FragmentLibraryPlaylistViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class LibraryFragment : Fragment() {
 
+    companion object {
+        private const val STATE_TAB = "stateTab"
+    }
+
     private lateinit var tabLayoutMediator: TabLayoutMediator
     private lateinit var binding: FragmentLibraryBinding
+    private val viewModel: FragmentLibraryPlaylistViewModel by viewModel()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         binding = FragmentLibraryBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -22,7 +35,6 @@ class LibraryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         binding.viewPager.adapter = LibraryViewPagerAdapter(childFragmentManager, lifecycle)
 
         tabLayoutMediator =
@@ -35,12 +47,24 @@ class LibraryFragment : Fragment() {
         tabLayoutMediator.attach()
     }
 
+    override fun onPause() {
+        viewModel.selectedTabIndex.value = binding.viewPager.currentItem
+        super.onPause()
+
+    }
+    override fun onResume() {
+        viewModel.observeSelectedTabIndex().observe(viewLifecycleOwner) {tabIndex ->
+            binding.viewPager.setCurrentItem(tabIndex, false)
+        }
+        super.onResume()
+
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         tabLayoutMediator.detach()
     }
-
-    }
+}
 
 
 

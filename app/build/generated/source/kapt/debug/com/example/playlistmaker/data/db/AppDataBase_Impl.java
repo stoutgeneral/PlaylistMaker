@@ -15,11 +15,14 @@ import com.example.playlistmaker.data.db.dao.FavoriteDao;
 import com.example.playlistmaker.data.db.dao.FavoriteDao_Impl;
 import com.example.playlistmaker.data.db.dao.PlaylistDao;
 import com.example.playlistmaker.data.db.dao.PlaylistDao_Impl;
+import com.example.playlistmaker.data.db.dao.PlaylistTrackDao;
+import com.example.playlistmaker.data.db.dao.PlaylistTrackDao_Impl;
 import java.lang.Class;
 import java.lang.Override;
 import java.lang.String;
 import java.lang.SuppressWarnings;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -32,22 +35,27 @@ public final class AppDataBase_Impl extends AppDataBase {
 
   private volatile PlaylistDao _playlistDao;
 
+  private volatile PlaylistTrackDao _playlistTrackDao;
+
   @Override
   @NonNull
   protected SupportSQLiteOpenHelper createOpenHelper(@NonNull final DatabaseConfiguration config) {
-    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(2) {
+    final SupportSQLiteOpenHelper.Callback _openCallback = new RoomOpenHelper(config, new RoomOpenHelper.Delegate(3) {
       @Override
       public void createAllTables(@NonNull final SupportSQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS `favorite_entity` (`trackId` INTEGER NOT NULL, `trackName` TEXT NOT NULL, `artistName` TEXT NOT NULL, `trackTime` TEXT NOT NULL, `artworkUrl100` TEXT NOT NULL, `collectionName` TEXT NOT NULL, `releaseDate` TEXT NOT NULL, `primaryGenreName` TEXT NOT NULL, `country` TEXT NOT NULL, `previewUrl` TEXT NOT NULL, `insertTimeStamp` INTEGER NOT NULL, PRIMARY KEY(`trackId`))");
-        db.execSQL("CREATE TABLE IF NOT EXISTS `playlist_entity` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT, `description` TEXT, `uri` TEXT, `tracks` TEXT, `trackCounter` INTEGER NOT NULL)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `favorite_entity` (`trackId` INTEGER NOT NULL, `trackName` TEXT, `artistName` TEXT, `trackTimeMillis` INTEGER, `artworkUrl100` TEXT, `collectionName` TEXT, `releaseDate` TEXT, `primaryGenreName` TEXT, `country` TEXT, `previewUrl` TEXT, `insertTimeStamp` INTEGER NOT NULL, PRIMARY KEY(`trackId`))");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `playlist_entity` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT, `description` TEXT, `uri` TEXT, `tracks` TEXT, `trackTimeMillis` INTEGER NOT NULL)");
+        db.execSQL("CREATE TABLE IF NOT EXISTS `playlist_track_entity` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `playlistId` INTEGER NOT NULL, `trackId` INTEGER NOT NULL, `trackName` TEXT, `artistName` TEXT, `trackTimeMillis` INTEGER, `artworkUrl100` TEXT, `collectionName` TEXT, `releaseDate` TEXT, `primaryGenreName` TEXT, `country` TEXT, `previewUrl` TEXT, FOREIGN KEY(`playlistId`) REFERENCES `playlist_entity`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )");
+        db.execSQL("CREATE INDEX IF NOT EXISTS `index_playlist_track_entity_playlistId` ON `playlist_track_entity` (`playlistId`)");
         db.execSQL("CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)");
-        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '79b2df3d76a35d671966787388a1f6b3')");
+        db.execSQL("INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3be4f559c883ee4796ec64b6c76be1e7')");
       }
 
       @Override
       public void dropAllTables(@NonNull final SupportSQLiteDatabase db) {
         db.execSQL("DROP TABLE IF EXISTS `favorite_entity`");
         db.execSQL("DROP TABLE IF EXISTS `playlist_entity`");
+        db.execSQL("DROP TABLE IF EXISTS `playlist_track_entity`");
         final List<? extends RoomDatabase.Callback> _callbacks = mCallbacks;
         if (_callbacks != null) {
           for (RoomDatabase.Callback _callback : _callbacks) {
@@ -69,6 +77,7 @@ public final class AppDataBase_Impl extends AppDataBase {
       @Override
       public void onOpen(@NonNull final SupportSQLiteDatabase db) {
         mDatabase = db;
+        db.execSQL("PRAGMA foreign_keys = ON");
         internalInitInvalidationTracker(db);
         final List<? extends RoomDatabase.Callback> _callbacks = mCallbacks;
         if (_callbacks != null) {
@@ -93,15 +102,15 @@ public final class AppDataBase_Impl extends AppDataBase {
           @NonNull final SupportSQLiteDatabase db) {
         final HashMap<String, TableInfo.Column> _columnsFavoriteEntity = new HashMap<String, TableInfo.Column>(11);
         _columnsFavoriteEntity.put("trackId", new TableInfo.Column("trackId", "INTEGER", true, 1, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsFavoriteEntity.put("trackName", new TableInfo.Column("trackName", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsFavoriteEntity.put("artistName", new TableInfo.Column("artistName", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsFavoriteEntity.put("trackTime", new TableInfo.Column("trackTime", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsFavoriteEntity.put("artworkUrl100", new TableInfo.Column("artworkUrl100", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsFavoriteEntity.put("collectionName", new TableInfo.Column("collectionName", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsFavoriteEntity.put("releaseDate", new TableInfo.Column("releaseDate", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsFavoriteEntity.put("primaryGenreName", new TableInfo.Column("primaryGenreName", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsFavoriteEntity.put("country", new TableInfo.Column("country", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsFavoriteEntity.put("previewUrl", new TableInfo.Column("previewUrl", "TEXT", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsFavoriteEntity.put("trackName", new TableInfo.Column("trackName", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsFavoriteEntity.put("artistName", new TableInfo.Column("artistName", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsFavoriteEntity.put("trackTimeMillis", new TableInfo.Column("trackTimeMillis", "INTEGER", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsFavoriteEntity.put("artworkUrl100", new TableInfo.Column("artworkUrl100", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsFavoriteEntity.put("collectionName", new TableInfo.Column("collectionName", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsFavoriteEntity.put("releaseDate", new TableInfo.Column("releaseDate", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsFavoriteEntity.put("primaryGenreName", new TableInfo.Column("primaryGenreName", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsFavoriteEntity.put("country", new TableInfo.Column("country", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsFavoriteEntity.put("previewUrl", new TableInfo.Column("previewUrl", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsFavoriteEntity.put("insertTimeStamp", new TableInfo.Column("insertTimeStamp", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysFavoriteEntity = new HashSet<TableInfo.ForeignKey>(0);
         final HashSet<TableInfo.Index> _indicesFavoriteEntity = new HashSet<TableInfo.Index>(0);
@@ -118,7 +127,7 @@ public final class AppDataBase_Impl extends AppDataBase {
         _columnsPlaylistEntity.put("description", new TableInfo.Column("description", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsPlaylistEntity.put("uri", new TableInfo.Column("uri", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
         _columnsPlaylistEntity.put("tracks", new TableInfo.Column("tracks", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
-        _columnsPlaylistEntity.put("trackCounter", new TableInfo.Column("trackCounter", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPlaylistEntity.put("trackTimeMillis", new TableInfo.Column("trackTimeMillis", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
         final HashSet<TableInfo.ForeignKey> _foreignKeysPlaylistEntity = new HashSet<TableInfo.ForeignKey>(0);
         final HashSet<TableInfo.Index> _indicesPlaylistEntity = new HashSet<TableInfo.Index>(0);
         final TableInfo _infoPlaylistEntity = new TableInfo("playlist_entity", _columnsPlaylistEntity, _foreignKeysPlaylistEntity, _indicesPlaylistEntity);
@@ -128,9 +137,33 @@ public final class AppDataBase_Impl extends AppDataBase {
                   + " Expected:\n" + _infoPlaylistEntity + "\n"
                   + " Found:\n" + _existingPlaylistEntity);
         }
+        final HashMap<String, TableInfo.Column> _columnsPlaylistTrackEntity = new HashMap<String, TableInfo.Column>(12);
+        _columnsPlaylistTrackEntity.put("id", new TableInfo.Column("id", "INTEGER", false, 1, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPlaylistTrackEntity.put("playlistId", new TableInfo.Column("playlistId", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPlaylistTrackEntity.put("trackId", new TableInfo.Column("trackId", "INTEGER", true, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPlaylistTrackEntity.put("trackName", new TableInfo.Column("trackName", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPlaylistTrackEntity.put("artistName", new TableInfo.Column("artistName", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPlaylistTrackEntity.put("trackTimeMillis", new TableInfo.Column("trackTimeMillis", "INTEGER", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPlaylistTrackEntity.put("artworkUrl100", new TableInfo.Column("artworkUrl100", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPlaylistTrackEntity.put("collectionName", new TableInfo.Column("collectionName", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPlaylistTrackEntity.put("releaseDate", new TableInfo.Column("releaseDate", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPlaylistTrackEntity.put("primaryGenreName", new TableInfo.Column("primaryGenreName", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPlaylistTrackEntity.put("country", new TableInfo.Column("country", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        _columnsPlaylistTrackEntity.put("previewUrl", new TableInfo.Column("previewUrl", "TEXT", false, 0, null, TableInfo.CREATED_FROM_ENTITY));
+        final HashSet<TableInfo.ForeignKey> _foreignKeysPlaylistTrackEntity = new HashSet<TableInfo.ForeignKey>(1);
+        _foreignKeysPlaylistTrackEntity.add(new TableInfo.ForeignKey("playlist_entity", "CASCADE", "NO ACTION", Arrays.asList("playlistId"), Arrays.asList("id")));
+        final HashSet<TableInfo.Index> _indicesPlaylistTrackEntity = new HashSet<TableInfo.Index>(1);
+        _indicesPlaylistTrackEntity.add(new TableInfo.Index("index_playlist_track_entity_playlistId", false, Arrays.asList("playlistId"), Arrays.asList("ASC")));
+        final TableInfo _infoPlaylistTrackEntity = new TableInfo("playlist_track_entity", _columnsPlaylistTrackEntity, _foreignKeysPlaylistTrackEntity, _indicesPlaylistTrackEntity);
+        final TableInfo _existingPlaylistTrackEntity = TableInfo.read(db, "playlist_track_entity");
+        if (!_infoPlaylistTrackEntity.equals(_existingPlaylistTrackEntity)) {
+          return new RoomOpenHelper.ValidationResult(false, "playlist_track_entity(com.example.playlistmaker.data.db.entity.PlaylistTrackEntity).\n"
+                  + " Expected:\n" + _infoPlaylistTrackEntity + "\n"
+                  + " Found:\n" + _existingPlaylistTrackEntity);
+        }
         return new RoomOpenHelper.ValidationResult(true, null);
       }
-    }, "79b2df3d76a35d671966787388a1f6b3", "106f6608cc92269e6a7abbd8604a4815");
+    }, "3be4f559c883ee4796ec64b6c76be1e7", "32f95fac54df0667f1741de75af28388");
     final SupportSQLiteOpenHelper.Configuration _sqliteConfig = SupportSQLiteOpenHelper.Configuration.builder(config.context).name(config.name).callback(_openCallback).build();
     final SupportSQLiteOpenHelper _helper = config.sqliteOpenHelperFactory.create(_sqliteConfig);
     return _helper;
@@ -141,20 +174,31 @@ public final class AppDataBase_Impl extends AppDataBase {
   protected InvalidationTracker createInvalidationTracker() {
     final HashMap<String, String> _shadowTablesMap = new HashMap<String, String>(0);
     final HashMap<String, Set<String>> _viewTables = new HashMap<String, Set<String>>(0);
-    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "favorite_entity","playlist_entity");
+    return new InvalidationTracker(this, _shadowTablesMap, _viewTables, "favorite_entity","playlist_entity","playlist_track_entity");
   }
 
   @Override
   public void clearAllTables() {
     super.assertNotMainThread();
     final SupportSQLiteDatabase _db = super.getOpenHelper().getWritableDatabase();
+    final boolean _supportsDeferForeignKeys = android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP;
     try {
+      if (!_supportsDeferForeignKeys) {
+        _db.execSQL("PRAGMA foreign_keys = FALSE");
+      }
       super.beginTransaction();
+      if (_supportsDeferForeignKeys) {
+        _db.execSQL("PRAGMA defer_foreign_keys = TRUE");
+      }
       _db.execSQL("DELETE FROM `favorite_entity`");
       _db.execSQL("DELETE FROM `playlist_entity`");
+      _db.execSQL("DELETE FROM `playlist_track_entity`");
       super.setTransactionSuccessful();
     } finally {
       super.endTransaction();
+      if (!_supportsDeferForeignKeys) {
+        _db.execSQL("PRAGMA foreign_keys = TRUE");
+      }
       _db.query("PRAGMA wal_checkpoint(FULL)").close();
       if (!_db.inTransaction()) {
         _db.execSQL("VACUUM");
@@ -168,6 +212,7 @@ public final class AppDataBase_Impl extends AppDataBase {
     final HashMap<Class<?>, List<Class<?>>> _typeConvertersMap = new HashMap<Class<?>, List<Class<?>>>();
     _typeConvertersMap.put(FavoriteDao.class, FavoriteDao_Impl.getRequiredConverters());
     _typeConvertersMap.put(PlaylistDao.class, PlaylistDao_Impl.getRequiredConverters());
+    _typeConvertersMap.put(PlaylistTrackDao.class, PlaylistTrackDao_Impl.getRequiredConverters());
     return _typeConvertersMap;
   }
 
@@ -210,6 +255,20 @@ public final class AppDataBase_Impl extends AppDataBase {
           _playlistDao = new PlaylistDao_Impl(this);
         }
         return _playlistDao;
+      }
+    }
+  }
+
+  @Override
+  public PlaylistTrackDao getPlaylistTrackDao() {
+    if (_playlistTrackDao != null) {
+      return _playlistTrackDao;
+    } else {
+      synchronized(this) {
+        if(_playlistTrackDao == null) {
+          _playlistTrackDao = new PlaylistTrackDao_Impl(this);
+        }
+        return _playlistTrackDao;
       }
     }
   }

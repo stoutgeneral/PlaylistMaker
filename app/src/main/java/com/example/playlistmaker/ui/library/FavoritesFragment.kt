@@ -7,12 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import com.example.playlistmaker.R
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.example.playlistmaker.databinding.FragmentFavoritesBinding
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.presentation.library.FavoritesFragmentViewModel
 import com.example.playlistmaker.presentation.models.FavoriteState
-import com.example.playlistmaker.ui.audioplayer.AudioPlayerActivity
+import com.example.playlistmaker.ui.audioplayer.AudioPlayerFragment
 import com.example.playlistmaker.ui.search.TrackAdapter
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -94,9 +96,10 @@ class FavoritesFragment : Fragment() {
 
     private fun switchToPlayer(track: Track) {
         if (clickDebounce()) {
-            val displayIntent = Intent(requireContext(), AudioPlayerActivity::class.java)
-            displayIntent.putExtra("track", track)
-            startActivity(displayIntent)
+            val bundle = Bundle()
+            bundle.putParcelable("track", track)
+
+            findNavController().navigate(R.id.actionGlobalPlayer, bundle)
         }
     }
 

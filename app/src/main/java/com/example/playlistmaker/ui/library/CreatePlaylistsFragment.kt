@@ -37,7 +37,7 @@ import com.markodevcic.peko.PermissionResult
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CreatePlaylistsFragment : Fragment() {
+open class CreatePlaylistsFragment : Fragment() {
 
     companion object {
         private var parentAudioPlayer = false
@@ -47,8 +47,8 @@ class CreatePlaylistsFragment : Fragment() {
         }
     }
 
-    private lateinit var binding: FragmentCreatePlaylistsBinding
-    private val viewModel: CreatePlaylistFragmentViewModel by viewModel()
+    open lateinit var binding: FragmentCreatePlaylistsBinding
+    open val viewModel: CreatePlaylistFragmentViewModel by viewModel()
 
     private val pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) {
         if (it != null) {
@@ -73,9 +73,9 @@ class CreatePlaylistsFragment : Fragment() {
         return binding.root
     }
 
-    private val requester = PermissionRequester.instance()
-    private var tempPlaylist = Playlist(tracks = ArrayList())
-    private lateinit var confirmDialog: MaterialAlertDialogBuilder
+     val requester = PermissionRequester.instance()
+     var tempPlaylist = Playlist(tracks = ArrayList())
+     lateinit var confirmDialog: MaterialAlertDialogBuilder
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -88,7 +88,7 @@ class CreatePlaylistsFragment : Fragment() {
         confirmDialog = MaterialAlertDialogBuilder(requireContext(), R.style.AllertDialog)
             .setTitle(R.string.playlist_alert_title)
             .setMessage(R.string.playlist_alert_message)
-            .setNeutralButton(R.string.playlist_alert_cancel) { _, _ -> }
+            .setNeutralButton(R.string.alert_cancel) { _, _ -> }
             .setPositiveButton(R.string.playlist_alert_confirm) { _, _ ->
                 navigateBack()
             }

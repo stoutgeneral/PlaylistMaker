@@ -2,6 +2,8 @@ package com.example.playlistmaker.di
 
 import com.example.playlistmaker.data.mapper.FavoriteMapper
 import com.example.playlistmaker.data.mapper.PlaylistMapper
+import com.example.playlistmaker.data.mapper.PlaylistTrackMapper
+import com.example.playlistmaker.data.mapper.TrackMapper
 import com.example.playlistmaker.data.repository.AudioPlayerRepositoryImpl
 import com.example.playlistmaker.data.repository.FavoriteRepositoryImpl
 import com.example.playlistmaker.data.repository.PlaylistRepositoryImpl
@@ -26,23 +28,24 @@ val repositoryModule = module {
         SearchHistoryRepositoryImpl(get(), get(), get())
     }
 
-    factory<AudioPlayerRepository> {
-        AudioPlayerRepositoryImpl(get())
-    }
-
     single<SettingsRepository> {
         SettingsRepositoryImpl(get())
     }
-
-    factory { FavoriteMapper() }
 
     single<FavoriteRepository> {
         FavoriteRepositoryImpl(get(), get())
     }
 
-    factory { PlaylistMapper() }
-
     single<PlaylistRepository> {
-        PlaylistRepositoryImpl(get(), get(), get())
+        PlaylistRepositoryImpl(get(), get(), get(), get(), get())
     }
+
+    factory<AudioPlayerRepository> {
+        AudioPlayerRepositoryImpl(get())
+    }
+
+    factory { TrackMapper }
+    factory { PlaylistTrackMapper() }
+    factory { PlaylistMapper() }
+    factory { FavoriteMapper() }
 }
